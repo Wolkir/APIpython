@@ -4,7 +4,7 @@ from bson import ObjectId
 import json
 from datetime import datetime
 
-dateSeul = Blueprint('dateSeul', __name__)
+dateSeul = Blueprint('dateDuJour', __name__)
 
 @dateSeul.route('/dateseul', methods=['GET'])
 def get_data_by_date():
