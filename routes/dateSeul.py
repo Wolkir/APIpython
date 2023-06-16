@@ -13,9 +13,8 @@ def get_data_by_date():
     db = client['test']
     collection = db['testDate']
 
-    # Convertir la chaîne de date en objet datetime
-    date_str = "2023-11-30T00:00:00.000+00:00"
-    date = datetime.fromisoformat(date_str)
+    # Obtention de la date du jour
+    date = datetime.now()
 
     # Requête pour récupérer les données par date
     query = {"date": date}
@@ -32,3 +31,4 @@ def get_data_by_date():
 
     # Retourne les données en format JSON en utilisant la conversion personnalisée
     return jsonify(json.loads(json.dumps(data, default=serialize_object)))
+
