@@ -4,9 +4,9 @@ from bson import ObjectId
 import json
 from datetime import datetime
 
-dateSeul = Blueprint('dateDuJour', __name__)
+dateDuJour = Blueprint('dateDuJour', __name__)
 
-@dateSeul.route('/dateseul', methods=['GET'])
+@dateDuJour.route('/dateDuJour', methods=['GET'])
 def get_data_by_date():
     # Connexion à la base de données MongoDB
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
