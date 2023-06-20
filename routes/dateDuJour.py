@@ -11,6 +11,7 @@ def get_data_by_date():
     # Connexion à la base de données MongoDB
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
     db = client['test']
+
     collection = db['things']
 
     # Récupération de la date actuelle
@@ -27,6 +28,12 @@ def get_data_by_date():
             "$lte": end_date
         }
     }
+
+    # Obtention de la date du jour
+    date = datetime.now()
+
+    # Requête pour récupérer les données par date
+    query = {"date": date}
     data = list(collection.find(query))
 
     # Fermeture de la connexion à la base de données
@@ -34,11 +41,10 @@ def get_data_by_date():
 
     # Fonction de conversion personnalisée pour les objets ObjectId et datetime
     def serialize_object(obj):
-        if isinstance(obj, ObjectId):
+        if isinstance(obj, (ObjectId, datetime)):
             return str(obj)
-        elif isinstance(obj, datetime):
-            return obj.isoformat()
         raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
     # Retourne les données au format JSON en utilisant la conversion personnalisée
     return jsonify(json.loads(json.dumps(data, default=serialize_object)))
+

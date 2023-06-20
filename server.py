@@ -2,6 +2,7 @@ import sys
 
 from pymongo import MongoClient
 from flask import Flask
+
 from routes.dateDuJour import dateDuJour
 from routes.semaineGlissante import semaineGlissante
 from routes.semaineEnCours import semaineEnCours
@@ -13,7 +14,7 @@ from routes.Equity import Equity
 
 
 app = Flask(__name__)
-
+app.register_blueprint(nom)
 app.register_blueprint(dateDuJour)
 app.register_blueprint(semaineGlissante)
 app.register_blueprint(semaineEnCours)
