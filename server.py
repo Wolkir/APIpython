@@ -14,7 +14,6 @@ from routes.Equity import Equity
 
 
 app = Flask(__name__)
-app.register_blueprint(nom)
 app.register_blueprint(dateDuJour)
 app.register_blueprint(semaineGlissante)
 app.register_blueprint(semaineEnCours)
