@@ -11,20 +11,20 @@ def get_data_by_week():
     # Connexion à la base de données MongoDB
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
     db = client['test']
-    collection = db['testDate']
+    collection = db['things']
 
     # Récupération de la date actuelle
     current_date = datetime.now()
 
-    # Calcul du début de la semaine actuelle (lundi)
+    # Calcul de la première journée de la semaine actuelle (lundi)
     start_date = current_date - timedelta(days=current_date.weekday())
 
-    # Calcul de la fin de la semaine actuelle (dimanche)
+    # Calcul de la dernière journée de la semaine actuelle (dimanche)
     end_date = start_date + timedelta(days=6)
 
     # Requête pour récupérer les données dans la plage de dates spécifiée
     query = {
-        "date": {
+        "dateAndTimeOpening": {
             "$gte": start_date,
             "$lte": end_date
         }

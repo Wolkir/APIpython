@@ -4,26 +4,21 @@ from bson import ObjectId
 from datetime import datetime, timedelta
 import json
 
-moisEnCours = Blueprint('moisEnCours', __name__)
+dateDuJour = Blueprint('dateDuJour', __name__)
 
-@moisEnCours.route('/moisencours', methods=['GET'])
-def get_data_by_month():
+@dateDuJour.route('/datedujour', methods=['GET'])
+def get_data_by_date():
     # Connexion à la base de données MongoDB
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
     db = client['test']
     collection = db['things']
 
     # Récupération de la date actuelle
-    current_date = datetime.now()
+    current_date = datetime.now().date()
 
-    # Calcul de la première journée du mois actuel
-    start_date = datetime(current_date.year, current_date.month, 1)
-
-    # Calcul de la dernière journée du mois actuel
-    if current_date.month == 12:
-        end_date = datetime(current_date.year + 1, 1, 1) - timedelta(days=1)
-    else:
-        end_date = datetime(current_date.year, current_date.month + 1, 1) - timedelta(days=1)
+    # Calcul de la plage de dates pour la journée en cours
+    start_date = datetime.combine(current_date, datetime.min.time())
+    end_date = datetime.combine(current_date, datetime.max.time())
 
     # Requête pour récupérer les données dans la plage de dates spécifiée
     query = {
