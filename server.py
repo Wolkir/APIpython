@@ -2,6 +2,7 @@ import sys
 
 from pymongo import MongoClient
 from flask import Flask
+from flask_cors import CORS
 
 from routes.dateDuJour import dateDuJour
 from routes.semaineGlissante import semaineGlissante
@@ -14,6 +15,9 @@ from routes.Equity import Equity
 
 
 app = Flask(__name__)
+CORS(app)
+CORS(app, origins='*')
+
 app.register_blueprint(dateDuJour)
 app.register_blueprint(semaineGlissante)
 app.register_blueprint(semaineEnCours)
