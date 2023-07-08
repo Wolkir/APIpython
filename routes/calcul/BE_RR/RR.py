@@ -17,7 +17,7 @@ def calculate_rr():
         price_close = document['priceClosure']
         price_opening = document['priceOpening']
         stop_loss = document['stopLoss']
-
+ 
         # Calcul de la valeur de la clé "RR"
         rr = (price_close - price_opening) + (price_opening - stop_loss)
 
