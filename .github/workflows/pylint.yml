@@ -1,0 +1,24 @@
+name: Pylint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.x"  # Remplacez "3.x" par la version de Python souhaitée
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Pylint
+      run: pylint server.py
