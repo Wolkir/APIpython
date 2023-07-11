@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from datetime import datetime, timedelta
 from pymongo.errors import PyMongoError
 from bson import ObjectId
+
 import json
 import atexit
 
@@ -27,30 +28,36 @@ atexit.register(close_mongo_client)
 
 @TPRatteint.route('/TPRatteint', methods=['GET'])
 def update_TPRatteint():
-    argument = request.args.get('date')
+    argumentDate = request.args.get('date')
+    argumentFiltre = request.args.get('filtre')
+    debutDate = request.args.get('debutDate', None)
+    finDate = request.args.get('finDate', None)
     db = client['test']
     collection = db['thingsTest']
 
-    if argument == "aujourd'hui":
+    if argumentDate == "aujourd'hui":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date
         end_date = date + timedelta(days=1)
-    elif argument == "semaineEnCours":
+    elif argumentDate == "semaineEnCours":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date - timedelta(days=date.weekday())
         end_date = start_date + timedelta(days=7)
-    elif argument == "semaineGlissante":
+    elif argumentDate == "semaineGlissante":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date - timedelta(days=date.weekday() - 1)
         end_date = start_date + timedelta(days=8)
-    elif argument == "moisEnCours":
+    elif argumentDate == "moisEnCours":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date.replace(day=1)
         end_date = start_date.replace(month=start_date.month + 1)
-    elif argument == "moisGlissant":
+    elif argumentDate == "moisGlissant":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date.replace(day=1) - timedelta(days=1)
         end_date = start_date.replace(month=start_date.month + 1)
+    elif debutDate is not None and finDate is not None and argumentDate == "choixLibre":
+        start_date = datetime.fromisoformat(debutDate)
+        end_date = datetime.fromisoformat(finDate)
     else:
         return jsonify({'message': 'Invalid argument'})
 
@@ -58,7 +65,8 @@ def update_TPRatteint():
         query = {
             '$and': [
                 {'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}},
-                {'TPR': True}
+                {'TPR': True},
+                {'symbole': argumentFiltre}
             ]
         }
         data = list(collection.find(query))
