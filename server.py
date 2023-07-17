@@ -34,9 +34,14 @@ from routes.calcul.ddmax import ddmax
 from routes.calcul.killzone import killzone
 from routes.calcul.session import session
 from routes.calcul.sharp import sharp_ratio
+from routes.calcul.weekday import weekday
+from routes.calcul.tradecount import tradecount
+from routes.calcul.assign_order import assign_order
+from routes.calcul.average.average_rr import average_rr
+from routes.calcul.conversion_map import conversion_map
+
 # envoie
-from routes.envoie.TPRatteint import TPRatteint
-from routes.envoie.TPRnonAtteint import TPRnonAtteint
+from routes.envoie.envoie import envoie
 
 app = Flask(__name__)
 CORS(app)
@@ -70,13 +75,14 @@ app.register_blueprint(ddmax)
 app.register_blueprint(session)
 app.register_blueprint(sharp_ratio)
 app.register_blueprint(killzone)
-
-
-
+app.register_blueprint(weekday)
+app.register_blueprint(tradecount)
+app.register_blueprint(assign_order)
+app.register_blueprint(average_rr)
+#app.register_blueprint(conversion_map)
 
 # envoie
-app.register_blueprint(TPRatteint)
-app.register_blueprint(TPRnonAtteint)
+app.register_blueprint(envoie)
 
 #app.register_blueprint(Symbole)
 
