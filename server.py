@@ -4,7 +4,10 @@ from pymongo import MongoClient
 from flask import Flask
 from flask_cors import CORS
 
-
+# user
+from connexion.user import user
+from connexion.tradReq import trade_blueprint
+from connexion.strategie import strategie_blueprint
 
 # date
 from routes.date.dateDuJour import dateDuJour
@@ -47,6 +50,11 @@ app = Flask(__name__)
 CORS(app)
 CORS(app, origins='*')
 
+# user
+app.register_blueprint(user)
+app.register_blueprint(trade_blueprint)
+app.register_blueprint(strategie_blueprint)
+
 # date
 app.register_blueprint(dateDuJour)
 app.register_blueprint(semaineGlissante)
@@ -79,7 +87,7 @@ app.register_blueprint(weekday)
 app.register_blueprint(tradecount)
 app.register_blueprint(assign_order)
 app.register_blueprint(average_rr)
-#app.register_blueprint(conversion_map)
+# app.register_blueprint(conversion_map)
 
 # envoie
 app.register_blueprint(envoie)
