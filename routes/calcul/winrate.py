@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 
-app = Flask(__name__)
 winrate = Blueprint('winrate', __name__)
 
 # Connexion à la base de données MongoDB
@@ -26,7 +25,3 @@ def calculate_winrate():
     # Retourne le résultat du calcul du winrate au format JSON
     return jsonify({"winrate": winrate})
 
-app.register_blueprint(winrate)
-
-if __name__ == '__main__':
-    app.run()
