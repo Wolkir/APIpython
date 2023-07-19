@@ -9,6 +9,13 @@ from connexion.user import user
 from connexion.tradReq import trade_blueprint
 from connexion.strategie import strategie_blueprint
 
+# date
+from routes.date.dateDuJour import dateDuJour
+from routes.date.semaineGlissante import semaineGlissante
+from routes.date.semaineEnCours import semaineEnCours
+from routes.date.moisEnCours import moisEnCours
+from routes.date.moisGlissant import moisGlissant
+
 # calcul
 from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
