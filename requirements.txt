@@ -5,3 +5,4 @@ markupsafe<2.0
 dnspython==2.3.0
 Flask-Cors==3.0.10
 numpy
+flask_pymongo
