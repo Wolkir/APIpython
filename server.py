@@ -55,6 +55,14 @@ app.register_blueprint(user)
 app.register_blueprint(trade_blueprint)
 app.register_blueprint(strategie_blueprint)
 
+# date
+app.register_blueprint(dateDuJour)
+app.register_blueprint(semaineGlissante)
+app.register_blueprint(semaineEnCours)
+app.register_blueprint(moisEnCours)
+app.register_blueprint(moisGlissant)
+app.register_blueprint(Symbole)
+
 # calcul
 app.register_blueprint(RR)
 app.register_blueprint(BE)
