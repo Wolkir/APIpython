@@ -7,7 +7,7 @@ Equity = Blueprint('Equity', __name__)
 def calculate_equity():
     # Connexion à la base de données MongoDB
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(url, , connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
+    client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
     db = client['test']
     collection = db['things']
 
