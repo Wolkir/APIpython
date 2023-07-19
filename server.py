@@ -87,4 +87,4 @@ def hello_world():
 if __name__ == '__main__':
     client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority")
     collection = client.db["things"]
-    app.run(port=5000)
+    app.run(port=80)
