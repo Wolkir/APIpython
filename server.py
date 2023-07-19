@@ -85,6 +85,7 @@ def hello_world():
     return 'reussi en depit de ents'
 
 if __name__ == '__main__':
-    client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority")
+    url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(url, , connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
     collection = client.db["things"]
     app.run(port=1234)
