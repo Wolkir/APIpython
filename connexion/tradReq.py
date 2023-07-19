@@ -31,6 +31,7 @@ def setup_trade_routes(app):
             "username": username,
             "password": hashed_password,
             "ticketNumber": data.get('ticketNumber'),
+            "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
