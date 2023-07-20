@@ -19,6 +19,7 @@ def save_trade_request():
     data = request.json
     username = data.get('username')
     password = data.get('password')
+    closure_position = data.get('closurePosition')
 
     try:
         # Vérifier l'authentification de l'utilisateur
@@ -29,8 +30,11 @@ def save_trade_request():
         # Hacher le mot de passe
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        # Récupérer la collection correspondant au nom d'utilisateur
-        user_collection = db[username]
+        # Construire le nom de la collection en fonction de closurePosition
+        collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
+
+        # Récupérer la collection correspondant au nom d'utilisateur et closurePosition
+        user_collection = db[collection_name]
 
         # Créer une nouvelle instance de TradeRequest à partir des données reçues
         trade_request = {
@@ -51,12 +55,12 @@ def save_trade_request():
             "swap": data.get('swap'),
             "profit": data.get('profit'),
             "commission": data.get('commission'),
-            "closurePosition": data.get('closurePosition'),
+            "closurePosition": closure_position,
             "balance": data.get('balance')
             # Ajoutez ici les autres champs de la demande de transaction en fonction de vos besoins
         }
 
-        # Enregistrer l'objet dans la collection de l'utilisateur
+        # Enregistrer l'objet dans la collection de l'utilisateur et closurePosition
         user_collection.insert_one(trade_request)
         return jsonify({"message": "Data saved successfully Python"}), 201
     except Exception as e:
