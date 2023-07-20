@@ -21,7 +21,7 @@ def save_trade_request():
     password = data.get('password')
 
     try:
-        # Connexion à la base de données MongoDB (déjà initialisé)
+        # Connexion à la base de données MongoDB (déjà initialisée)
         global mongo  # Indiquer que l'on souhaite utiliser la variable 'mongo' globale
 
         # Vérifier l'authentification de l'utilisateur
@@ -35,14 +35,14 @@ def save_trade_request():
         # Créer une nouvelle instance de TradeRequest à partir des données reçues
         trade_request = {
             "username": username,
-            "password": hashed_password,
+            "password": hashed_password.decode('utf-8'),  # Converting bytes to string
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
-            "symbole": data.get('symbole'),
+            "symbol": data.get('symbol'),  # Corrected the spelling of 'symbol'
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
             "takeProfit": data.get('takeProfit'),
@@ -50,7 +50,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commision": data.get('commision'), 
+            "commission": data.get('commission'),  # Corrected the spelling of 'commission'
             "closurePosition": data.get('closurePosition'),
             "balance": data.get('balance')
             # Ajoutez ici les autres champs de la demande de transaction en fonction de vos besoins
@@ -61,5 +61,3 @@ def save_trade_request():
         return jsonify({"message": "Données enregistrées avec succès"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
-# Enregistrement du blueprint dans l'application Flask
