@@ -40,7 +40,7 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
-            "symbol": data.get('symbol'),
+            "symbole": data.get('symbol'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
             "takeProfit": data.get('takeProfit'),
