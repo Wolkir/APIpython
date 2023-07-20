@@ -56,7 +56,7 @@ def save_trade_request():
 
         # Enregistrer l'objet dans la base de données
         trade_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully"}), 201
+        return jsonify({"message": "Data saved successfully Python"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
