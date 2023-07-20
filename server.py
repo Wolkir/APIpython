@@ -53,7 +53,6 @@ CORS(app, origins='*')
 app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
 app.register_blueprint(trade_blueprint)
-<<<<<<< HEAD
 """
 app.register_blueprint(login)
 app.register_blueprint(signup)
@@ -61,8 +60,7 @@ app.register_blueprint(createStrategie)
 app.register_blueprint(suppressionStrategie)
 app.register_blueprint(recuperationStrategie)
 app.register_blueprint(trade_blueprint)
-"""
-=======
+
 app.register_blueprint(strategie_blueprint)
 
 # date
@@ -72,8 +70,7 @@ app.register_blueprint(semaineEnCours)
 app.register_blueprint(moisEnCours)
 app.register_blueprint(moisGlissant)
 app.register_blueprint(Symbole)
->>>>>>> b4dd8f5c67a7ea54151e0982aaf07b82b50706ba
-
+"""
 # calcul
 app.register_blueprint(RR)
 app.register_blueprint(BE)
@@ -114,8 +111,5 @@ if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
     collection = client.db["things"]
-<<<<<<< HEAD
     app.run(host='0.0.0.0', port=1234)
-=======
     app.run(host='0.0.0.0', port=1234)
->>>>>>> b4dd8f5c67a7ea54151e0982aaf07b82b50706ba
