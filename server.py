@@ -5,16 +5,15 @@ from flask import Flask
 from flask_cors import CORS
 
 # user
-from connexion.user import user
-from connexion.tradReq import trade_blueprint
-from connexion.strategie import strategie_blueprint
+from connexion.user.login import setup_login_routes
+from connexion.user.signup import setup_signup_route
 
-# date
-from routes.date.dateDuJour import dateDuJour
-from routes.date.semaineGlissante import semaineGlissante
-from routes.date.semaineEnCours import semaineEnCours
-from routes.date.moisEnCours import moisEnCours
-from routes.date.moisGlissant import moisGlissant
+#from connexion.tradReq import trade_blueprint
+from connexion.tradReq.tradReq import trade_blueprint
+
+from connexion.strategie.createStrategie import createStrategie
+from connexion.strategie.suppressionStrategie import suppressionStrategie
+from connexion.strategie.recuperationStrategie import recuperationStrategie
 
 # calcul
 from routes.calcul.BE_RR.RR import RR
@@ -51,16 +50,17 @@ CORS(app)
 CORS(app, origins='*')
 
 # user
-app.register_blueprint(user)
+app.register_blueprint(setup_signup_route(app))
+app.register_blueprint(setup_login_routes(app))
 app.register_blueprint(trade_blueprint)
-app.register_blueprint(strategie_blueprint)
-
-# date
-app.register_blueprint(dateDuJour)
-app.register_blueprint(semaineGlissante)
-app.register_blueprint(semaineEnCours)
-app.register_blueprint(moisEnCours)
-app.register_blueprint(moisGlissant)
+"""
+app.register_blueprint(login)
+app.register_blueprint(signup)
+app.register_blueprint(createStrategie)
+app.register_blueprint(suppressionStrategie)
+app.register_blueprint(recuperationStrategie)
+app.register_blueprint(trade_blueprint)
+"""
 
 # calcul
 app.register_blueprint(RR)
@@ -99,6 +99,7 @@ def hello_world():
     return 'reussi en depit de ents'
 
 if __name__ == '__main__':
-    client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority")
+    url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
     collection = client.db["things"]
-    app.run()
+    app.run(host='0.0.0.0', port=1234)
