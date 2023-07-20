@@ -6,6 +6,7 @@ import bcrypt
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
+trade_collection = db["things"]
 
 app = Flask(__name__)
 
@@ -19,7 +20,6 @@ def save_trade_request():
     data = request.json
     username = data.get('username')
     password = data.get('password')
-    closure_position = data.get('closurePosition')
 
     try:
         # Vérifier l'authentification de l'utilisateur
@@ -29,12 +29,6 @@ def save_trade_request():
 
         # Hacher le mot de passe
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-        # Construire le nom de la collection en fonction de closurePosition
-        collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
-
-        # Récupérer la collection correspondant au nom d'utilisateur et closurePosition
-        user_collection = db[collection_name]
 
         # Créer une nouvelle instance de TradeRequest à partir des données reçues
         trade_request = {
@@ -55,16 +49,13 @@ def save_trade_request():
             "swap": data.get('swap'),
             "profit": data.get('profit'),
             "commission": data.get('commission'),
-            "closurePosition": closure_position,
+            "closurePosition": data.get('closurePosition'),
             "balance": data.get('balance')
             # Ajoutez ici les autres champs de la demande de transaction en fonction de vos besoins
         }
 
-        # Enregistrer l'objet dans la collection de l'utilisateur et closurePosition
-        user_collection.insert_one(trade_request)
+        # Enregistrer l'objet dans la base de données
+        trade_collection.insert_one(trade_request)
         return jsonify({"message": "Data saved successfully Python"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
-# Enregistrement du blueprint dans l'application Flask
-app.register_blueprint(trade_blueprint, url_prefix='/api')
