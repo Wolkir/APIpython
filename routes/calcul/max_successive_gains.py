@@ -1,10 +1,7 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 
-app = Flask(__name__)
 maxsuccessivegains = Blueprint('maxsuccessivegains', __name__)
-from flask import Flask, Blueprint, jsonify
-from pymongo import MongoClient
 
 app = Flask(__name__)
 max_successive_gains = Blueprint('max_successive_gains', __name__)
