@@ -24,10 +24,13 @@ def setup_signup_route(app):
 
             # Hacher le mot de passe avant de l'enregistrer dans la collection users
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            # Convertir le mot de passe haché en une chaîne de caractères
+            hashed_password_str = hashed_password.decode('utf-8')
+
             user_data = {
                 "username": username,
                 "email": email,
-                "password": hashed_password
+                "password": hashed_password_str  # Enregistrer le mot de passe sous forme de chaîne de caractères
             }
 
             # Enregistrer l'utilisateur dans la collection users
