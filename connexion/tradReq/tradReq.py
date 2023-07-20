@@ -13,7 +13,7 @@ app = Flask(__name__)
 trade_blueprint = Blueprint('trade', __name__)
 
 def compare_passwords(password, hashed_password):
-    return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
@@ -33,7 +33,7 @@ def save_trade_request():
         # Créer une nouvelle instance de TradeRequest à partir des données reçues
         trade_request = {
             "username": username,
-            "password": hashed_password.decode('utf-8'),  # Converting bytes to string
+            "password": hashed_password,
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
@@ -56,6 +56,10 @@ def save_trade_request():
 
         # Enregistrer l'objet dans la base de données
         trade_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully"}), 201
+        return jsonify({"message": "Data saved successfully Python"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+# Enregistrement du blueprint dans l'application Flask
+
+
