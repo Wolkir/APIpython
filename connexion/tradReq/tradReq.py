@@ -56,7 +56,8 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": closure_position,
-            "balance": data.get('balance')
+            "balance": data.get('balance'),
+            "broker":data.get('broker')
             # Ajoutez ici les autres champs de la demande de transaction en fonction de vos besoins
         }
 
