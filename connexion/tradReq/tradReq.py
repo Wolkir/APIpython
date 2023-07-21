@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 trade_blueprint = Blueprint('trade', __name__)
 
-@trade_blueprint.route('/savetraderequest', methods=['POST'])
 # Define the compare_passwords function
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
@@ -89,3 +88,9 @@ def save_trade_request():
         return jsonify({"message": "Data saved successfully Python CLOSE"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+# Enregistrement du blueprint dans l'application Flask
+app.register_blueprint(trade_blueprint, url_prefix='/api')
+
+if __name__ == "__main__":
+    app.run()
