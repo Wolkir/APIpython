@@ -1,3 +1,16 @@
+from flask import Flask, Blueprint, jsonify, request
+from flask_pymongo import PyMongo
+from pymongo import MongoClient
+import bcrypt
+
+# Connexion à la base de données MongoDB
+client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
+db = client["test"]
+
+app = Flask(__name__)
+
+trade_blueprint = Blueprint('trade', __name__)
+
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
