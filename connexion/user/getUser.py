@@ -10,14 +10,11 @@ users_collection = db['users']
 
 @user_blueprint.route('/users/<string:user_id>', methods=['GET'])
 def get_user(user_id):
-    req = {"userId": user_id}
-    result = _get_user(req)
+    result = _get_user(user_id)  # Utiliser directement l'ID reçu comme paramètre
 
     return jsonify(result["data"]), result["status"]
 
-def _get_user(req):
-    user_id = req["userId"]
-
+def _get_user(user_id):  # Modifier ici aussi
     try:
         user = users_collection.find_one({"_id": user_id})
 
