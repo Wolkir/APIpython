@@ -7,6 +7,8 @@ from flask_cors import CORS
 # user
 from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
+from connexion.user.getUser import user_blueprint
+
 from connexion.tradReq.tradReq import trade_blueprint
 
 from connexion.strategie.createStrategie import createStrategie
@@ -45,14 +47,12 @@ from routes.envoie.envoie import envoie
 
 app = Flask(__name__)
 
-# Fonction pour gérer les en-têtes CORS
 def after_request(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
     return response
 
-# Appliquer le décorateur after_request à toutes les réponses
 app.after_request(after_request)
 
 CORS(app)
@@ -60,10 +60,11 @@ CORS(app)
 # user
 app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
+app.register_blueprint(user_blueprint)
+
 app.register_blueprint(trade_blueprint)
+
 app.register_blueprint(createStrategie)
-# Autres routes...
-# ...
 
 if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
