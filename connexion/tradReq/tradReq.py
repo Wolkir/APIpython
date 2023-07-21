@@ -46,7 +46,7 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
-            "symbol": data.get('symbol'),
+            "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
             "takeProfit": data.get('takeProfit'),
@@ -54,7 +54,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commission'),
+            "commission": data.get('commision'),
             "closurePosition": closure_position,
             "balance": data.get('balance')
             # Ajoutez ici les autres champs de la demande de transaction en fonction de vos besoins
