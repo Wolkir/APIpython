@@ -12,6 +12,11 @@ app = Flask(__name__)
 trade_blueprint = Blueprint('trade', __name__)
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
+# Define the compare_passwords function
+def compare_passwords(password, hashed_password):
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
+
+@trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
     username = data.get('username')
