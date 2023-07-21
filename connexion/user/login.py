@@ -24,7 +24,11 @@ def setup_login_routes(app):
 
             # Vérification du mot de passe haché
             hashed_password = user['password']  # Le mot de passe est déjà stocké sous forme de bytes
-            if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
+
+            # Encode le mot de passe entré en bytes pour la comparaison
+            entered_password_encoded = password.encode('utf-8')
+
+            if bcrypt.checkpw(entered_password_encoded, hashed_password):
                 # Génération du jeton d'authentification
                 token = jwt.encode({"userId": str(user['_id'])}, 'RANDOM_TOKEN_SECRET', algorithm='HS256')
                 return jsonify({"userId": str(user['_id']), "token": token}), 200
