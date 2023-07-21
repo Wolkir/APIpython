@@ -134,6 +134,5 @@ def save_trade_request():
 # Enregistrement du blueprint dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
-# Lancer l'application Flask
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
