@@ -24,8 +24,17 @@ def save_trade_request():
 
             if existing_open_order:
                 # Mettre à jour le volume de l'ordre ouvert avec le nouveau volume
-                existing_open_order['volume'] = data.get('volume')
-                user_collection.replace_one({"_id": existing_open_order["_id"]}, existing_open_order)
+                existing_open_order['volume_closed'] = existing_open_order.get('volume_closed', 0) + data.get('volume')
+
+                if existing_open_order['volume_closed'] >= existing_open_order['volume']:
+                    # L'ordre ouvert est entièrement fermé, donc nous l'enregistrons dans la collection des ordres fermés
+                    user_collection.delete_one({"_id": existing_open_order["_id"]})
+
+                    # Supprimer l'ordre ouvert de la collection des ordres ouverts
+                    user_collection.delete_one({"_id": existing_open_order["_id"]})
+                else:
+                    # Mettre à jour l'ordre ouvert avec le nouveau volume fermé
+                    user_collection.replace_one({"_id": existing_open_order["_id"]}, existing_open_order)
             else:
                 # Créer une nouvelle instance de TradeRequest pour l'ordre ouvert
                 trade_request = {
