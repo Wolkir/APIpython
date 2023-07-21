@@ -71,6 +71,6 @@ def save_trade_request():
                 # Si l'ordre ouvert n'existe pas, nous ne pouvons pas fermer cet ordre
                 return jsonify({"message": "Open order not found"}), 404
 
-        return jsonify({"message": "Data saved successfully"}), 201
+        return jsonify({"message": "Data saved successfully Python"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
