@@ -90,7 +90,7 @@ def save_trade_request():
             # Enregistrer l'objet dans la collection de l'utilisateur et closurePosition
             user_collection.insert_one(trade_request)
 
-        return jsonify({"message": "Data saved successfully"}), 201
+        return jsonify({"message": "Data saved successfully v2"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
