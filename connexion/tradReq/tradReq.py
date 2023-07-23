@@ -35,17 +35,19 @@ def save_trade_request():
         if closure_position == "Open":
             volume_remain = data.get('volume')
         else:
-            # Deduct the volume of 'Close' order from 'Open' order with the same identifier
+            # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
                 volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
-                if volume_remain <= 0:
-                    open_orders.delete_one({"identifier": data.get('identifier')})
-                    return jsonify({"message": "Open order deleted"}), 200
+                if volume_remain < 0:
+                    volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
+                if volume_remain == 0:
+                    open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
+
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
             data.pop("volume_remain", None)
@@ -59,7 +61,8 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
-            "symbol": data.get('symbole'),
+            "volume_remain": volume_remain,
+            "symbol": data.get('symbol'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
             "takeProfit": data.get('takeProfit'),
@@ -67,7 +70,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commision'),
+            "commission": data.get('commission'),
             "closurePosition": closure_position,
             "balance": data.get('balance'),
             "broker": data.get('broker'),
