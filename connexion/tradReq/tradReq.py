@@ -60,6 +60,10 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
+            # Insert the 'Close' order into the 'close' collection
+            close_collection = db[f"{username}_close"]
+            close_collection.insert_one(data)
+
         trade_request = {
             "username": username,
             "password": hashed_password,
@@ -78,8 +82,8 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commission'),
-            "closurePosition": data.get('closurePosition'),
+            "commission": data.get('commision'),
+            "closurePosition": date.get('closurePosition'),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
