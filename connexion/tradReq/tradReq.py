@@ -15,7 +15,7 @@ def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
 # Define a threshold to consider volume_remain as zero
-VOLUME_THRESHOLD = 0.000001
+VOLUME_THRESHOLD = 0.009
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
