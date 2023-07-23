@@ -22,8 +22,22 @@ def setup_things_routes(app):
             app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
             mongo = PyMongo(app)
 
+            argUsername = request.args.get('username', None)
+            argTypeTrade = request.args.get('typeTrade', None)
+
+            query = {
+                '$and': [
+                    {'username': argUsername},
+                ]
+            }
+
+            if argTypeTrade is not None and argTypeTrade == "renseigne":
+                query['$and'].append({'$or': [{'annonceEconomique': True}, {'Fatigue': True}]})
+            if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
+                query['$and'].append({'$or': [{'annonceEconomique': False}, {'Fatigue': False}]})
+
             things_collection = mongo.db.things
-            all_things = list(things_collection.find({}))
+            all_things = list(things_collection.find(query))
 
             for thing in all_things:
                 thing = convert_to_json_serializable(thing)
