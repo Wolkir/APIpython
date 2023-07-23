@@ -32,9 +32,9 @@ def setup_things_routes(app):
             }
 
             if argTypeTrade is not None and argTypeTrade == "renseigne":
-                query['$and'].append({'$or': [{'annonceEconomique': True}, {'Fatigue': True}]})
+                query['$and'].append({'$or': [{'annonceEconomique': {'$ne': None}}, {'psychologie': {'$ne': None}}, {'strategie': {'$ne': None}}]})
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
-                query['$and'].append({'$or': [{'annonceEconomique': False}, {'Fatigue': False}]})
+                query['$and'].append({'$or': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
             things_collection = mongo.db.things
             all_things = list(things_collection.find(query))
