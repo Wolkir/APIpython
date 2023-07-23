@@ -4,11 +4,7 @@ from pymongo import MongoClient
 import bcrypt
 
 # Connexion à la base de données MongoDB
-client = MongoClient("mongodb
-
-+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?
-
-retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
 
 app = Flask(__name__)
@@ -27,54 +23,33 @@ def save_trade_request():
 
     try:
         user = db.users.find_one({"username": username})
-        if not user or not compare_passwords(password, user
-
-['password']):
+        if not user or not compare_passwords(password, user['password']):
             return jsonify({"message": "Access denied"}), 401
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), 
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-bcrypt.gensalt())
-
-        collection_name = f"{username}_open" if closure_position == 
-
-"Open" else f"{username}_close"
+        collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
 
         user_collection = db[collection_name]
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
+            if volume_remain < 0.0009:
+                volume_remain = 0
+                user_collection.delete_one({"identifier": data.get('identifier')})
         else:
-            # Check if there's a corresponding 'Open' order with the 
-
-same identifier
+            # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
-            open_order = open_orders.find_one({"identifier": data.get
-
-('identifier')})
+            open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
-                volume_remain = open_order.get('volume_remain', 0) - 
-
-data.get('volume')
+                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
                 if volume_remain < 0:
                     volume_remain = 0
-                open_orders.update_one({"identifier": data.get
-
-('identifier')}, {"$set": {"volume_remain": volume_remain}})
+                open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
                 if volume_remain == 0:
-                    open_orders.delete_one({"identifier": data.get
-
-('identifier')})
+                    open_orders.delete_one({"identifier": data.get('identifier')})
             else:
-                return jsonify({"message": "No corresponding 'Open' 
-
-order found"}), 400
-
-        # Handle the case where volume_remain of 'Close' order is less 
-
-than 0.0009
-        if closure_position == "Close" and volume_remain < 0.0009:
-            volume_remain = 0
+                return jsonify({"message": "No corresponding 'Open' order found"}), 400
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
@@ -99,7 +74,7 @@ than 0.0009
             "swap": data.get('swap'),
             "profit": data.get('profit'),
             "commission": data.get('commision'),
-            "closurePosition": data.get('closurePosition'),
+            "closurePosition": data.get('closure_position'),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
@@ -108,9 +83,7 @@ than 0.0009
         }
 
         user_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully Python 
-
-v6"}), 201
+        return jsonify({"message": "Data saved successfully Python v6"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
