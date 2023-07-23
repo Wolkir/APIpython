@@ -33,20 +33,22 @@ def save_trade_request():
         user_collection = db[collection_name]
 
         if closure_position == "Open":
-            # For 'Open' orders, copy the 'volume' to 'volume_remain'
-            data['volume_remain'] = data['volume']
+            volume_remain = data.get('volume')
         else:
-            # For 'Close' orders, deduct the 'volume' from the corresponding 'Open' order's 'volume_remain'
+            volume_remain = 0
+
+            # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
-            if open_order and open_order['volume_remain'] >= data.get('volume'):
-                new_volume_remain = open_order['volume_remain'] - data.get('volume')
-                if new_volume_remain == 0:
-                    open_orders.delete_one({"identifier": data.get('identifier')})
-                else:
-                    open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": new_volume_remain}})
+            if open_order:
+                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
+                if volume_remain < 0:
+                    return jsonify({"message": "Insufficient volume_remain in 'Open' order"}), 400
+
+                # Update the 'volume_remain' for the corresponding 'Open' order
+                open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
             else:
-                return jsonify({"message": "Insufficient volume_remain in 'Open' order"}), 400
+                return jsonify({"message": "No corresponding 'Open' order found"}), 400
 
         trade_request = {
             "username": username,
@@ -57,6 +59,7 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
+            "volume_remain": volume_remain,
             "symbol": data.get('symbol'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
