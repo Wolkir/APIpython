@@ -43,8 +43,7 @@ def save_trade_request():
             if open_order:
                 volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
                 if volume_remain < 0:
-                    return jsonify({"message": "Insufficient volume_remain in 'Open' order"}), 400
-                elif volume_remain == 0:
+                    volume_remain = 0
                     open_orders.delete_one({"identifier": data.get('identifier')})
                 else:
                     # Update the 'volume_remain' for the corresponding 'Open' order
