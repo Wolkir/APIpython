@@ -14,6 +14,9 @@ trade_blueprint = Blueprint('trade', __name__)
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
+# Define a threshold to consider volume_remain as zero
+VOLUME_THRESHOLD = 0.000001
+
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
@@ -43,13 +46,14 @@ def save_trade_request():
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain == 0:
+                if volume_remain < VOLUME_THRESHOLD:
                     open_orders.delete_one({"identifier": data.get('identifier')})
+                    return jsonify({"message": "Open order deleted"}), 200
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
 
-        # Handle the case where volume_remain of 'Close' order is less than 0.0009
-        if closure_position == "Close" and volume_remain < 0.0009:
+        # Handle the case where volume_remain of 'Close' order is less than VOLUME_THRESHOLD
+        if closure_position == "Close" and volume_remain < VOLUME_THRESHOLD:
             volume_remain = 0
 
         # Remove 'volume_remain' field for 'Close' orders
@@ -74,7 +78,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commision'),
+            "commission": data.get('commission'),
             "closurePosition": ('closure_position'),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
