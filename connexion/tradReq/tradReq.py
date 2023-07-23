@@ -48,6 +48,10 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
 
+        # Handle the case where volume_remain of 'Close' order is less than 0.0009
+        if closure_position == "Close" and volume_remain < 0.0009:
+            volume_remain = 0
+
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
             data.pop("volume_remain", None)
