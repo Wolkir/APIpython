@@ -58,7 +58,6 @@ def save_trade_request():
             "strategie": None,
         }
 
-        # Enregistrer l'objet dans la collection de l'utilisateur et closurePosition
         user_collection.insert_one(trade_request)
         return jsonify({"message": "Data saved successfully Python v6"}), 201
     except Exception as e:
