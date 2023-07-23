@@ -45,6 +45,9 @@ from routes.calcul.conversion_map import conversion_map
 # envoie
 from routes.envoie.envoie import envoie
 
+#journal
+from routes.journal.recuperationTrade import setup_things_routes
+
 app = Flask(__name__)
 
 def after_request(response):
@@ -65,6 +68,9 @@ app.register_blueprint(setup_user_routes(app))
 app.register_blueprint(trade_blueprint)
 
 app.register_blueprint(createStrategie)
+
+#journal
+app.register_blueprint(setup_things_routes(app))
 
 if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
