@@ -14,6 +14,9 @@ trade_blueprint = Blueprint('trade', __name__)
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
+# Define a threshold to consider volume_remain as zero
+VOLUME_THRESHOLD = 0.000001
+
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
@@ -34,7 +37,7 @@ def save_trade_request():
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
-            if volume_remain < 0.0009:
+            if volume_remain < VOLUME_THRESHOLD:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
