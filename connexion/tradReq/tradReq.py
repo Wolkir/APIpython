@@ -52,6 +52,14 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
 
+        # Handle the case where volume_remain of 'Close' order is less than VOLUME_THRESHOLD
+        if closure_position == "Close" and volume_remain < VOLUME_THRESHOLD:
+            volume_remain = 0
+
+        # Round the volume_remain to zero if it's very close to zero
+        if volume_remain > 0 and volume_remain < VOLUME_THRESHOLD:
+            volume_remain = 0
+
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
             data.pop("volume_remain", None)
@@ -78,7 +86,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commission'),
+            "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
