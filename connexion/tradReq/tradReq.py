@@ -32,6 +32,21 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
+        if closure_position == "Open":
+            volume_remain = data.get('volume')
+        else:
+            volume_remain = 0
+
+            # Deduct the volume of 'Close' order from 'Open' order with the same identifier
+            open_orders = db[f"{username}_open"]
+            open_order = open_orders.find_one({"identifier": data.get('identifier')})
+            if open_order and open_order['volume_remain'] >= data.get('volume'):
+                volume_remain = open_order['volume_remain'] - data.get('volume')
+                if volume_remain == 0:
+                    open_orders.delete_one({"identifier": data.get('identifier')})
+            else:
+                return jsonify({"message": "Insufficient volume_remain in 'Open' order"}), 400
+
         trade_request = {
             "username": username,
             "password": hashed_password,
@@ -41,7 +56,8 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "volume": data.get('volume'),
-            "symbol": data.get('symbole'),
+            "volume_remain": volume_remain,
+            "symbol": data.get('symbole'),  # Note: 'symbole' should be corrected to 'symbol'
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
             "takeProfit": data.get('takeProfit'),
@@ -49,10 +65,10 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commision'),
+            "commission": data.get('commision'),  # Note: 'commision' should be corrected to 'commission'
             "closurePosition": closure_position,
             "balance": data.get('balance'),
-            "broker":data.get('broker'),
+            "broker": data.get('broker'),
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
