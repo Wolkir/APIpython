@@ -1,27 +1,30 @@
 from flask import Blueprint, jsonify
-
-user_blueprint = Blueprint('user', __name__)
-
 from pymongo import MongoClient
 
-mongo_client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
-db = mongo_client['test']
-users_collection = db['users']
+def setup_user_routes(app):
+    # Connexion à la base de données MongoDB
+    mongo_client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+    db = mongo_client['test']
+    users_collection = db['users']
 
-@user_blueprint.route('/users/<string:user_id>', methods=['GET'])
-def get_user(user_id):
-    result = _get_user(user_id)  # Utiliser directement l'ID reçu comme paramètre
+    user_blueprint = Blueprint('user', __name__)
 
-    return jsonify(result["data"]), result["status"]
+    @user_blueprint.route('/users/<string:user_id>', methods=['GET'])
+    def get_user(user_id):
+        result = _get_user(user_id)
 
-def _get_user(user_id):  # Modifier ici aussi
-    try:
-        user = users_collection.find_one({"_id": user_id})
+        return jsonify(result["data"]), result["status"]
 
-        if user is None:
-            return {"status": 404, "data": {"message": "Utilisateur non trouvé"}}
+    def _get_user(user_id):
+        try:
+            user = users_collection.find_one({"_id": user_id})
 
-        return {"status": 200, "data": {"user": user}}
+            if user is None:
+                return {"status": 404, "data": {"message": "Utilisateur non trouvé"}}
 
-    except Exception as e:
-        return {"status": 500, "data": {"error": str(e)}}
+            return {"status": 200, "data": {"user": user}}
+
+        except Exception as e:
+            return {"status": 500, "data": {"error": str(e)}}
+
+    return user_blueprint

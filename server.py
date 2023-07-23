@@ -7,7 +7,7 @@ from flask_cors import CORS
 # user
 from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
-from connexion.user.getUser import user_blueprint
+from connexion.user.getUser import setup_user_routes
 
 from connexion.tradReq.tradReq import trade_blueprint
 
@@ -60,7 +60,7 @@ CORS(app)
 # user
 app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
-app.register_blueprint(user_blueprint)
+app.register_blueprint(setup_user_routes(app))
 
 app.register_blueprint(trade_blueprint)
 

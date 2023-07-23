@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 import bcrypt
 import jwt
+from bson import ObjectId  # Importer la classe ObjectId
 
 login_blueprint = Blueprint('login', __name__)
 
@@ -24,14 +25,18 @@ def setup_login_routes(app):
 
             # Vérification du mot de passe haché
             hashed_password = user['password']  # Le mot de passe est déjà stocké sous forme de bytes
-
-            # Encode le mot de passe entré en bytes pour la comparaison
             entered_password_encoded = password.encode('utf-8')
 
             if bcrypt.checkpw(entered_password_encoded, hashed_password):
+                # Récupérer toutes les données de l'utilisateur ayant l'email spécifié
+                user_data = {key: str(value) for key, value in user.items() if key != 'password'}
+
                 # Génération du jeton d'authentification
                 token = jwt.encode({"userId": str(user['_id'])}, 'RANDOM_TOKEN_SECRET', algorithm='HS256')
-                return jsonify({"userId": str(user['_id']), "token": token}), 200
+                
+                # Combiner toutes les données de l'utilisateur et le jeton d'authentification
+                response_data = {"userId": str(user['_id']), "token": token, "user_data": user_data}
+                return jsonify(response_data), 200
             else:
                 return jsonify({"message": "Paire login/mot de passe incorrecte"}), 401
         except Exception as e:
