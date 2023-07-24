@@ -55,6 +55,10 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
+        # Round 'volume' and 'volume_remain' to two decimal places
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
+
         trade_request = {
             "username": username,
             "password": hashed_password,
@@ -63,8 +67,8 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
-            "volume": round(data.get('volume'), 2),  # Round 'volume' to two decimal places
-            "volume_remain": round(volume_remain, 2),  # Round 'volume_remain' to two decimal places
+            "volume": data.get('volume'),
+            "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
