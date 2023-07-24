@@ -67,6 +67,7 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
+            "orderType":data.get('orderType')
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -84,6 +85,7 @@ def save_trade_request():
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
+            
         }
 
         user_collection.insert_one(trade_request)
