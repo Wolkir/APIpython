@@ -56,6 +56,8 @@ def setup_things_routes(app):
             data = request.get_json()
             trades_data = data.get('trades', [])
 
+            things_collection = mongo.db.things  # Déplacez cette ligne en dehors de la boucle for
+
             for trade in trades_data:
                 trade_id = trade.get('id')
                 valeur_ann_eco = trade.get('valeurAnnEco')
@@ -63,7 +65,6 @@ def setup_things_routes(app):
                 if trade_id and valeur_ann_eco in ['oui', 'non']:
                     annonce_economique = True if valeur_ann_eco == 'oui' else False
 
-                    things_collection = mongo.db.things  # La variable things_collection doit être définie ici
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'annonceEconomique': annonce_economique}})
 
             return jsonify({"message": "Trade details updated successfully."}), 200
