@@ -46,7 +46,7 @@ def save_trade_request():
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain == 0:
+                if volume_remain < 0.01:
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
@@ -54,12 +54,6 @@ def save_trade_request():
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
             data.pop("volume_remain", None)
-
-        # Round 'volume' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-
-        # Round 'volume_remain' to two decimal places
-        volume_remain = round(volume_remain, 2)
 
         trade_request = {
             "username": username,
