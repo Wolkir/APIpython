@@ -1,0 +1,7 @@
+from flask import Blueprint, jsonify
+
+test_blueprint = Blueprint('test', __name__)
+
+@test_blueprint.route('/coucou', methods=['GET'])
+def coucou():
+    return jsonify({"message": "Coucou"}), 200
