@@ -4,6 +4,20 @@ from pymongo import MongoClient
 from flask import Flask
 from flask_cors import CORS
 
+app = Flask(__name__)
+
+def after_request(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+    return response
+
+app.after_request(after_request)
+
+CORS(app)
+
+#===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
+
 # user
 from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
@@ -11,10 +25,9 @@ from connexion.user.getUser import setup_user_routes
 
 from connexion.tradReq.tradReq import trade_blueprint
 
-from connexion.strategie.createStrategie import setup_createStrategie_routes
-from connexion.strategie.suppressionStrategie import suppression_strategie
-from connexion.strategie.recuperationStrategie import setup_recuperationStrategie_routes
-
+from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
+setup_recuperationStrategie(app)
+app.register_blueprint(recuperationStrategie)
 # calcul
 from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
@@ -48,32 +61,16 @@ from routes.envoie.envoie import envoie
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
 
-app = Flask(__name__)
-
-def after_request(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-    return response
-
-app.after_request(after_request)
-
-CORS(app)
-
 # user
 app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
 app.register_blueprint(setup_user_routes(app))
 
 app.register_blueprint(trade_blueprint)
-
-app.register_blueprint(setup_createStrategie_routes(app))
-app.register_blueprint(setup_recuperationStrategie_routes(app))
-app.register_blueprint(suppression_strategie(app))
-
 #journal
 app.register_blueprint(setup_things_routes(app))
 
+#===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
