@@ -34,7 +34,7 @@ def save_trade_request():
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
-            if volume_remain < 0.01:
+            if volume_remain < 0.0009:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
@@ -46,7 +46,7 @@ def save_trade_request():
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain < 0.01:
+                if volume_remain < 0.0009:
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
@@ -63,8 +63,8 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
-            "volume": data.get('volume'),
-            "volume_remain": volume_remain,
+            "volume": round(data.get('volume'), 2),  # Round 'volume' to two decimal places
+            "volume_remain": round(volume_remain, 2),  # Round 'volume_remain' to two decimal places
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
