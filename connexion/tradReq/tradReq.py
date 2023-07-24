@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
+from decimal import Decimal, ROUND_HALF_UP
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -55,9 +56,11 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
-        # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+        # Round 'volume' to two decimal places
+        data['volume'] = Decimal(str(data.get('volume'))).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+        # Round 'volume_remain' to two decimal places
+        volume_remain = Decimal(str(volume_remain)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
         trade_request = {
             "username": username,
