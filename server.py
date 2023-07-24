@@ -11,9 +11,9 @@ from connexion.user.getUser import setup_user_routes
 
 from connexion.tradReq.tradReq import trade_blueprint
 
-from connexion.strategie.createStrategie import createStrategie
-from connexion.strategie.suppressionStrategie import suppressionStrategie
-from connexion.strategie.recuperationStrategie import recuperationStrategie
+from connexion.strategie.createStrategie import setup_createStrategie_routes
+from connexion.strategie.suppressionStrategie import suppression_strategie
+from connexion.strategie.recuperationStrategie import setup_recuperationStrategie_routes
 
 # calcul
 from routes.calcul.BE_RR.RR import RR
@@ -67,7 +67,9 @@ app.register_blueprint(setup_user_routes(app))
 
 app.register_blueprint(trade_blueprint)
 
-app.register_blueprint(createStrategie)
+app.register_blueprint(setup_createStrategie_routes(app))
+app.register_blueprint(setup_recuperationStrategie_routes(app))
+app.register_blueprint(suppression_strategie(app))
 
 #journal
 app.register_blueprint(setup_things_routes(app))
