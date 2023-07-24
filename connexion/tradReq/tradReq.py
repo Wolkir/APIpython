@@ -55,8 +55,10 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
-        # Round 'volume' and 'volume_remain' to two decimal places
+        # Round 'volume' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
+
+        # Round 'volume_remain' to two decimal places
         volume_remain = round(volume_remain, 2)
 
         trade_request = {
