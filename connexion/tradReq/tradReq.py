@@ -2,7 +2,6 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
-from decimal import Decimal, ROUND_HALF_UP
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -34,8 +33,8 @@ def save_trade_request():
         user_collection = db[collection_name]
 
         if closure_position == "Open":
-            volume_remain = Decimal(data.get('volume'))
-            if volume_remain < Decimal('0.01'):
+            volume_remain = data.get('volume')
+            if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
@@ -43,7 +42,7 @@ def save_trade_request():
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
-                volume_remain = Decimal(open_order.get('volume_remain', 0)) - Decimal(data.get('volume'))
+                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
@@ -57,8 +56,8 @@ def save_trade_request():
             data.pop("volume_remain", None)
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = Decimal(str(data.get('volume'))).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-        volume_remain = Decimal(str(volume_remain)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
 
         trade_request = {
             "username": username,
