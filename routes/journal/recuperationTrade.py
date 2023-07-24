@@ -2,6 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 import jwt
 from bson import ObjectId
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 things_blueprint = Blueprint('things', __name__)
 
@@ -52,18 +55,21 @@ def setup_things_routes(app):
         try:
             app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
             mongo = PyMongo(app)
-
+            logging.debug("connexion mongo etablie")
             data = request.get_json()
             trades_data = data.get('trades', [])
+            logging.debug(trades_data)
 
-            things_collection = mongo.db.things  # Déplacez cette ligne en dehors de la boucle for
+            things_collection = mongo.db.things
 
             for trade in trades_data:
                 trade_id = trade.get('id')
                 valeur_ann_eco = trade.get('valeurAnnEco')
+                logging.debug("recuperation trade_id et valeur_ann_eco")
 
                 if trade_id and valeur_ann_eco in ['oui', 'non']:
                     annonce_economique = True if valeur_ann_eco == 'oui' else False
+                    logging.debug("conversion true false")
 
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'annonceEconomique': annonce_economique}})
 
