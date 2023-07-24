@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
+from decimal import Decimal, ROUND_HALF_UP
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -33,20 +34,20 @@ def save_trade_request():
         user_collection = db[collection_name]
 
         if closure_position == "Open":
-            volume_remain = data.get('volume')
-            if volume_remain < 0.01:
-                volume_remain = 0
+            volume_remain = Decimal(str(data.get('volume')))
+            if volume_remain < Decimal('0.01'):
+                volume_remain = Decimal('0')
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
-                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
+                volume_remain = Decimal(str(open_order.get('volume_remain', 0))) - Decimal(str(data.get('volume')))
                 if volume_remain < 0:
-                    volume_remain = 0
+                    volume_remain = Decimal('0')
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain == 0:
+                if volume_remain == Decimal('0'):
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
@@ -55,11 +56,9 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
-        # Round 'volume' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-
-        # Round 'volume_remain' to two decimal places
-        volume_remain = round(volume_remain, 2)
+        # Round 'volume' and 'volume_remain' to two decimal places
+        data['volume'] = round(Decimal(str(data.get('volume'))), 2)
+        volume_remain = volume_remain.quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
 
         trade_request = {
             "username": username,
