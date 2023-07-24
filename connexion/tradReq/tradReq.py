@@ -79,7 +79,7 @@ def save_trade_request():
             "swap": data.get('swap'),
             "profit": data.get('profit'),
             "commission": data.get('commision'),
-            "closurePosition": data.get('closure_position'),
+            "closurePosition": data.get('closurePosition'),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
