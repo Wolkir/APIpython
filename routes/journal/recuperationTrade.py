@@ -59,7 +59,7 @@ def setup_things_routes(app):
             data = request.get_json()
             trades_data = data.get('trades', [])
             logging.debug(trades_data)
-
+            logging.debug("tableau recuperer")
             things_collection = mongo.db.things
 
             for trade in trades_data:
