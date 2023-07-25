@@ -23,7 +23,7 @@ from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
 from connexion.user.getUser import setup_user_routes
 
-from connexion.tradReq.tradReq import trade_blueprint
+#from connexion.tradReq.tradReq import trade_blueprint
 
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
 setup_recuperationStrategie(app)
