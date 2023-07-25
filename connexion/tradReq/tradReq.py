@@ -1,8 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
-from routes.calcul.TPR import update_tpr  # Import the update_tpr function from the tpr.py module
+from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -60,47 +59,21 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-        trade_request = {
-            "username": username,
-            "password": hashed_password,
-            "ticketNumber": data.get('ticketNumber'),
-            "identifier": data.get('identifier'),
-            "magicNumber": data.get('magicNumber'),
-            "dateAndTimeOpening": data.get('dateAndTimeOpening'),
-            "typeOfTransaction": data.get('typeOfTransaction'),
-            "typeOrder":data.get('typeOrder'),
-            "volume": data.get('volume'),
-            "volume_remain": volume_remain,
-            "symbol": data.get('symbole'),
-            "priceOpening": data.get('priceOpening'),
-            "stopLoss": data.get('stopLoss'),
-            "takeProfit": data.get('takeProfit'),
-            "dateAndTimeClosure": data.get('dateAndTimeClosure'),
-            "priceClosure": data.get('priceClosure'),
-            "swap": data.get('swap'),
-            "profit": data.get('profit'),
-            "commission": data.get('commision'),
-            "closurePosition": data.get('closurePosition'),
-            "balance": data.get('balance'),
-            "broker": data.get('broker'),
-            "annonceEconomique": None,
-            "psychologie": None,
-            "strategie": None,
-            "position": None,
-        }
+        # Calculate TPR
+        tpr_value = calculate_tpr(data)
 
-        
-        user_collection.insert_one(trade_request)
+        # Add TPR value to the data before insertion
+        data['TPR'] = tpr_value
 
-        # After inserting the trade request, trigger TPR calculation
-        update_tpr()
+        # Insert the data into the collection
+        user_collection.insert_one(data)
 
-        return jsonify({"message": "Data saved successfully Python v7 TPR"}), 201
+        return jsonify({"message": "Data saved successfully with TPR"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
-# Import the update_tpr function from the tpr.py module
-tpr_blueprint = Blueprint
+if __name__ == '__main__':
+    app.run()
