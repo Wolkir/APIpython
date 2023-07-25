@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
+from routes.calcul.TPR import tpr
 import bcrypt
 
 # Connexion à la base de données MongoDB
