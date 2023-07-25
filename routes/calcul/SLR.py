@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
-from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
@@ -40,6 +39,3 @@ def update_slr():
         return jsonify({'message': 'SLR updated successfully'}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
-# Enregistrement du blueprint "slr" dans l'application Flask
-app.register_blueprint(slr, url_prefix='/slr')
