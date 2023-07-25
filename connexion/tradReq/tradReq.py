@@ -61,14 +61,17 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-           # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
-   def trigger_tpr_calculations(data):
-        response = requests.post("https://apipython2.onrender.com/tpr", json=data)
+        # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
+        def trigger_tpr_calculations(data):
+            response = requests.post("https://apipython2.onrender.com/tpr", json=data)
             if response.status_code == 200:
-            print("Calculs TPR effectués avec succès.")
-        # If needed, you can extract TPR data from the response and use it
+                print("Calculs TPR effectués avec succès.")
+                # If needed, you can extract TPR data from the response and use it
             else:
-            print("Erreur lors de l'exécution des calculs TPR.")  
+                print("Erreur lors de l'exécution des calculs TPR.")  
+
+        # Trigger TPR calculations and update data in the TPR route
+        trigger_tpr_calculations(data)
              
         trade_request = {
             "username": username,
@@ -96,7 +99,6 @@ def save_trade_request():
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
-            
         }
 
         user_collection.insert_one(trade_request)
