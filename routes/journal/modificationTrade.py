@@ -50,10 +50,8 @@ def setup_modificationTrade_routes(app):
                 trade_id = position.get('id')
                 valeur_position = position.get('valuePosition')
 
-                if trade_id and valeur_position in ['oui', 'non']:
-                    positionValeurFinal = True if valeur_position == 'oui' else False
-
-                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'annonceEconomique': positionValeurFinal}})
+                if trade_id and valeur_position:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'position': valeur_position}})
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
@@ -61,3 +59,5 @@ def setup_modificationTrade_routes(app):
             return jsonify({"error": str(e)}), 500
 
     return modificationTrade
+
+
