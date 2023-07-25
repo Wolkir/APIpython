@@ -1,8 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
-from routes.calcul.TPR import tpr
-import requests
 import bcrypt
 
 # Connexion à la base de données MongoDB
@@ -61,18 +59,6 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-        # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
-    def trigger_tpr_calculations(data):
-            response = requests.post("https://apipython2.onrender.com/tpr", json=data)
-            if response.status_code == 200:
-                print("Calculs TPR effectués avec succès.")
-                # If needed, you can extract TPR data from the response and use it
-            else:
-                print("Erreur lors de l'exécution des calculs TPR.")  
-
-        # Trigger TPR calculations and update data in the TPR route
-        trigger_tpr_calculations(data)
-             
         trade_request = {
             "username": username,
             "password": hashed_password,
@@ -81,7 +67,7 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
-            "orderType":data.get('orderType'),
+            "typeOrder":data.get('typeOrder'),
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -102,7 +88,7 @@ def save_trade_request():
         }
 
         user_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully Python v6 TPR"}), 201
+        return jsonify({"message": "Data saved successfully Python v6"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
