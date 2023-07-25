@@ -54,6 +54,7 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 from routes.calcul.conversion_map import conversion_map
+app.register_blueprint(tpr)
 
 # envoie
 from routes.envoie.envoie import envoie
