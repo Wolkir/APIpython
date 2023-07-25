@@ -56,7 +56,7 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
-            # Calculate SLR
+            # Calculate SLR only for 'Close' orders
             slr_value = calculate_slr(data)
             data['SLR'] = slr_value['SLR']
 
