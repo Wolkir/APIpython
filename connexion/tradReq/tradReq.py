@@ -63,12 +63,12 @@ def save_trade_request():
 
            # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
    def trigger_tpr_calculations(data):
-    response = requests.post("https://apipython2.onrender.com/tpr", json=data)
-        if response.status_code == 200:
-        print("Calculs TPR effectués avec succès.")
+        response = requests.post("https://apipython2.onrender.com/tpr", json=data)
+            if response.status_code == 200:
+            print("Calculs TPR effectués avec succès.")
         # If needed, you can extract TPR data from the response and use it
-    else:
-        print("Erreur lors de l'exécution des calculs TPR.")  
+            else:
+            print("Erreur lors de l'exécution des calculs TPR.")  
              
         trade_request = {
             "username": username,
