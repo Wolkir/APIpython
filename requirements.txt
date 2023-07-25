@@ -8,4 +8,4 @@ numpy
 flask_pymongo
 bcrypt
 PyJWT==2.1.0
-requests
+
