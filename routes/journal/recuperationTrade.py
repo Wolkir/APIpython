@@ -9,14 +9,13 @@ logging.basicConfig(level=logging.DEBUG)
 things_blueprint = Blueprint('things', __name__)
 
 def convert_to_json_serializable(data):
-    if isinstance(data, bytes):
-        return str(data)
-    elif isinstance(data, ObjectId):
-        return str(data)
-    elif isinstance(data, dict):
-        return {key: convert_to_json_serializable(value) for key, value in data.items()}
-    elif isinstance(data, list):
-        return [convert_to_json_serializable(item) for item in data]
+    for key, value in data.items():
+        if isinstance(value, bytes):
+            data[key] = str(value)
+        elif isinstance(value, ObjectId):
+            data[key] = str(value)
+        elif isinstance(value, dict):
+            data[key] = convert_to_json_serializable(value)
     return data
 
 def setup_things_routes(app):
@@ -40,12 +39,11 @@ def setup_things_routes(app):
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
-            things_collection = mongo.db.things
+            things_collection = mongo.db.test2_close  # Modification ici pour cibler la collection "test2_close"
             all_things = list(things_collection.find(query))
 
-            # Mettre à jour les valeurs de chaque objet thing dans la liste all_things
-            for i, thing in enumerate(all_things):
-                all_things[i] = convert_to_json_serializable(thing)
+            for thing in all_things:
+                thing = convert_to_json_serializable(thing)
 
             return jsonify(all_things), 200
 
@@ -62,7 +60,7 @@ def setup_things_routes(app):
             trades_data = data.get('trades', [])
             psychologie_data = data.get('psychologie', [])
             logging.debug("tableaux récupérés")
-            things_collection = mongo.db.test2_close
+            things_collection = mongo.db.test2_close  # Modification ici pour cibler la collection "test2_close"
 
             # Mise à jour ou création des champs psychologie
             for psychologie_item in psychologie_data:
