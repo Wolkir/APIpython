@@ -39,11 +39,12 @@ def setup_things_routes(app):
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
-            things_collection = mongo.db.test2_close
+            things_collection = mongo.db.things
             all_things = list(things_collection.find(query))
 
-            for thing in all_things:
-                thing = convert_to_json_serializable(thing)
+            # Mettre à jour les valeurs de chaque objet thing dans la liste all_things
+            for i, thing in enumerate(all_things):
+                all_things[i] = convert_to_json_serializable(thing)
 
             return jsonify(all_things), 200
 
