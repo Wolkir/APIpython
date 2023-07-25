@@ -2,6 +2,9 @@ from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
 from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
+from routes.calcul.SLR import calculate_slr  # Import the calculate_tpr function from the tpr.py module
+
+
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -54,6 +57,12 @@ def save_trade_request():
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
             data.pop("volume_remain", None)
+
+            # Calculate SLR
+            slr_value = calculate_slr(data)
+
+            # Insert the data into the collection
+            user_collection.insert_one(slr_value)
 
             # Calculate TPR only for 'Close' orders
             tpr_value = calculate_tpr(data)
