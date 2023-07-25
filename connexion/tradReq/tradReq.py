@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from routes.calcul.TPR import tpr
-import requests
+
 import bcrypt
 
 # Connexion à la base de données MongoDB
@@ -61,12 +61,7 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
        
-        # Appel de la fonction update_tpr() pour effectuer les calculs
-        if closure_position == "Open":
-           
-            requests.post("https://apipython2.onrender.com/tpr")
-
-        
+             
         trade_request = {
             "username": username,
             "password": hashed_password,
