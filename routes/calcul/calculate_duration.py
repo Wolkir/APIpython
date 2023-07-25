@@ -9,6 +9,7 @@ collection = db['things']
 
 calculate_duration = Blueprint('calculate_duration', __name__)
 
+
 @calculate_duration.route('/calculate_duration', methods=['GET'])
 def calculate_time_duration():
     try:
@@ -29,3 +30,4 @@ def calculate_time_duration():
         return jsonify({"message": "La clé 'durée' a été ajoutée à la collection 'things'"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
