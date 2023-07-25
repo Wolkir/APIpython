@@ -62,7 +62,7 @@ def save_trade_request():
        
         # Appel de la fonction update_tpr() pour effectuer les calculs
         if closure_position == "Open":
-        tpr.update_tpr()
+            tpr.update_tpr()
         
         trade_request = {
             "username": username,
