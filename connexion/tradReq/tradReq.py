@@ -66,12 +66,12 @@ def save_trade_request():
             data['TPR'] = tpr_value['TPR']
 
             # Calculate duration for the JSON data
-            duration_response = calculate_time_duration([data])
-            if duration_response.status_code != 200:
-                return duration_response
+            duration_response, status_code = calculate_time_duration([data])
+            if status_code != 200:
+                return duration_response, status_code
 
             # Update the data with the duration field
-            data_with_duration = duration_response.json
+            data_with_duration = duration_response[0]
 
             data['duration'] = data_with_duration['duration']
 
