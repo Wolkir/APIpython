@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
+from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
-from route.calcul.TPR import tpr  # Importez le blueprint TPR du module TPR
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -95,3 +95,5 @@ def save_trade_request():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+# Enregistrement du blueprint dans l'application Flask
+app.register_blueprint(trade_blueprint, url_prefix='/api')

@@ -25,9 +25,11 @@ from connexion.user.getUser import setup_user_routes
 
 #from connexion.tradReq.tradReq import trade_blueprint
 
+"""
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
 setup_recuperationStrategie(app)
 app.register_blueprint(recuperationStrategie)
+"""
 
 # calcul
 from routes.calcul.BE_RR.RR import RR
@@ -54,15 +56,16 @@ from routes.calcul.weekday import weekday
 from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
-from routes.calcul.conversion_map import conversion_map
-app.register_blueprint(tpr)
+#from routes.calcul.conversion_map import conversion_map
 
 # envoie
 from routes.envoie.envoie import envoie
 
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
+from routes.journal.recuperationTrade import modificationTrade
 
+app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
 app.register_blueprint(average_duration)
 app.register_blueprint(average_rr)
@@ -99,6 +102,7 @@ app.register_blueprint(setup_user_routes(app))
 
 #journal
 app.register_blueprint(setup_things_routes(app))
+app.register_blueprint(modificationTrade)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
