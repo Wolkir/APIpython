@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
+import bcrypt
 from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
@@ -55,13 +56,13 @@ def save_trade_request():
             data.pop("volume_remain", None)
 
             # Calculate TPR only for 'Close' orders
-            data = calculate_tpr(data)
+            tpr_value = calculate_tpr(data)
 
-        # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
-
-        user_collection.insert_one(data)
+            # Insert the data with TPR value into the collection
+            user_collection.insert_one(tpr_value)
+        else:
+            # For 'Open' orders, directly insert the data into the collection
+            user_collection.insert_one(data)
 
         return jsonify({"message": "Data saved successfully with TPR"}), 201
     except Exception as e:
