@@ -1,6 +1,8 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
+from routes.calcul.TPR import tpr
+import requests
 import bcrypt
 
 # Connexion à la base de données MongoDB
@@ -59,6 +61,13 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
+          if closure_position == "Open":
+            tpr.update_tpr()
+
+            # Envoie une requête POST à l'URL du code TPR
+            # Remplacez "http://chemin-vers-votre-code-tpr/" par l'URL appropriée de votre code TPR
+            requests.post("https://apipython2.onrender.com/tpr")       
+             
         trade_request = {
             "username": username,
             "password": hashed_password,
@@ -67,6 +76,7 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
+            "orderType":data.get('orderType'),
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -84,6 +94,7 @@ def save_trade_request():
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
+            
         }
 
         user_collection.insert_one(trade_request)
