@@ -60,9 +60,7 @@ def save_trade_request():
 
             # Calculate SLR
             slr_value = calculate_slr(data)
-
-            # Insert the data into the collection
-            user_collection.insert_one(slr_value)
+            data['SLR'] = slr_value['SLR']
 
             # Calculate TPR only for 'Close' orders
             tpr_value = calculate_tpr(data)
