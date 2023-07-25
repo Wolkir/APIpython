@@ -13,9 +13,9 @@ def calculate_slr(entry):
     price_closure = entry.get('priceClosure')
     stop_loss = entry.get('stopLoss')
 
-    if type_of_transaction == "buy" and price_closure <= stop_loss:
+    if type_of_transaction == "Buy" and price_closure <= stop_loss:
         entry['SLR'] = True
-    elif type_of_transaction == "sell" and price_closure >= stop_loss:
+    elif type_of_transaction == "Sell" and price_closure >= stop_loss:
         entry['SLR'] = True
     else:
         entry['SLR'] = False
