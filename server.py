@@ -63,7 +63,7 @@ from routes.envoie.envoie import envoie
 
 #journal
 #from routes.journal.recuperationTrade import setup_things_routes
-from routes.journal.recuperationTrade import modificationTrade
+#from routes.journal.recuperationTrade import modificationTrade
 
 app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
