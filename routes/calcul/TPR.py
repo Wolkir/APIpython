@@ -22,6 +22,7 @@ def calculate_tpr(entry):
 
     return entry
 
+
 @tpr.route('/tpr', methods=['POST'])
 def update_tpr():
     try:
