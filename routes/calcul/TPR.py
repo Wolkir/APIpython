@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
 # Connexion à la base de données MongoDB
@@ -28,8 +28,10 @@ def update_tpr():
         data = request.json
 
         for entry in data:
-            # Calculate the TPR value for each entry
-            entry = calculate_tpr(entry)
+            # Check if closurePosition is "Close" before calculating TPR
+            if entry.get('closurePosition') == "Close":
+                # Calculate the TPR value for "Close" entry
+                entry = calculate_tpr(entry)
 
             # Update the entry in the database with the TPR value
             db = client['test']
