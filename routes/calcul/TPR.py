@@ -1,75 +1,41 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
-import bcrypt
-from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
-client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
-db = client["test"]
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 
-app = Flask(__name__)
+tpr = Blueprint('tpr', __name__)
 
-trade_blueprint = Blueprint('trade', __name__)
+def calculate_tpr(entry):
+    # Your TPR calculation logic here based on the 'entry' data
+    # For example:
+    type_of_transaction = entry.get('typeOfTransaction')
+    price_closure = entry.get('priceClosure')
+    take_profit = entry.get('takeProfit')
+    
+    if type_of_transaction == "buy" and price_closure >= take_profit:
+        entry['TPR'] = True
+    elif type_of_transaction == "sell" and price_closure <= take_profit:
+        entry['TPR'] = True
+    else:
+        entry['TPR'] = False
 
-def compare_passwords(password, hashed_password):
-    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
+    return entry
 
-@trade_blueprint.route('/savetraderequest', methods=['POST'])
-def save_trade_request():
-    data = request.json
-    username = data.get('username')
-    password = data.get('password')
-    closure_position = data.get('closurePosition')
-
+@tpr.route('/tpr', methods=['POST'])
+def update_tpr():
     try:
-        user = db.users.find_one({"username": username})
-        if not user or not compare_passwords(password, user['password']):
-            return jsonify({"message": "Access denied"}), 401
+        data = request.json
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        for entry in data:
+            # Calculate the TPR value for each entry
+            entry = calculate_tpr(entry)
 
-        collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
-
-        user_collection = db[collection_name]
-
-        if closure_position == "Open":
-            volume_remain = data.get('volume')
-            if volume_remain < 0.01:
-                volume_remain = 0
-                user_collection.delete_one({"identifier": data.get('identifier')})
-        else:
-            # Check if there's a corresponding 'Open' order with the same identifier
-            open_orders = db[f"{username}_open"]
-            open_order = open_orders.find_one({"identifier": data.get('identifier')})
-            if open_order:
-                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
-                if volume_remain < 0:
-                    volume_remain = 0
-                open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain == 0:
-                    open_orders.delete_one({"identifier": data.get('identifier')})
-            else:
-                return jsonify({"message": "No corresponding 'Open' order found"}), 400
-
-        # Remove 'volume_remain' field for 'Close' orders
-        if closure_position == "Close":
-            data.pop("volume_remain", None)
-
-            # Calculate TPR only for 'Close' orders
-            tpr_value = calculate_tpr(data)
-
-            # Insert the data with TPR value into the collection
-            user_collection.insert_one(tpr_value)
-        else:
-            # For 'Open' orders, directly insert the data into the collection
-            user_collection.insert_one(data)
-
-        return jsonify({"message": "Data saved successfully with TPR"}), 201
+            # Update the entry in the database with the TPR value
+            db = client['test']
+            collection = db['test2_open']
+            collection.update_one({'_id': entry['_id']}, {'$set': {'TPR': entry['TPR']}})
+        
+        return jsonify({'message': 'TPR updated successfully'}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
-# Enregistrement du blueprint "trade" dans l'application Flask
-app.register_blueprint(trade_blueprint, url_prefix='/api')
-
-if __name__ == '__main__':
-    app.run()
