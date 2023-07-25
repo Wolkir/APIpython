@@ -65,8 +65,15 @@ def save_trade_request():
             tpr_value = calculate_tpr(data)
             data['TPR'] = tpr_value['TPR']
 
-            # Calculate duration for all documents in the 'things' collection
-            calculate_time_duration()
+            # Calculate duration for the JSON data
+            duration_response = calculate_time_duration([data])
+            if duration_response.status_code != 200:
+                return duration_response
+
+            # Update the data with the duration field
+            data_with_duration = duration_response.json
+
+            data['duration'] = data_with_duration['duration']
 
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
@@ -75,7 +82,7 @@ def save_trade_request():
         # Insert the data into the collection
         user_collection.insert_one(data)
 
-        return jsonify({"message": "Data saved successfully with TPR and SLR"}), 201
+        return jsonify({"message": "Data saved successfully with TPR, SLR, and duration"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
