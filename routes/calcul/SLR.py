@@ -1,4 +1,12 @@
 # Code SLR
+from flask import Flask, Blueprint, jsonify, request
+from pymongo import MongoClient
+from bson import ObjectId
+from datetime import datetime, timedelta
+import json
+
+# Connexion à la base de données MongoDB
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 
 slr = Blueprint('slr', __name__)
 
