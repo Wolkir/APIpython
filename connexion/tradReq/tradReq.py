@@ -1,8 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
-from route.calcul.TPR import update_tpr  # Import de la fonction update_tpr du module TPR
+from route.calcul.TPR import tpr  # Importez le blueprint TPR du module TPR
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -89,17 +88,20 @@ def save_trade_request():
         }
 
         user_collection.insert_one(trade_request)
-        
+
         # Appel de la fonction TPR pour mettre à jour les valeurs TPR
         if closure_position == "Open":
             update_tpr()
-        
+
         return jsonify({"message": "Data saved successfully Python v7"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# Enregistrement du blueprint dans l'application Flask
+# Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
+
+# Enregistrement du blueprint TPR dans l'application Flask
+app.register_blueprint(tpr, url_prefix='/calcul')  # Assurez-vous que la route '/calcul' est appropriée selon votre besoin
 
 if __name__ == "__main__":
     app.run(debug=True)
