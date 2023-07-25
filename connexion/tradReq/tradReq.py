@@ -58,6 +58,9 @@ def save_trade_request():
             # Calculate TPR for "Close" positions
             tpr_value = calculate_tpr(data)
             data['TPR'] = tpr_value
+        else:
+            # For "Open" positions, set 'TPR' to None or False, as desired
+            data['TPR'] = None
 
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
