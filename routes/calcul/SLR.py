@@ -1,9 +1,6 @@
-# Code SLR
-from flask import Flask, Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
-from bson import ObjectId
-from datetime import datetime, timedelta
-import json
+from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
@@ -11,6 +8,8 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 slr = Blueprint('slr', __name__)
 
 def calculate_slr(entry):
+    # Your SLR calculation logic here based on the 'entry' data
+    # For example:
     type_of_transaction = entry.get('typeOfTransaction')
     price_closure = entry.get('priceClosure')
     stop_loss = entry.get('stopLoss')
@@ -44,6 +43,3 @@ def update_slr():
 
 # Enregistrement du blueprint "slr" dans l'application Flask
 app.register_blueprint(slr, url_prefix='/slr')
-
-if __name__ == '__main__':
-    app.run()
