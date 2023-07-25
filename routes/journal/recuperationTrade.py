@@ -9,13 +9,14 @@ logging.basicConfig(level=logging.DEBUG)
 things_blueprint = Blueprint('things', __name__)
 
 def convert_to_json_serializable(data):
-    for key, value in data.items():
-        if isinstance(value, bytes):
-            data[key] = str(value)
-        elif isinstance(value, ObjectId):
-            data[key] = str(value)
-        elif isinstance(value, dict):
-            data[key] = convert_to_json_serializable(value)
+    if isinstance(data, bytes):
+        return str(data)
+    elif isinstance(data, ObjectId):
+        return str(data)
+    elif isinstance(data, dict):
+        return {key: convert_to_json_serializable(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [convert_to_json_serializable(item) for item in data]
     return data
 
 def setup_things_routes(app):
