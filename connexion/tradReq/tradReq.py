@@ -92,6 +92,9 @@ def save_trade_request():
         
         user_collection.insert_one(trade_request)
 
+        # After inserting the trade request, trigger TPR calculation
+        update_tpr()
+
         return jsonify({"message": "Data saved successfully Python v7 TPR"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -100,16 +103,4 @@ def save_trade_request():
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 # Import the update_tpr function from the tpr.py module
-tpr_blueprint = Blueprint('tpr', __name__)
-
-@tpr_blueprint.route('/tpr', methods=['GET'])
-def run_tpr():
-    # Call the update_tpr function to execute TPR logic
-    update_tpr()
-    return jsonify({"message": "TPR logic executed successfully"}), 200
-
-# Enregistrement du blueprint "tpr" dans l'application Flask
-app.register_blueprint(tpr_blueprint, url_prefix='/tpr')
-
-if __name__ == '__main__':
-    app.run()
+tpr_blueprint = Blueprint
