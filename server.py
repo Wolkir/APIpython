@@ -63,7 +63,7 @@ from routes.envoie.envoie import envoie
 
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
-from routes.journal.modificationTrade import modificationTrade
+from routes.journal.modificationTrade import setup_modificationTrade_routes
 
 app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
@@ -102,7 +102,7 @@ app.register_blueprint(trade_blueprint)
 
 #journal
 app.register_blueprint(setup_things_routes(app))
-app.register_blueprint(modificationTrade)
+app.register_blueprint(setup_modificationTrade_routes(app))
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
