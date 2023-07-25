@@ -55,15 +55,14 @@ def save_trade_request():
         if closure_position == "Close":
             data.pop("volume_remain", None)
 
-        # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+            # Calculate TPR
+            tpr_value = calculate_tpr(data)
 
-        # Calculate TPR
-        tpr_value = calculate_tpr(data)
+            # Add TPR value to the data before insertion
+            data['TPR'] = tpr_value
 
-        # Insert the data into the collection
-        user_collection.insert_one(tpr_value)
+            # Insert the data into the collection
+            user_collection.insert_one(data)
 
         return jsonify({"message": "Data saved successfully with TPR"}), 201
     except Exception as e:
