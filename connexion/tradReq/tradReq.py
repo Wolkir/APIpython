@@ -63,7 +63,7 @@ def save_trade_request():
 
            # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
         if closure_position == "Open":
-            response = requests.get("https://apipython2.onrender.com/tpr")  # Remplacez l'URL par celle de votre application Flask
+            response = requests.post("https://apipython2.onrender.com/tpr")  # Remplacez l'URL par celle de votre application Flask
 
             if response.status_code == 200:
                 print("Calculs TPR effectués avec succès.")
