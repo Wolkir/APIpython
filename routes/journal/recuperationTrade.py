@@ -55,17 +55,27 @@ def setup_things_routes(app):
         try:
             app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
             mongo = PyMongo(app)
-            logging.debug("connexion mongo etablie")
+            logging.debug("connexion mongo établie")
             data = request.get_json()
             trades_data = data.get('trades', [])
-            logging.debug(trades_data)
-            logging.debug("tableau recuperer")
+            psychologie_data = data.get('psychologie', [])
+            logging.debug("tableaux récupérés")
             things_collection = mongo.db.things
 
+            # Mise à jour ou création des champs psychologie
+            for psychologie_item in psychologie_data:
+                trade_id = psychologie_item.get('id')
+                value_psy = psychologie_item.get('valuePsy')
+                logging.debug("récupération trade_id et valuePsy")
+
+                if trade_id and value_psy:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'psychologie': value_psy}}, upsert=True)
+            
+            # Mise à jour du champ annonceEconomique
             for trade in trades_data:
                 trade_id = trade.get('id')
                 valeur_ann_eco = trade.get('valeurAnnEco')
-                logging.debug("recuperation trade_id et valeur_ann_eco")
+                logging.debug("récupération trade_id et valeur_ann_eco")
 
                 if trade_id and valeur_ann_eco in ['oui', 'non']:
                     annonce_economique = True if valeur_ann_eco == 'oui' else False
