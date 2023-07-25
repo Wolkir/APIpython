@@ -101,7 +101,7 @@ app.register_blueprint(setup_user_routes(app))
 #app.register_blueprint(trade_blueprint)
 
 #journal
-app.register_blueprint(setup_things_routes(app))
+#app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(modificationTrade)
 
 #===========================================LANCEMENT DU SERVER===============================================#
