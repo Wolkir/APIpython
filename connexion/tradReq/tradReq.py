@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
-from routes.calcul.TPR import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
+from routes.calcul.tpr import calculate_tpr  # Import the calculate_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -62,11 +62,8 @@ def save_trade_request():
         # Calculate TPR
         tpr_value = calculate_tpr(data)
 
-        # Add TPR value to the data before insertion
-        data['TPR'] = tpr_value
-
         # Insert the data into the collection
-        user_collection.insert_one(data)
+        user_collection.insert_one(tpr_value)
 
         return jsonify({"message": "Data saved successfully with TPR"}), 201
     except Exception as e:
