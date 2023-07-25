@@ -22,7 +22,6 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-    
 
     try:
         user = db.users.find_one({"username": username})
@@ -66,9 +65,8 @@ def save_trade_request():
             tpr_value = calculate_tpr(data)
             data['TPR'] = tpr_value['TPR']
 
-             # Calculate TPR only for 'Close' orders
-            duration_value = calculate_time_duration(data)
-            data['duration'] = duration_value['duration']
+            # Calculate duration for all documents in the 'things' collection
+            calculate_time_duration()
 
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
