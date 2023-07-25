@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, request
 from datetime import datetime
 
 calculate_duration = Blueprint('calculate_duration', __name__)
@@ -29,4 +29,6 @@ def update_time_duration():
         return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
+    app = Flask(__name__)
+    app.register_blueprint(calculate_duration, url_prefix='/api')
     app.run()
