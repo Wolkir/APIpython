@@ -34,7 +34,7 @@ def save_trade_request():
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
-            if volume_remain < 0.009:
+            if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
