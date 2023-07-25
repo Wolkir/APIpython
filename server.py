@@ -28,6 +28,7 @@ from connexion.tradReq.tradReq import trade_blueprint
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
 setup_recuperationStrategie(app)
 app.register_blueprint(recuperationStrategie)
+
 # calcul
 from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
@@ -60,6 +61,33 @@ from routes.envoie.envoie import envoie
 
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
+
+app.register_blueprint(assign_order)
+app.register_blueprint(average_duration)
+app.register_blueprint(average_rr)
+app.register_blueprint(averagegain)
+app.register_blueprint(averageloss)
+app.register_blueprint(BE)
+app.register_blueprint(RR)
+app.register_blueprint(calculate_duration)
+#app.register_blueprint(conversion_map)
+app.register_blueprint(ddmax)
+app.register_blueprint(Equity)
+app.register_blueprint(killzone)
+app.register_blueprint(maxprofit)
+app.register_blueprint(minloss)
+app.register_blueprint(profitfactor)
+app.register_blueprint(profitfactorlong)
+app.register_blueprint(profitfactorshort)
+app.register_blueprint(session)
+app.register_blueprint(sharp_ratio)
+app.register_blueprint(slr)
+app.register_blueprint(Tilts)
+app.register_blueprint(tpr)
+app.register_blueprint(tradecount)
+app.register_blueprint(weekday)
+app.register_blueprint(winrate)
+app.register_blueprint(envoie)
 
 # user
 app.register_blueprint(setup_signup_route(app))
