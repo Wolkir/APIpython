@@ -61,12 +61,14 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-          if closure_position == "Open":
-            tpr.update_tpr()
+           # Appel de la route /tpr du Blueprint tpr pour effectuer les calculs
+        if closure_position == "Open":
+            response = requests.get("https://apipython2.onrender.com/tpr")  # Remplacez l'URL par celle de votre application Flask
 
-            # Envoie une requête POST à l'URL du code TPR
-            # Remplacez "http://chemin-vers-votre-code-tpr/" par l'URL appropriée de votre code TPR
-            requests.post("https://apipython2.onrender.com/tpr")       
+            if response.status_code == 200:
+                print("Calculs TPR effectués avec succès.")
+            else:
+                print("Erreur lors de l'exécution des calculs TPR.")     
              
         trade_request = {
             "username": username,
