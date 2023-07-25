@@ -56,14 +56,14 @@ from routes.calcul.weekday import weekday
 from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
-#from routes.calcul.conversion_map import conversion_map
+from routes.calcul.conversion_map import conversion_map
 
 # envoie
 from routes.envoie.envoie import envoie
 
 #journal
-#from routes.journal.recuperationTrade import setup_things_routes
-#from routes.journal.recuperationTrade import modificationTrade
+from routes.journal.recuperationTrade import setup_things_routes
+from routes.journal.recuperationTrade import modificationTrade
 
 app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
@@ -108,5 +108,5 @@ app.register_blueprint(modificationTrade)
 if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
-    collection = client.db["test"]
+    collection = client.db["things"]
     app.run(host='0.0.0.0', port=1234)
