@@ -39,7 +39,7 @@ def setup_things_routes(app):
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
-            things_collection = mongo.db.test2_close
+            things_collection = mongo.db.things
             all_things = list(things_collection.find(query))
 
             for thing in all_things:
@@ -60,7 +60,7 @@ def setup_things_routes(app):
             trades_data = data.get('trades', [])
             psychologie_data = data.get('psychologie', [])
             logging.debug("tableaux récupérés")
-            things_collection = mongo.db.test2_close
+            things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
             for psychologie_item in psychologie_data:

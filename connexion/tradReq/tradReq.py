@@ -1,8 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
-from routes.calcul.TPR import tpr
-import requests
 import bcrypt
 
 # Connexion à la base de données MongoDB
@@ -36,7 +34,7 @@ def save_trade_request():
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
-            if volume_remain < 0.0009:
+            if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
@@ -48,7 +46,7 @@ def save_trade_request():
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
-                if volume_remain < 0.0009:
+                if volume_remain == 0:
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
@@ -69,7 +67,7 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
-            "orderType":data.get('orderType'),
+            "typeOrder":data.get('typeOrder'),
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -87,9 +85,9 @@ def save_trade_request():
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
-            
         }
 
+        
         user_collection.insert_one(trade_request)
         return jsonify({"message": "Data saved successfully Python v6"}), 201
     except Exception as e:
