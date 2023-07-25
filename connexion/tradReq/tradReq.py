@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import bcrypt
-from tpr import update_tpr  # Import the update_tpr function from the tpr.py module
+from TPR import update_tpr  # Import the update_tpr function from the tpr.py module
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
