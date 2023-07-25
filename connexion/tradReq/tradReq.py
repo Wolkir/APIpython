@@ -1,9 +1,8 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
-from routes.calcul.TPR import tpr
-import requests
 import bcrypt
+from route.calcul.TPR import update_tpr  # Import de la fonction update_tpr du module TPR
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -36,7 +35,7 @@ def save_trade_request():
 
         if closure_position == "Open":
             volume_remain = data.get('volume')
-            if volume_remain < 0.0009:
+            if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
         else:
@@ -69,7 +68,7 @@ def save_trade_request():
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
-            "orderType":data.get('orderType'),
+            "typeOrder":data.get('typeOrder'),
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -87,13 +86,20 @@ def save_trade_request():
             "annonceEconomique": None,
             "psychologie": None,
             "strategie": None,
-            
         }
 
         user_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully Python v6"}), 201
+        
+        # Appel de la fonction TPR pour mettre à jour les valeurs TPR
+        if closure_position == "Open":
+            update_tpr()
+        
+        return jsonify({"message": "Data saved successfully Python v7"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 # Enregistrement du blueprint dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
+
+if __name__ == "__main__":
+    app.run(debug=True)
