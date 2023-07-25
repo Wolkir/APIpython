@@ -58,7 +58,11 @@ def save_trade_request():
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
-
+       
+        # Appel de la fonction update_tpr() pour effectuer les calculs
+        if closure_position == "Open":
+        tpr.update_tpr()
+        
         trade_request = {
             "username": username,
             "password": hashed_password,
