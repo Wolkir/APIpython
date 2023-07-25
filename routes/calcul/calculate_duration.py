@@ -1,33 +1,32 @@
 from flask import Flask, Blueprint, jsonify
-from pymongo import MongoClient
 from datetime import datetime
-
-# Connexion à la base de données MongoDB
-client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
-db = client['test']
-collection = db['things']
 
 calculate_duration = Blueprint('calculate_duration', __name__)
 
-
-@calculate_duration.route('/calculate_duration', methods=['GET'])
-def calculate_time_duration():
+def calculate_time_duration(data):
     try:
-        # Récupérer les documents avec les dates de départ et de fin
-        documents = collection.find()
-        
-        # Calculer la durée pour chaque document et mettre à jour la collection
-        for doc in documents:
-            opening_time = doc['dateAndTimeOpening']
-            closure_time = doc['dateAndTimeClosure']
+        # Calculer la durée pour chaque document dans les données JSON
+        for doc in data:
+            opening_time = datetime.fromisoformat(doc['dateAndTimeOpening'])
+            closure_time = datetime.fromisoformat(doc['dateAndTimeClosure'])
             
             # Calculer la durée
             duration = closure_time - opening_time
-            
-            # Mettre à jour le document avec la clé 'durée' et sa valeur
-            collection.update_one({'_id': doc['_id']}, {'$set': {'durée': str(duration)}})
+            doc['duration'] = str(duration)
         
-        return jsonify({"message": "La clé 'durée' a été ajoutée à la collection 'things'"}), 200
+        return data, 200
+    except Exception as e:
+        return {"error": str(e)}, 400
+
+@calculate_duration.route('/calculate_duration', methods=['POST'])
+def update_time_duration():
+    try:
+        data = request.json
+        # Call the calculate_time_duration() function and pass the JSON data
+        updated_data, status_code = calculate_time_duration(data)
+        return jsonify(updated_data), status_code
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+if __name__ == '__main__':
+    app.run()
