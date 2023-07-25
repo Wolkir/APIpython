@@ -23,7 +23,7 @@ from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
 from connexion.user.getUser import setup_user_routes
 
-#from connexion.tradReq.tradReq import trade_blueprint
+from connexion.tradReq.tradReq import trade_blueprint
 
 """
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
@@ -63,7 +63,7 @@ from routes.envoie.envoie import envoie
 
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
-from routes.journal.modificationTrade import modificationTrade
+from routes.journal.modificationTrade import setup_modificationTrade_routes
 
 app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
@@ -98,11 +98,11 @@ app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
 app.register_blueprint(setup_user_routes(app))
 
-#app.register_blueprint(trade_blueprint)
+app.register_blueprint(trade_blueprint)
 
 #journal
 app.register_blueprint(setup_things_routes(app))
-app.register_blueprint(modificationTrade)
+app.register_blueprint(setup_modificationTrade_routes(app))
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':

@@ -2,9 +2,6 @@ from flask import Blueprint, jsonify, request
 from flask_pymongo import PyMongo
 import jwt
 from bson import ObjectId
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
 
 things_blueprint = Blueprint('things', __name__)
 

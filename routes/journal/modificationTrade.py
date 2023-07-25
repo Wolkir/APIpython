@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_pymongo import PyMongo
+import jwt
 from bson import ObjectId
 
 
@@ -25,6 +26,7 @@ def setup_modificationTrade_routes(app):
             data = request.get_json()
             trades_data = data.get('trades', [])
             psychologie_data = data.get('psychologie', [])
+            position_data = data.get('position', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -44,6 +46,13 @@ def setup_modificationTrade_routes(app):
                     annonce_economique = True if valeur_ann_eco == 'oui' else False
 
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'annonceEconomique': annonce_economique}})
+            # Mise à jour du champ position
+            for position in position_data:
+                trade_id = position.get('id')
+                valeur_position = position.get('valuePosition')
+
+                if trade_id and valeur_position:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'position': valeur_position}})
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
