@@ -62,7 +62,7 @@ def save_trade_request():
        
         # Appel de la fonction update_tpr() pour effectuer les calculs
         if closure_position == "Open":
-            TPR.update_tpr()
+           
             requests.post("https://apipython2.onrender.com/tpr")
 
         
