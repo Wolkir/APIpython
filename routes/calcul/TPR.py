@@ -13,9 +13,9 @@ def calculate_tpr(entry):
     price_closure = entry.get('priceClosure')
     take_profit = entry.get('takeProfit')
     
-    if type_of_transaction == "buy" and price_closure >= take_profit:
+    if type_of_transaction == "Buy" and price_closure >= take_profit:
         entry['TPR'] = True
-    elif type_of_transaction == "sell" and price_closure <= take_profit:
+    elif type_of_transaction == "Sell" and price_closure <= take_profit:
         entry['TPR'] = True
     else:
         entry['TPR'] = False
