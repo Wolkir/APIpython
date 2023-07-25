@@ -6,7 +6,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-"""
+CORS(app)
+
 def after_request(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
@@ -14,9 +15,6 @@ def after_request(response):
     return response
 
 app.after_request(after_request)
-"""
-
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
@@ -112,4 +110,3 @@ if __name__ == '__main__':
     client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
     collection = client.db["things"]
     app.run(host='0.0.0.0', port=1234)
-
