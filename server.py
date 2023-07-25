@@ -5,9 +5,6 @@ from flask import Flask
 from flask_cors import CORS
 
 app = Flask(__name__)
-
-CORS(app)
-
 def after_request(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
@@ -15,6 +12,8 @@ def after_request(response):
     return response
 
 app.after_request(after_request)
+
+CORS(app, origins='*', allow_headers='*', methods='*')
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
