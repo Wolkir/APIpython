@@ -13,7 +13,7 @@ tpr = Blueprint('tpr', __name__)
 # Function to fetch real-time data from the API
 def fetch_real_time_data():
     # Replace 'YOUR_API_URL' with the URL of the real-time data API you are using
-    response = requests.get('YOUR_API_URL')
+    response = requests.get('https://apipython2.onrender.com/savetraderequest')
 
     # Check if the request was successful
     if response.status_code == 200:
