@@ -16,7 +16,8 @@ def update_tpr():
     db = client['test']
     collection = db['test2_open']
 
-    data = list(collection.find())
+    #data = list(collection.find())
+    data = request.json
 
     for entry in data:
         type_of_transaction = entry.get('typeOfTransaction')
