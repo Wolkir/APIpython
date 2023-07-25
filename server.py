@@ -56,7 +56,7 @@ from routes.calcul.weekday import weekday
 from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
-from routes.calcul.conversion_map import conversion_map
+#from routes.calcul.conversion_map import conversion_map
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -101,7 +101,7 @@ app.register_blueprint(setup_user_routes(app))
 #app.register_blueprint(trade_blueprint)
 
 #journal
-#app.register_blueprint(setup_things_routes(app))
+app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(modificationTrade)
 
 #===========================================LANCEMENT DU SERVER===============================================#
