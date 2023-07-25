@@ -100,7 +100,7 @@ def save_trade_request():
         }
 
         user_collection.insert_one(trade_request)
-        return jsonify({"message": "Data saved successfully Python v6"}), 201
+        return jsonify({"message": "Data saved successfully Python v6 TPR"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
