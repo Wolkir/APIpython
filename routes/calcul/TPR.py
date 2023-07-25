@@ -22,23 +22,20 @@ def calculate_tpr(entry):
 
     return entry
 
-@tpr.route('/tpr', methods=['GET'])
+@tpr.route('/tpr', methods=['POST'])
 def update_tpr():
-    client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
-    db = client['test']
-    collection = db['test2_open']
+    try:
+        data = request.json
 
-    #data = list(collection.find())
-    data = request.json
+        for entry in data:
+            # Calculate the TPR value for each entry
+            entry = calculate_tpr(entry)
 
-    for entry in data:
-        # Calculate the TPR value for each entry
-        entry = calculate_tpr(entry)
-
-        # Update the TPR value in the database
-        collection.update_one({'_id': entry['_id']}, {'$set': {'TPR': entry['TPR']}})
-
-    client.close()
-
-    return jsonify({'message': 'TPR updated successfully'})
-
+            # Update the entry in the database with the TPR value
+            db = client['test']
+            collection = db['test2_open']
+            collection.update_one({'_id': entry['_id']}, {'$set': {'TPR': entry['TPR']}})
+        
+        return jsonify({'message': 'TPR updated successfully'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
