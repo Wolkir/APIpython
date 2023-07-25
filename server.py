@@ -62,7 +62,7 @@ from routes.calcul.average.average_rr import average_rr
 from routes.envoie.envoie import envoie
 
 #journal
-from routes.journal.recuperationTrade import setup_things_routes
+#from routes.journal.recuperationTrade import setup_things_routes
 from routes.journal.recuperationTrade import modificationTrade
 
 app.register_blueprint(tpr)
