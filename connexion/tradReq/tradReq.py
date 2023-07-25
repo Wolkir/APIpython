@@ -102,7 +102,7 @@ app.register_blueprint(trade_blueprint, url_prefix='/api')
 # Import the update_tpr function from the tpr.py module
 tpr_blueprint = Blueprint('tpr', __name__)
 
-@tpr_blueprint.route('/run_tpr', methods=['GET'])
+@tpr_blueprint.route('/tpr', methods=['GET'])
 def run_tpr():
     # Call the update_tpr function to execute TPR logic
     update_tpr()
