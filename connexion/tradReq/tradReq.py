@@ -60,7 +60,13 @@ def save_trade_request():
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
-       
+
+          if closure_position == "Open":
+            tpr.update_tpr()
+
+            # Envoie une requête POST à l'URL du code TPR
+            # Remplacez "http://chemin-vers-votre-code-tpr/" par l'URL appropriée de votre code TPR
+            requests.post("https://apipython2.onrender.com/tpr")       
              
         trade_request = {
             "username": username,
