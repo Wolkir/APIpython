@@ -108,5 +108,5 @@ app.register_blueprint(modificationTrade)
 if __name__ == '__main__':
     url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
-    collection = client.db["things"]
+    collection = client.db["test"]
     app.run(host='0.0.0.0', port=1234)
