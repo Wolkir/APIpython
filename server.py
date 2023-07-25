@@ -16,7 +16,7 @@ def after_request(response):
 app.after_request(after_request)
 """
 
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
