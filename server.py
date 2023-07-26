@@ -26,7 +26,7 @@ from connexion.tradReq.tradReq import trade_blueprint
 
 
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
-app.register_blueprint(setup_recuperationStrategie(app))
+app.register_blueprint(recuperationStrategie)
 
 
 # calcul
