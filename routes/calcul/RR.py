@@ -10,8 +10,7 @@ RR = Blueprint('RR', __name__)
 
 @RR.route('/rr', methods=['GET'])
 def calculate_rr(data):
-    # Récupération des données envoyées en tant que JSON
-    data = request.json
+  
 
     # Calculer la valeur de la clé "RR" pour chaque élément en une seule étape
     price_close = data['priceClosure']
