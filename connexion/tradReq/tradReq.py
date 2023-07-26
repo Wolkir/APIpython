@@ -5,6 +5,8 @@ from datetime import time
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import calculate_killzone
+from routes.calcul.session import determine_session
+
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -69,6 +71,9 @@ def save_trade_request():
 
             killzone = calculate_killzone(data)
             data['killzone'] = killzone
+
+            session = determine_session(data)
+            data['session'] = session
 
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
