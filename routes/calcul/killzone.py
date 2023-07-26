@@ -3,11 +3,11 @@ from datetime import time
 
 #killzone_blueprint = Blueprint('killzone', __name__)
 killzone = Blueprint('killzone', __name__)
-data = request.json
+
 #@killzone_blueprint.route('/killzone', methods=['POST'])
 def calculate_killzone(data):
   
-    results = []
+
 
     # Parcourir tous les documents de la collection
     for doc in data:
