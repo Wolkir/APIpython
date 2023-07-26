@@ -6,7 +6,6 @@ from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import determine_killzone
 
-
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
@@ -72,30 +71,23 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-            # Remove 'volume_remain' field for 'Close' orders
-       if closure_position == "Open":
         # Calculate killzone only for 'Open' orders
-         killzone = determine_killzone(data)
-         data['killzone'] = killzone['killzone']
+        if closure_position == "Open":
+            killzone = determine_killzone(data)
+            data['killzone'] = killzone
 
-         # Insert the data into the collection
-         user_collection.insert_one(data)
+        # Insert the data into the collection
+        user_collection.insert_one(data)
 
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-     
-   
 
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 # Killzone Blueprint
 killzone_blueprint = Blueprint('killzone', __name__)
-
-
-
-    return jsonify({"message": "Clé 'killzone' ajoutée avec succès à chaque document 'Open' de la collection."})
 
 # Enregistrement du blueprint "killzone" dans l'application Flask
 app.register_blueprint(killzone_blueprint, url_prefix='/api')
