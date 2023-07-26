@@ -30,7 +30,7 @@ app.register_blueprint(recuperationStrategie)
 
 
 # calcul
-from routes.calcul.BE_RR.RR import RR
+#from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
 from routes.calcul.Equity import Equity
 from routes.calcul.TPR import tpr
@@ -55,6 +55,7 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 #from routes.calcul.conversion_map import conversion_map
+from routes.calcul.RR import RR
 
 # envoie
 from routes.envoie.envoie import envoie
