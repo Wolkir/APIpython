@@ -24,6 +24,6 @@ def determine_session(data):
         # Mettre à jour ou ajouter la clé 'session' dans le dictionnaire data
         doc['session'] = session_value
 
-    return data
+    return session_value
 
 
