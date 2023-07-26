@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, time
 
 session = Blueprint('session', __name__)
 
