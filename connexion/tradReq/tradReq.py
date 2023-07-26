@@ -4,7 +4,7 @@ import bcrypt
 from datetime import time
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
-from route.calcul.killzone import determine_killzone
+from routes.calcul.killzone import determine_killzone
 
 
 # Connexion à la base de données MongoDB
