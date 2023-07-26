@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from datetime import time
+from datetime import datetime
 
 #killzone_blueprint = Blueprint('killzone', __name__)
 killzone = Blueprint('killzone', __name__)
