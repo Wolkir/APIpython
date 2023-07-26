@@ -9,8 +9,9 @@ killzone = Blueprint('killzone', __name__)
 
 @killzone.route('/killzone', methods=['GET'])
 def determine_killzone():
+    data=request.json
     # Parcourir tous les documents de la collection
-    for doc in collection.find():
+    for doc in data :
         # Récupérer l'heure d'ouverture de chaque document
         opening_time = doc['dateAndTimeOpening'].time()
 
