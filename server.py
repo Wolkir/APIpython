@@ -24,11 +24,11 @@ from connexion.user.getUser import setup_user_routes
 
 from connexion.tradReq.tradReq import trade_blueprint
 
-"""
+
 from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
 setup_recuperationStrategie(app)
 app.register_blueprint(recuperationStrategie)
-"""
+
 
 # calcul
 from routes.calcul.BE_RR.RR import RR
