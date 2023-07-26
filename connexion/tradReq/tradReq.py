@@ -84,6 +84,9 @@ def save_trade_request():
             killzone = calculate_killzone(data)
             data['killzone'] = killzone
 
+            session = determine_session(data)
+            data['session'] = session
+
         # Insert the data into the collection
         user_collection.insert_one(data)
 
