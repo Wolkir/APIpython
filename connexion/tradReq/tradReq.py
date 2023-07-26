@@ -75,12 +75,11 @@ def save_trade_request():
             session = determine_session(data)
             data['session'] = session
 
-            #duration = calculate_time_duration(data)
-            #data['duration'] = duration
-            calculate_time_duration(data)
+            duration = calculate_time_duration(data)
+            data['duration'] = duration
+       
 
-            # Get the 'duration' for the first entry (assuming it's the same for all entries)
-            duration = data[0]['duration'
+          
 
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
