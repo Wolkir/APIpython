@@ -82,6 +82,9 @@ def save_trade_request():
 
             rr = calculate_rr(data)
             data['RR'] = rr
+
+            rrt = calculate_rrt(data)
+            data['RRT'] = rrt
        
 
           
