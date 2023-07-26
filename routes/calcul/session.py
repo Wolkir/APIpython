@@ -8,7 +8,8 @@ session = Blueprint('session', __name__)
 def determine_session(data):
     sessions = []
     for doc in data:
-        opening_time = datetime.strptime(data['dateAndTimeOpening'], "%Y-%m-%d %H:%M:%S.%f")
+      
+        opening_datetime = datetime.strptime(data['dateAndTimeOpening'], "%Y-%m-%dT%H:%M:%S.%f%z")
         if time(0, 0) <= opening_time.time() < time(7, 0):
             session_value = "AS"
         elif time(8, 0) <= opening_time.time() < time(12, 0):
