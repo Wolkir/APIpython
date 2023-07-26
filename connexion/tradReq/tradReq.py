@@ -1,10 +1,8 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
-from datetime import time
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
-from routes.calcul.killzone import calculate_killzone
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -12,7 +10,6 @@ db = client["test"]
 
 app = Flask(__name__)
 
-# Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
 
 def compare_passwords(password, hashed_password):
@@ -71,21 +68,48 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-        # Calculate killzone only for 'Open' orders
-        if closure_position == "Open":
-            killzone = calculate_killzone(data)
-            data['killzone'] = killzone['killzone']
+        # Ajout du schéma trade_request aux données avant l'insertion dans la collection
+        trade_request = {
+            "username": username,
+            "password": hashed_password,
+            "ticketNumber": data.get('ticketNumber'),
+            "identifier": data.get('identifier'),
+            "magicNumber": data.get('magicNumber'),
+            "dateAndTimeOpening": data.get('dateAndTimeOpening'),
+            "typeOfTransaction": data.get('typeOfTransaction'),
+            "typeOrder": data.get('typeOrder'),
+            "volume": data.get('volume'),
+            "volume_remain": volume_remain,
+            "symbol": data.get('symbole'),
+            "priceOpening": data.get('priceOpening'),
+            "stopLoss": data.get('stopLoss'),
+            "takeProfit": data.get('takeProfit'),
+            "dateAndTimeClosure": data.get('dateAndTimeClosure'),
+            "priceClosure": data.get('priceClosure'),
+            "swap": data.get('swap'),
+            "profit": data.get('profit'),
+            "commission": data.get('commision'),
+            "closurePosition": data.get('closurePosition'),
+            "balance": data.get('balance'),
+            "broker": data.get('broker'),
+            "annonceEconomique": None,
+            "psychologie": None,
+            "strategie": None,
+            "position": None,
+            "typeOrdre": None,
+            "violeStrategie": None,
+            "sortie": None
+        }
 
-        # Insert the data into the collection
-        user_collection.insert_one(data)
+        # Insertion des données dans la collection
+        user_collection.insert_one(trade_request)
 
-        return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
+        return jsonify({"message": "Data saved successfully with TPR and SLR"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
-
 
 if __name__ == '__main__':
     app.run()
