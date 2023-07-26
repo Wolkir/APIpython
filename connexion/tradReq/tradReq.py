@@ -128,7 +128,9 @@ def save_trade_request():
             "sortie": None,
             "killzone": data.get("killzone"),
             "session": data.get("session"),
-            "duration": data.get('duration')
+            "duration": data.get('duration'),
+            "TPR": data.get('TPR'),
+            "SLR": data.get('SLR')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
