@@ -7,8 +7,8 @@ def calculate_time_duration(data):
     try:
         # Calculate the duration for each data entry in the list
         for entry in data:
-            opening_time = datetime.fromisoformat(entry['dateAndTimeOpening'])
-            closure_time = datetime.fromisoformat(entry['dateAndTimeClosure'])
+            opening_time = datetime.strptime(entry['dateAndTimeOpening'], "%Y-%m-%dT%H:%M:%S.%f%z")
+            closure_time = datetime.strptime(entry['dateAndTimeClosure'], "%Y-%m-%dT%H:%M:%S.%f%z")
             duration = closure_time - opening_time
             entry['duration'] = str(duration)
         
