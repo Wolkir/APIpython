@@ -86,11 +86,6 @@ def save_trade_request():
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
-# Killzone Blueprint
-killzone_blueprint = Blueprint('killzone', __name__)
-
-# Enregistrement du blueprint "killzone" dans l'application Flask
-app.register_blueprint(killzone_blueprint, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run()
