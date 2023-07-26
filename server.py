@@ -55,7 +55,7 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 #from routes.calcul.conversion_map import conversion_map
-from routes.calcul.RR import RR
+from routes.calcul.RR import rr
 
 # envoie
 from routes.envoie.envoie import envoie
