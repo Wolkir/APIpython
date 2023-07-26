@@ -119,10 +119,12 @@ def save_trade_request():
             "typeOrdre": None,
             "violeStrategie": None,
             "sortie": None
+           "killzone": data.get("killzone"),
+           "session": data.get("session")
         }
-        combined_data = [trade_request, data]
+        #combined_data = [trade_request, data]
         # Insertion des données dans la collection
-        user_collection.insert_many(combined_data)
+        user_collection.insert_one(trade_request)
 
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
