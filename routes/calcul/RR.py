@@ -6,10 +6,10 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 RR = Blueprint('RR', __name__)
-
 @RR.route('/rr', methods=['GET'])
+
 def calculate_rr(data):
-    # Calculer la valeur de la clé "RR"
+  
     price_close = data['priceClosure']
     price_opening = data['priceOpening']
     stop_loss = data['stopLoss']
