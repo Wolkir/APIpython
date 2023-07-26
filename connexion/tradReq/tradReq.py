@@ -8,6 +8,7 @@ from routes.calcul.killzone import calculate_killzone
 from routes.calcul.session import determine_session
 from routes.calcul.calculate_duration import calculate_time_duration
 from routes.calcul.RR import calculate_rr
+from routes.calcul.RRT import calculate_rrt
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
