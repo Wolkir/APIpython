@@ -30,6 +30,9 @@ def setup_modificationTrade_routes(app):
             typeOrdre_data = data.get('typeOrdre', [])
             violeStrategie_data = data.get('violeStrategie', [])
             sortie_data = data.get('sortie', [])
+            indicateur1_data = data.get('indicateur1', [])
+            indicateur2_data = data.get('indicateur2', [])
+            indicateur3_data = data.get('indicateur3', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -81,6 +84,31 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and valeur_sortie:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'sortie': valeur_sortie}})
+
+            # Mise à jour ou création des champs indicateur1
+            for indicateur1_item in indicateur1_data:
+                trade_id = indicateur1_item.get('id')
+                value_indicateur1 = indicateur1_item.get('valueIndicateur1')
+
+                if trade_id and value_indicateur1:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur1': value_indicateur1}}, upsert=True)
+
+            # Mise à jour ou création des champs indicateur2
+            for indicateur2_item in indicateur2_data:
+                trade_id = indicateur2_item.get('id')
+                value_indicateur2 = indicateur2_item.get('valueIndicateur2')
+
+                if trade_id and value_indicateur2:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur2': value_indicateur2}}, upsert=True)
+
+            # Mise à jour ou création des champs indicateur3
+            for indicateur3_item in indicateur3_data:
+                trade_id = indicateur3_item.get('id')
+                value_indicateur3 = indicateur3_item.get('valueIndicateur3')
+
+                if trade_id and value_indicateur3:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur3': value_indicateur3}}, upsert=True)
+
             return jsonify({"message": "Trade details updated successfully."}), 200
 
         except Exception as e:
