@@ -1,3 +1,4 @@
+from flask import Blueprint
 from pymongo import MongoClient
 
 # Connexion à la base de données MongoDB
