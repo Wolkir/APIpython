@@ -4,27 +4,19 @@ from pymongo import MongoClient
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
-collection = db['things']
+
 
 RR = Blueprint('RR', __name__)
 
 @RR.route('/rr', methods=['GET'])
-def calculate_rr():
-    # Récupération des documents de la collection
-    documents = collection.find()
+def calculate_rr(data):
+    # Récupération des données envoyées en tant que JSON
+    data = request.json
 
-    for document in documents:
-        price_close = document['priceClosure']
-        price_opening = document['priceOpening']
-        stop_loss = document['stopLoss']
- 
-        # Calcul de la valeur de la clé "RR"
-        rr = (price_close - price_opening) + (price_opening - stop_loss)
+    # Calculer la valeur de la clé "RR" pour chaque élément en une seule étape
+    price_close = data['priceClosure']
+    price_opening = data['priceOpening']
+    stop_loss = data['stopLoss']
+    rr_values = [(pc - po) + (po - sl) for pc, po, sl in zip(price_close, price_opening, stop_loss)]
 
-        # Mise à jour du document avec la clé "RR"
-        collection.update_one({'_id': document['_id']}, {'$set': {'RR': rr}})
-
-    # Fermeture de la connexion à la base de données
-    client.close()
-    
-    return 'Clé "RR" mise à jour avec succès.'
+    return rr_values  # Renvoie les valeurs de la clé "RR" en tant que liste JSON
