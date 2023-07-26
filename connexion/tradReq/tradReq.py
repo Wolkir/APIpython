@@ -73,7 +73,7 @@ def save_trade_request():
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
-            killzone = determine_killzone(data)
+            killzone = calculate_killzone(data)
             data['killzone'] = killzone
 
         # Insert the data into the collection
