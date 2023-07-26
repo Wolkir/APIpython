@@ -27,6 +27,7 @@ def setup_modificationTrade_routes(app):
             trades_data = data.get('trades', [])
             psychologie_data = data.get('psychologie', [])
             position_data = data.get('position', [])
+            typeOrdre_data = data.get('typeOrdre', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -53,6 +54,14 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and valeur_position:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'position': valeur_position}})
+            
+            # Mise à jour du champ type ordre
+            for typeOrdre in typeOrdre_data:
+                trade_id = typeOrdre.get('id')
+                valeur_typeOrdre = typeOrdre.get('valuePosition')
+
+                if trade_id and valeur_typeOrdre:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'typeOrdre': valeur_typeOrdre}})
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
@@ -60,5 +69,6 @@ def setup_modificationTrade_routes(app):
             return jsonify({"error": str(e)}), 500
 
     return modificationTrade
+
 
 
