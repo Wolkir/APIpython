@@ -72,12 +72,20 @@ def save_trade_request():
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
 
-        # Insert the data into the collection
-        user_collection.insert_one(data)
+            # Remove 'volume_remain' field for 'Close' orders
+       if closure_position == "Open":
+        # Calculate killzone only for 'Open' orders
+         killzone = determine_killzone(data)
+         data['killzone'] = killzone['killzone']
 
-        return jsonify({"message": "Data saved successfully with TPR and SLR"}), 201
+         # Insert the data into the collection
+         user_collection.insert_one(data)
+
+        return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+     
+   
 
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
@@ -85,21 +93,7 @@ app.register_blueprint(trade_blueprint, url_prefix='/api')
 # Killzone Blueprint
 killzone_blueprint = Blueprint('killzone', __name__)
 
-@killzone_blueprint.route('/killzone', methods=['GET'])
-def determine_killzone():
-    # Parcourir tous les documents de la collection pour les ordres 'Open'
-    for doc in db['things'].find({"closurePosition": "Open"}):
-        # Récupérer l'heure d'ouverture de chaque document
-        opening_time = doc['dateAndTimeOpening'].time()
 
-        # Déterminer si l'heure d'ouverture se trouve dans l'une des plages horaires spécifiées
-        if (time(3, 0) <= opening_time <= time(6, 0)) or (time(9, 0) <= opening_time <= time(12, 0)) or (time(14, 0) <= opening_time <= time(17, 0)):
-            killzone = True
-        else:
-            killzone = False
-
-        # Ajouter la clé "killzone" au document courant
-        db['things'].update_one({'_id': doc['_id']}, {'$set': {'killzone': killzone}})
 
     return jsonify({"message": "Clé 'killzone' ajoutée avec succès à chaque document 'Open' de la collection."})
 
