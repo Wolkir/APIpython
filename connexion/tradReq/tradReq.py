@@ -87,8 +87,40 @@ def save_trade_request():
             session = determine_session(data)
             data['session'] = session
 
-        # Insert the data into the collection
-        user_collection.insert_one(data)
+        trade_request = {
+            "username": username,
+            "password": hashed_password,
+            "ticketNumber": data.get('ticketNumber'),
+            "identifier": data.get('identifier'),
+            "magicNumber": data.get('magicNumber'),
+            "dateAndTimeOpening": data.get('dateAndTimeOpening'),
+            "typeOfTransaction": data.get('typeOfTransaction'),
+            "typeOrder": data.get('typeOrder'),
+            "volume": data.get('volume'),
+            "volume_remain": volume_remain,
+            "symbol": data.get('symbole'),
+            "priceOpening": data.get('priceOpening'),
+            "stopLoss": data.get('stopLoss'),
+            "takeProfit": data.get('takeProfit'),
+            "dateAndTimeClosure": data.get('dateAndTimeClosure'),
+            "priceClosure": data.get('priceClosure'),
+            "swap": data.get('swap'),
+            "profit": data.get('profit'),
+            "commission": data.get('commision'),
+            "closurePosition": data.get('closurePosition'),
+            "balance": data.get('balance'),
+            "broker": data.get('broker'),
+            "annonceEconomique": None,
+            "psychologie": None,
+            "strategie": None,
+            "position": None,
+            "typeOrdre": None,
+            "violeStrategie": None,
+            "sortie": None
+        }
+
+        # Insertion des données dans la collection
+        user_collection.insert_one(trade_request)
 
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
