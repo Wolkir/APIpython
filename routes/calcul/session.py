@@ -1,12 +1,9 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request
 from datetime import datetime
 
 session = Blueprint('session', __name__)
 
-@session.route('/session', methods=['POST'])
 def determine_session(data):
-    data = request.json  # Récupérer les données JSON de la requête
-
     # Parcourir tous les documents pour déterminer la session en fonction de l'heure d'ouverture
     for doc in data:
         # Vous pouvez ajuster le format d'heure ici en fonction de celui dans votre requête JSON
@@ -16,16 +13,17 @@ def determine_session(data):
 
         # Déterminer la session en fonction de l'heure d'ouverture
         if opening_time.hour >= 0 and opening_time.hour < 7:
-            session = "AS"
+            session_value = "AS"
         elif opening_time.hour >= 8 and opening_time.hour < 12:
-            session = "LD"
+            session_value = "LD"
         elif opening_time.hour >= 13 and opening_time.hour < 15:
-            session = "NY"
+            session_value = "NY"
         else:
-            session = "ND"
+            session_value = "ND"
 
-        # Ajouter la session au document actuel
-        doc['session'] = session
+        # Mettre à jour ou ajouter la clé 'session' dans le dictionnaire data
+        doc['session'] = session_value
 
-    return jsonify(data)  # Retourner les données JSON mises à jour avec la clé 'session'
+    return data
+
 
