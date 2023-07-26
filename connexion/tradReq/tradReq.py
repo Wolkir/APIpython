@@ -86,6 +86,8 @@ def save_trade_request():
 
             session = determine_session(data)
             data['session'] = session
+        # Insert the data into the collection
+        user_collection.insert_one(data)
 
         trade_request = {
             "username": username,
