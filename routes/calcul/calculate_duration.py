@@ -12,6 +12,4 @@ def calculate_time_duration(data):
             duration = closure_time - opening_time
             entry['duration'] = str(duration)
         
-        return jsonify({"message": "La clé 'durée' a été ajoutée aux données JSON"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return data 
