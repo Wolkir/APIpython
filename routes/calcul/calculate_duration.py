@@ -12,4 +12,6 @@ def calculate_time_duration(data):
             duration = closure_time - opening_time
             entry['duration'] = str(duration)
         
-        return data 
+        return data  # Return the entire 'data' list with the 'duration' added to each element
+    except Exception as e:
+        return {"error": str(e)}  # Return an error response if an exception occurs
