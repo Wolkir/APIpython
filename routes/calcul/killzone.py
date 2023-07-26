@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from datetime import time
 
-killzone_blueprint = Blueprint('killzone', __name__)
+#killzone_blueprint = Blueprint('killzone', __name__)
+killzone = Blueprint('killzone', __name__)
 
 @killzone_blueprint.route('/killzone', methods=['POST'])
 def calculate_killzone():
