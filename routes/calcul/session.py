@@ -4,7 +4,7 @@ from datetime import datetime
 session = Blueprint('session', __name__)
 
 @session.route('/session', methods=['POST'])
-def determine_session():
+def determine_session(data):
     data = request.json  # Récupérer les données JSON de la requête
 
     # Parcourir tous les documents pour déterminer la session en fonction de l'heure d'ouverture
