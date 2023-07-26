@@ -10,8 +10,8 @@ session = Blueprint('session', __name__)
 #collection = db['things']
 
 #@session.route('/session', methods=['GET'])
-def determine_session():
-    data = request.json  # Récupérer les données JSON de la requête
+def determine_session(data):
+    #data = request.json  # Récupérer les données JSON de la requête
 
 
     # Parcourir tous les documents pour déterminer la session en fonction de l'heure d'ouverture
