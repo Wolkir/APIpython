@@ -29,6 +29,7 @@ def setup_modificationTrade_routes(app):
             position_data = data.get('position', [])
             typeOrdre_data = data.get('typeOrdre', [])
             violeStrategie_data = data.get('violeStrategie', [])
+            sortie_data = data.get('sortie', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -71,8 +72,15 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and valeur_violeStrategie in ['oui', 'non']:
                     violeStrategie = True if valeur_violeStrategie == 'oui' else False
-
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'violeStrategie': violeStrategie}})
+            
+            # Mise à jour du champ sortie
+            for sortie in sortie_data:
+                trade_id = sortie.get('id')
+                valeur_sortie = sortie.get('valueSortie')
+
+                if trade_id and valeur_sortie:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'sortie': valeur_sortie}})
             return jsonify({"message": "Trade details updated successfully."}), 200
 
         except Exception as e:
