@@ -139,7 +139,8 @@ def save_trade_request():
             "duration": data.get('duration'),
             "TPR": data.get('TPR'),
             "SLR": data.get('SLR'),
-            "RR": data.get('RR')
+            "RR": data.get('RR'),
+            "RRT": data.get('RRT')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
