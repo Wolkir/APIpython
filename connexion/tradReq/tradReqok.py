@@ -86,7 +86,8 @@ def save_trade_request():
             "psychologie": None,
             "strategie": None,
             "position": None,
-            "typeOrdre": None
+            "typeOrdre": None,
+            "violeStrategie": None
         }
 
         
