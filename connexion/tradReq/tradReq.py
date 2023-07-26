@@ -87,7 +87,7 @@ def save_trade_request():
             session = determine_session(data)
             data['session'] = session
         # Insert the data into the collection
-        user_collection.insert_one(data)
+        #user_collection.insert_one(data)
 
         trade_request = {
             "username": username,
@@ -120,9 +120,9 @@ def save_trade_request():
             "violeStrategie": None,
             "sortie": None
         }
-
+        combined_data = [trade_request, data]
         # Insertion des données dans la collection
-        user_collection.insert_one(trade_request)
+        user_collection.insert_many(combined_data)
 
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
