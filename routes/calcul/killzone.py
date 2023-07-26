@@ -19,12 +19,7 @@ def calculate_killzone():
             killzone_status = True
         else:
             killzone_status = False
+       
+         return killzone status
 
-        # Ajouter le résultat à la liste des résultats
-        results.append({
-            'dateAndTimeOpening': doc['dateAndTimeOpening'],
-            'killzone': killzone_status
-        })
 
-    # Retourner les résultats au format JSON
-    return jsonify(results)
