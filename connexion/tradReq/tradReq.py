@@ -4,7 +4,7 @@ import bcrypt
 from datetime import time
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
-from routes.calcul.killzone import determine_killzone
+from routes.calcul.killzone import calculate_killzone
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
