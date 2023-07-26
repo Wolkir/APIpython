@@ -1,25 +1,29 @@
-from flask import Flask, Blueprint, jsonify
-from pymongo import MongoClient
-from datetime import datetime, time
+from flask import Blueprint, jsonify, request
+from datetime import time
 
-# Connexion à la base de données MongoDB
-client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+killzone_blueprint = Blueprint('killzone', __name__)
 
-killzone = Blueprint('killzone', __name__)
+@killzone_blueprint.route('/killzone', methods=['POST'])
+def calculate_killzone():
+    data = request.json
+    results = []
 
-@killzone.route('/killzone', methods=['GET'])
-def determine_killzone():
-    data=request.json
     # Parcourir tous les documents de la collection
-    for doc in data :
+    for doc in data:
         # Récupérer l'heure d'ouverture de chaque document
-        opening_time = doc['dateAndTimeOpening'].time()
+        opening_time = datetime.strptime(doc['dateAndTimeOpening'], "%Y.%m.%d %H:%M:%S.%f").time()
 
         # Déterminer si l'heure d'ouverture se trouve dans l'une des plages horaires spécifiées
         if (time(3, 0) <= opening_time <= time(6, 0)) or (time(9, 0) <= opening_time <= time(12, 0)) or (time(14, 0) <= opening_time <= time(17, 0)):
-            killzone = True
+            killzone_status = True
         else:
-            killzone = False
-            
-    return entry
+            killzone_status = False
 
+        # Ajouter le résultat à la liste des résultats
+        results.append({
+            'dateAndTimeOpening': doc['dateAndTimeOpening'],
+            'killzone': killzone_status
+        })
+
+    # Retourner les résultats au format JSON
+    return jsonify(results)
