@@ -89,6 +89,7 @@ def save_trade_request():
 
             session = determine_session(data)
             data['session'] = session
+            
         # Insert the data into the collection
         #user_collection.insert_one(data)
 
@@ -124,7 +125,7 @@ def save_trade_request():
             "sortie": None,
             "killzone": data.get("killzone"),
             "session": data.get("session"),
-            "duration" :data.get('duration')
+            "duration": data.get('duration')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
