@@ -79,8 +79,8 @@ def save_trade_request():
             duration = calculate_time_duration(data)
             data['duration'] = duration['duration']
 
-            rr_values = calculate_rr(data)
-            data['RR'] = rr_values['RR']
+            rr = calculate_rr(data)
+            data['RR'] = rr['RR']
        
 
           
