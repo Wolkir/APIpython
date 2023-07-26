@@ -56,6 +56,7 @@ from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.RR import RR
+from routes.calcul.RR import RRT
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -72,6 +73,7 @@ app.register_blueprint(averagegain)
 app.register_blueprint(averageloss)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
+app.register_blueprint(RRT)
 app.register_blueprint(calculate_duration)
 #app.register_blueprint(conversion_map)
 app.register_blueprint(ddmax)
