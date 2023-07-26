@@ -118,7 +118,7 @@ def save_trade_request():
             "position": None,
             "typeOrdre": None,
             "violeStrategie": None,
-            "sortie": None
+            "sortie": None,
             "killzone": data.get("killzone"),
             "session": data.get("session")
         }
