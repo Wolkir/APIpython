@@ -123,7 +123,8 @@ def save_trade_request():
             "violeStrategie": None,
             "sortie": None,
             "killzone": data.get("killzone"),
-            "session": data.get("session")
+            "session": data.get("session"),
+            "duration" :data.get('duration')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
