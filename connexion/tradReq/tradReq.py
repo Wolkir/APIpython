@@ -67,6 +67,9 @@ def save_trade_request():
             tpr_value = calculate_tpr(data)
             data['TPR'] = tpr_value['TPR']
 
+            killzone = calculate_killzone(data)
+            data['killzone'] = killzone
+
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
