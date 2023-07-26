@@ -58,7 +58,7 @@ def setup_modificationTrade_routes(app):
             # Mise à jour du champ type ordre
             for typeOrdre in typeOrdre_data:
                 trade_id = typeOrdre.get('id')
-                valeur_typeOrdre = typeOrdre.get('valuePosition')
+                valeur_typeOrdre = typeOrdre.get('valueTypeOrdre')
 
                 if trade_id and valeur_typeOrdre:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'typeOrdre': valeur_typeOrdre}})
@@ -69,6 +69,3 @@ def setup_modificationTrade_routes(app):
             return jsonify({"error": str(e)}), 500
 
     return modificationTrade
-
-
-
