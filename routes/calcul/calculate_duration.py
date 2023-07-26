@@ -10,7 +10,7 @@ def calculate_time_duration(data):
             opening_time = datetime.strptime(entry['dateAndTimeOpening'], "%Y-%m-%dT%H:%M:%S.%f%z")
             closure_time = datetime.strptime(entry['dateAndTimeClosure'], "%Y-%m-%dT%H:%M:%S.%f%z")
             duration = closure_time - opening_time
-            entry['duration'] = str(duration)
+            entry['duration'] = duration  # Durée ajoutée directement sans conversion en chaîne de caractères
         
         return data  # Return the entire 'data' list with the 'duration' added to each element
     except Exception as e:
