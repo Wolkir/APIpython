@@ -76,7 +76,7 @@ def save_trade_request():
             data['session'] = session
 
             duration = calculate_time_duration(data)
-            data['duration'] = duration
+            data['duration'] = duration['duration']
        
 
           
