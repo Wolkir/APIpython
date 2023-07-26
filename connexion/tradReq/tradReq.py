@@ -2,6 +2,9 @@ from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
 from datetime import time
+from routes.calcul.TPR import calculate_tpr
+from routes.calcul.SLR import calculate_slr
+
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
