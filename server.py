@@ -56,7 +56,7 @@ from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.RR import RR
-from routes.calcul.RR import RRT
+from routes.calcul.RRT import RRT
 
 # envoie
 from routes.envoie.envoie import envoie
