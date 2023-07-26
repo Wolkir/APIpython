@@ -16,10 +16,10 @@ def calculate_killzone(data):
     else:
         killzone_status = False
 
-    return killzone_status
+    # Mettre à jour ou ajouter la clé 'killzone' dans le dictionnaire data
+    data['killzone'] = killzone_status
 
-
-
+    return data['killzone']  # Vous pouvez également retourner toute autre information que vous souhaitez utiliser ultérieurement.
 
 
 
