@@ -87,7 +87,8 @@ def save_trade_request():
             "strategie": None,
             "position": None,
             "typeOrdre": None,
-            "violeStrategie": None
+            "violeStrategie": None,
+            "sortie": None
         }
 
         
