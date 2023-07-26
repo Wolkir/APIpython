@@ -20,6 +20,6 @@ def calculate_killzone():
         else:
             killzone_status = False
        
-        return killzone status
+        return killzone_status
 
 
