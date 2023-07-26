@@ -67,7 +67,7 @@ def setup_modificationTrade_routes(app):
             # Mise à jour du champ violeStrategie
             for viole in violeStrategie_data:
                 trade_id = viole.get('id')
-                valeur_violeStrategie = viole.get('violeStrategie')
+                valeur_violeStrategie = viole.get('valueVioleStrategie')
 
                 if trade_id and valeur_violeStrategie in ['oui', 'non']:
                     violeStrategie = True if valeur_violeStrategie == 'oui' else False
