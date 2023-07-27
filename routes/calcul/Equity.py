@@ -7,7 +7,7 @@ db = client["test"]
 
 Equity = Blueprint('Equity', __name__)
 
-@Equity.route('/equity', methods=['POST'])
+@Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
     
     previous_equity = 2
