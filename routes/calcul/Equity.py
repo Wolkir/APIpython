@@ -8,7 +8,7 @@ Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
-    latest_entry_cursor = db.test2_close.find({}, sort=[("_id", DESCENDING)], limit=1)
+    latest_entry_cursor = db.things_close.find({}, sort=[("_id", DESCENDING)], limit=1)
 
     # Vérifier si latest_entry_cursor contient des documents
     if latest_entry_cursor.count() > 0:
