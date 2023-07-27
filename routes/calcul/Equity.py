@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 
 app = Flask(__name__)
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
