@@ -7,16 +7,16 @@ db = client["test"]
 
 Equity = Blueprint('Equity', __name__)
 
-def calculate_equity(data):
+def calculate_equity(username, data):
     try:
-        username = data.get('username')
-        profit = data.get('profit', 0.0)
-
         # Récupérer la dernière valeur d'équité de la collection username_close
         collection_name = f"{username}_close"
         collection = db[collection_name]
         last_entry = collection.find_one(sort=[('_id', -1)])
         previous_equity = last_entry.get('equity', 0.0)
+
+        # Récupérer la valeur de profit depuis l'objet data
+        profit = data.get('profit', 0.0)
 
         # Calculer la nouvelle valeur d'équité
         equity = previous_equity + profit
@@ -32,11 +32,11 @@ def calculate_equity(data):
 def calculate_equity_route():
     try:
         data = request.json
-        result = calculate_equity(data)
+        username = data.get('username')
+        result = calculate_equity(username, data)
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
-
