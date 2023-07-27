@@ -7,6 +7,7 @@ db = client["test"]
 Equity = Blueprint('Equity', __name__)
 def calculate_equity(data):
     try:
+        username = data.get('username')
         # Récupérer la dernière valeur d'équité de la collection username_close
         collection_name = f"{username}_close"
         collection = db[collection_name]
