@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 
 suppressionStrategie = Blueprint('suppressionStrategie', __name__)
 
-@suppressionStrategie.route('/suppressionStrategie', methods=['POST'])
+@suppressionStrategie.route('/suppressionStrategie', methods=['DELETE'])
 def suppression_strategie():
     data = request.json
 
