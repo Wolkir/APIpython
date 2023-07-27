@@ -5,7 +5,7 @@ from datetime import datetime
 weekday = Blueprint('weekday', __name__)
 
 @weekday.route('/weekday', methods=['GET'])
-def add_weekday():
+def add_weekday(data):
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
     db = client['test']
 
