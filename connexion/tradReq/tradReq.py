@@ -91,6 +91,9 @@ def save_trade_request():
             equity = calculate_equity(data)
             data['Equity'] = equity
 
+            weekday_str = add_weekday(data)
+            data['Day'] = weekday_str
+
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
