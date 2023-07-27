@@ -11,8 +11,7 @@ def get_recuperationStrategie():
         if not username:
             return jsonify({"error": "L'argument 'username' est manquant dans la requête"}), 400
 
-        app.config['MONGO_URI'] = 'mongodb://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
-        mongo = PyMongo(app)
+        mongo = PyMongo(app)  # En supposant que "app" est défini dans server.py
         collection = mongo.db['strategies']
 
         strategies = list(collection.find({"username": username}))
