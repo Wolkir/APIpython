@@ -8,10 +8,7 @@ db = client["test"]
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
-def calculate_equity():
-    # Assuming 'data' is a list of dictionaries with 'profit' key in each document
-    data = []  # Replace this with the actual data you want to process
-
+def calculate_equity(data):
     # Get the last equity value from "test2_close" collection
     last_equity = db["test2_close"].find_one({}, sort=[('_id', -1)])['equity']
 
