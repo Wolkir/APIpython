@@ -58,7 +58,7 @@ def update_envoie():
     print("argTypOrd : " + argTypOrd)
     
     db = client['test']
-    collection = db['thingsTest']
+    collection = db['things']
 
     start_date, end_date = process_argument_date(argD, debutDate, finDate)
     if start_date is None or end_date is None:
