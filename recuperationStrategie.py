@@ -26,4 +26,5 @@ def recuperationStrategieGet():
         return jsonify(strategies), 200
 
     except Exception as e:
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": "Erreur lors de la récupération des stratégies pour l'utilisateur donné", "details": str(e)}), 500
