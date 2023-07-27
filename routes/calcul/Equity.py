@@ -15,9 +15,16 @@ def calculate_equity(data):
     # Mettre à jour previous_equity avec la dernière valeur de "Equity" si elle existe, sinon garder la valeur par défaut de 2
     previous_equity = latest_entry.get("Equity", 2)
     
-    profit = data['profit']
+    # Récupérer la valeur du profit à partir des données (assurez-vous que la clé "profit" existe dans les données)
+    profit = data.get('profit', 0)
+    
+    # Vérifier si le profit est un nombre (float ou int)
+    if not isinstance(profit, (float, int)):
+        return jsonify({"error": "Profit must be a numeric value."}), 400
+    
     equity = profit + previous_equity
     
+
     
     return equity
 
