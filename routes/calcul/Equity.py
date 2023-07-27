@@ -24,5 +24,3 @@ def calculate_equity(data):
     return str(equity)
 
 
-
-
