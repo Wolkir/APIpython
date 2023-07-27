@@ -4,7 +4,7 @@ from pymongo import MongoClient
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['POST'])
-def calculate_equity():
+def calculate_equity(data):
     data = request.json  # Assuming you are sending data in JSON format through the request
 
     # Initialize a variable to store the previous equity value
