@@ -9,7 +9,7 @@ db = client["test"]
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['POST'])
-def calculate_equity():
+def calculate_equity(data):
     data = request.get_json()
 
     if 'profit' in data and isinstance(data['profit'], (int, float)):
