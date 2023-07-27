@@ -21,4 +21,12 @@ def calculate_equity(data):
 
             previous_equity = equity  # Update the previous equity value for the next iteration
 
-    return data  # Return the data with the 'equity' field updated
+    # Get the last data entry from the list
+    last_entry = data[-1]
+
+    # Get the equity value from the last data entry
+    last_equity = last_entry['equity']
+
+    return last_equity  # Return the last calculated equity value
+
+
