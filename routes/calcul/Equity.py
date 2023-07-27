@@ -19,7 +19,7 @@ def calculate_equity(data):
             last_equity += profit
             document['Equity'] = last_equity
 
-    return jsonify(data)
+    return data
 
 # Register the blueprint in the app
 app.register_blueprint(Equity)
