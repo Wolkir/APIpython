@@ -8,7 +8,16 @@ Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
-    latest_entry_cursor = db.things_close.find({}, sort=[("_id", DESCENDING)], limit=1)
+    username = data.get('username')
+
+    if not username:
+        return "Nom d'utilisateur manquant dans les données.", 400
+   
+    collection_name = f"{username}_close"  # Créer le nom de la collection en ajoutant le nom d'utilisateur à "_close"
+    collection = db[collection_name]     
+    latest_entry_cursor = collection.find({}, sort=[("_id", DESCENDING)], limit=1)
+
+    #latest_entry_cursor = db.things_close.find({}, sort=[("_id", DESCENDING)], limit=1)
 
     # Vérifier si latest_entry_cursor contient des documents
     if latest_entry_cursor.count() > 0:
