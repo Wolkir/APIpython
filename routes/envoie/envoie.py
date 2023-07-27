@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 
 import atexit
 import json
@@ -103,4 +103,5 @@ def update_envoie():
         return jsonify({'data': data})
     except PyMongoError as e:
         print("An error occurred:", str(e))
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': 'Error occurred'})
