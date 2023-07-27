@@ -12,7 +12,7 @@ def after_request(response):
     return response
 
 app.after_request(after_request)
-
+app.debug = True
 CORS(app, origins='*', allow_headers='*', methods='*')
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
