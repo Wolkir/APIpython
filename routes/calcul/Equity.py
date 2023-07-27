@@ -7,8 +7,10 @@ db = client["test"]
 
 Equity = Blueprint('Equity', __name__)
 
-@Equity.route('/equity', methods=['GET'])
-def calculate_equity(data):
+@Equity.route('/equity', methods=['POST'])
+def calculate_equity():
+    data = request.get_json()  # Assuming the data is passed as a JSON object in the request body
+
     # Récupérer la dernière valeur de la clé "Equity" triée par ordre décroissant
     latest_entry = db.test2_close.find_one({}, sort=[("Equity", DESCENDING)])
     
@@ -24,7 +26,6 @@ def calculate_equity(data):
     
     equity = profit + previous_equity
     
-
-    
+       
     return equity
 
