@@ -6,7 +6,9 @@ from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import calculate_killzone
 from routes.calcul.session import determine_session
-
+from routes.calcul.calculate_duration import calculate_time_duration
+from routes.calcul.RR import calculate_rr
+from routes.calcul.RRT import calculate_rrt
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -75,6 +77,18 @@ def save_trade_request():
             session = determine_session(data)
             data['session'] = session
 
+            duration = calculate_time_duration(data)
+            data['duration'] = duration['duration']
+
+            rr = calculate_rr(data)
+            data['RR'] = rr
+
+            rrt = calculate_rrt(data)
+            data['RRT'] = rrt
+       
+
+          
+
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
@@ -86,6 +100,10 @@ def save_trade_request():
 
             session = determine_session(data)
             data['session'] = session
+
+            rrt = calculate_rrt(data)
+            data['RRT'] = rrt
+            
         # Insert the data into the collection
         #user_collection.insert_one(data)
 
@@ -120,7 +138,12 @@ def save_trade_request():
             "violeStrategie": None,
             "sortie": None,
             "killzone": data.get("killzone"),
-            "session": data.get("session")
+            "session": data.get("session"),
+            "duration": data.get('duration'),
+            "TPR": data.get('TPR'),
+            "SLR": data.get('SLR'),
+            "RR": data.get('RR'),
+            "RRT": data.get('RRT')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
