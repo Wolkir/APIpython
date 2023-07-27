@@ -4,31 +4,21 @@ from pymongo import MongoClient
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
-def calculate_equity():
-    # Connexion à la base de données MongoDB
-    url = "mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(url, connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
-    db = client['test']
-    collection = db['things']
+def calculate_equity(data):
+    # Initialize a variable to store the previous equity value
+    previous_equity = 0
 
-    # Récupération des documents de la collection
-    documents = collection.find()
-
-    previous_equity = 0  # Variable to store the previous equity value
-
-    for document in documents:
+    # Iterate over each data entry
+    for document in data:
         if 'profit' in document:
             profit = document['profit']
 
-            # Calculate the new equity value by adding the previous equity and the current volume
+            # Calculate the new equity value by adding the previous equity and the current profit
             equity = previous_equity + profit
 
-            # Update the document with the new equity value
-            collection.update_one({'_id': document['_id']}, {'$set': {'equity': equity}})
+            # Update the data entry with the new equity value
+            document['equity'] = equity
 
             previous_equity = equity  # Update the previous equity value for the next iteration
 
-    # Fermeture de la connexion à la base de données
-    client.close()
-
-    return 'Clé "profsdit" mise à jour avec succès.'
+    return data  # Return the data with the 'equity' field updated
