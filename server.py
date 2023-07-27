@@ -110,6 +110,7 @@ app.register_blueprint(suppressionStrategie)
 
 # envoie
 app.register_blueprint(envoie)
+CORS(envoie)
 
 # journal
 app.register_blueprint(setup_things_routes(app))
