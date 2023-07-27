@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 Equity = Blueprint('Equity', __name__)
 
-def calculate_equity(username, data):
+def calculate_equity(data):
     try:
         # Récupérer la dernière valeur d'équité de la collection username_close
         collection_name = f"{username}_close"
