@@ -8,14 +8,25 @@ db = client["test"]
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
-def calculate_equity(data):
-    previous_equity = 0
+def calculate_equity():
+    # Assuming 'data' is a list of dictionaries with 'profit' key in each document
+    data = []  # Replace this with the actual data you want to process
 
+    # Get the last equity value from "test2_close" collection
+    last_equity = db["test2_close"].find_one({}, sort=[('_id', -1)])['equity']
+
+    # Calculate new equity for each document in 'data'
     for document in data:
         if 'profit' in document:
             profit = document['profit']
-            equity = previous_equity + profit
-            document['equity'] = equity
-            previous_equity = equity
+            last_equity += profit
+            document['equity'] = last_equity
 
-    return data
+    return jsonify(data)
+
+# Register the blueprint in the app
+app.register_blueprint(Equity)
+
+# Run the Flask app
+if __name__ == "__main__":
+    app.run()
