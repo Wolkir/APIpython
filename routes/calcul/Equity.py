@@ -29,7 +29,7 @@ def calculate_equity(username, data):
         return {"error": str(e)}  # Renvoyer une réponse d'erreur en cas d'exception
 
 @app.route('/calculate_equity', methods=['POST'])
-def calculate_equity_route():
+def calculate_equity_route(data):
     try:
         data = request.json
         username = data.get('username')
