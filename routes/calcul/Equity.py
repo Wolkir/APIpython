@@ -10,14 +10,14 @@ Equity = Blueprint('Equity', __name__)
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
     # Get the last equity value from "test2_close" collection
-    last_equity = db["test2_close"].find_one({}, sort=[('_id', -1)])['equity']
+    last_equity = db["test2_close"].find_one({}, sort=[('_id', -1)])['Equity']
 
     # Calculate new equity for each document in 'data'
     for document in data:
         if 'profit' in document:
             profit = document['profit']
             last_equity += profit
-            document['equity'] = last_equity
+            document['Equity'] = last_equity
 
     return jsonify(data)
 
