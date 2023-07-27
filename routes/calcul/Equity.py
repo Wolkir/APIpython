@@ -5,7 +5,7 @@ from pymongo import MongoClient
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
 Equity = Blueprint('Equity', __name__)
-def calculate_equity(data):
+def calculate_equity(data,username):
     try:
         username = data.get('username')
         # Récupérer la dernière valeur d'équité de la collection username_close
