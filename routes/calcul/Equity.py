@@ -3,28 +3,23 @@ from pymongo import MongoClient
 
 Equity = Blueprint('Equity', __name__)
 
-def calculate_equity(data):
-    # Initialize a variable to store the previous equity value
-    previous_equity = 0.0  # Utiliser 0.0 pour indiquer que c'est un nombre à virgule flottante
-
+def calculate_equity(username, data):
     try:
-        for document in data:
-            profit = document['profit']
+        # Récupérer la dernière valeur d'équité de la collection username_close
+        collection_name = f"{username}_close"
+        collection = db[collection_name]
+        last_entry = collection.find_one(sort=[('_id', -1)])
+        previous_equity = last_entry.get('equity', 0.0)
 
-            # Calculate the new equity value by adding the previous equity and the current profit
-            equity = previous_equity + profit
+        # Récupérer la valeur de profit depuis l'objet data
+        profit = data.get('profit', 0.0)
 
-            # Update the data entry with the new equity value
-            document['equity'] = equity
+        # Calculer la nouvelle valeur d'équité
+        equity = previous_equity + profit
 
-            previous_equity = equity  # Update the previous equity value for the next iteration
+        # Insérer la nouvelle valeur d'équité dans la collection
+        collection.insert_one({'equity': equity})
 
-        # Get the last data entry from the list
-        last_entry = data[-1]
-
-        # Get the equity value from the last data entry
-        last_equity = last_entry['equity']
-
-        return last_equity  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
+        return equity  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
     except Exception as e:
-        return {"error": str(e)}  # Return an error response if an exception occurs
+        return {"error": str(e)}  # Renvoyer une réponse d'erreur en cas d'exception
