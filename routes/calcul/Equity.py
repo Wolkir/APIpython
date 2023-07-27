@@ -13,8 +13,7 @@ def calculate_equity(data):
     latest_entry = db.test2_close.find_one({}, sort=[("Equity", DESCENDING)])
     
     # Mettre à jour previous_equity avec la dernière valeur de "Equity" si elle existe, sinon garder la valeur par défaut de 2
-    previous_equity = latest_entry.get("Equity", 2)
-    
+    previous_equity = latest_entry.get("Equity")
     profit = data['profit']
     equity = profit + previous_equity
 
