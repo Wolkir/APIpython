@@ -4,7 +4,7 @@ from pymongo import MongoClient, DESCENDING
 app = Flask(__name__)
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
-
+Equity = Blueprint('Equity', __name__)
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
     latest_entry = db.test2_close.find({}, sort=[("Equity", DESCENDING)], limit=1)
