@@ -25,4 +25,4 @@ def calculate_equity(data):
 
     equity = profit + previous_entry
 
-    return str(equity)
+    return equity
