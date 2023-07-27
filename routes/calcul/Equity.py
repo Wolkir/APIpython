@@ -14,15 +14,7 @@ def calculate_equity(data):
         equity = previous_equity + profit
 
         # Update the data entry with the new equity value
-        data['equity'] = equity
-
-        previous_equity = equity  # Update the previous equity value for the next iteration
-
-        # Get the last data entry from the list
-        last_entry = 2  # Remplacez cette valeur par la logique pour récupérer la dernière entrée de la collection
-
-        # Get the equity value from the last data entry
-        data['last_equity'] = str(last_entry)  # ['equity']
+        data['equity'] = str(equity)
 
         return data  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
     except Exception as e:
