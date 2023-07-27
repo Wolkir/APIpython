@@ -9,8 +9,8 @@ def add_weekday(data):
     client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
     db = client['test']
 
-    username = request.args.get('username')  # Récupérer le nom d'utilisateur depuis les arguments de requête
-    date_and_time_opening = request.args.get('dateAndTimeOpening')  # Récupérer la date et l'heure d'ouverture depuis les arguments de requête
+    username = data.get('username')  # Récupérer le nom d'utilisateur depuis les arguments de requête
+    date_and_time_opening = username = data.get('dateAndTimeOpening')  # Récupérer la date et l'heure d'ouverture depuis les arguments de requête
 
     if not username or not date_and_time_opening:
         return "Nom d'utilisateur ou dateAndTimeOpening manquant dans les arguments de requête.", 400
