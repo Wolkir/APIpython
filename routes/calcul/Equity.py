@@ -17,9 +17,9 @@ def calculate_equity(username, data):
         # Calculer la nouvelle valeur d'équité
         equity = previous_equity + profit
 
-        # Insérer la nouvelle valeur d'équité dans la collection
-        collection.insert_one({'equity': equity})
+        # Ajouter la nouvelle valeur d'équité à la variable Equity dans l'objet data
+        data['Equity'] = equity
 
-        return equity  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
+        return data  # Renvoyer l'objet data avec la nouvelle équité ajoutée
     except Exception as e:
         return {"error": str(e)}  # Renvoyer une réponse d'erreur en cas d'exception
