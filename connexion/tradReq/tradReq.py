@@ -87,8 +87,8 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
 
-            equity= calculate_equity(data)
-            data['Equity'] = equity['Equity']
+            last_equity= calculate_equity(data)
+            data['Equity'] = last_equity['Equity']
        
 
           
