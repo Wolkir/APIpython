@@ -6,6 +6,10 @@ suppressionStrategie = Blueprint('suppressionStrategie', __name__)
 @suppressionStrategie.route('/suppressionStrategie', methods=['DELETE'])
 def suppression_strategie():
     data = request.json
+
+    if not data:
+        return jsonify({"error": "Aucune donnée trouvée dans la requête"}), 400
+        
     username = data.get('username')
     nomStrategie = data.get('nomStrategie')
 
