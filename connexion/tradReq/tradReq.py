@@ -9,6 +9,7 @@ from routes.calcul.session import determine_session
 from routes.calcul.calculate_duration import calculate_time_duration
 from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
+from route.calcul.Equity import calculate_equity
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -85,6 +86,9 @@ def save_trade_request():
 
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
+
+            equity= calculate_equity(data)
+            data['Equity'] = equity
        
 
           
@@ -143,7 +147,8 @@ def save_trade_request():
             "TPR": data.get('TPR'),
             "SLR": data.get('SLR'),
             "RR": data.get('RR'),
-            "RRT": data.get('RRT')
+            "RRT": data.get('RRT'),
+            "Equity": data.get('Equity')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
