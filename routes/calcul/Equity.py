@@ -1,22 +1,22 @@
-from flask import Blueprint, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from pymongo import MongoClient
 
-
+app = Flask(__name__)
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
+
 Equity = Blueprint('Equity', __name__)
+
 def calculate_equity(data):
     try:
-        data= request.json
         username = data.get('username')
+        profit = data.get('profit', 0.0)
+
         # Récupérer la dernière valeur d'équité de la collection username_close
         collection_name = f"{username}_close"
         collection = db[collection_name]
         last_entry = collection.find_one(sort=[('_id', -1)])
         previous_equity = last_entry.get('equity', 0.0)
-
-        # Récupérer la valeur de profit depuis l'objet data
-        profit = data.get('profit', 0.0)
 
         # Calculer la nouvelle valeur d'équité
         equity = previous_equity + profit
@@ -27,3 +27,16 @@ def calculate_equity(data):
         return data  # Renvoyer l'objet data avec la nouvelle équité ajoutée
     except Exception as e:
         return {"error": str(e)}  # Renvoyer une réponse d'erreur en cas d'exception
+
+@app.route('/calculate_equity', methods=['POST'])
+def calculate_equity_route():
+    try:
+        data = request.json
+        result = calculate_equity(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
