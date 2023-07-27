@@ -11,9 +11,7 @@ Equity = Blueprint('Equity', __name__)
 def calculate_equity(data):
     previous_equity = 2
 
-    for document in data:
-        if 'profit' in document:
-            profit = document['profit']
-            equity = previous_equity + profit
-            
+    profit = data['profit']
+    equity = previous_equity + profit
+    
     return equity
