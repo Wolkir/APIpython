@@ -63,6 +63,8 @@ def update_envoie():
     start_date, end_date = process_argument_date(argD, debutDate, finDate)
     if start_date is None or end_date is None:
         return jsonify({'message': 'Invalid date arguments date'})
+    debutDate = debutDate.replace('Z', '')
+    finDate = finDate.replace('Z', '')
     print(start_date, end_date)
     
     argTPRbinaire, argSLbinaire, argBEbinaire = process_argument_xy(argTPR, argSL, argBE)
