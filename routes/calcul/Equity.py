@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
 
 Equity = Blueprint('Equity', __name__)
+db = client["test"]
 
 def calculate_equity(data):
     try:
