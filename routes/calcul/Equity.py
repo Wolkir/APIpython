@@ -1,10 +1,12 @@
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
 
 Equity = Blueprint('Equity', __name__)
 
-@Equity.route('/equity', methods=['GET'])
-def calculate_equity(data):
+@Equity.route('/equity', methods=['POST'])
+def calculate_equity():
+    data = request.json  # Assuming you are sending data in JSON format through the request
+
     # Initialize a variable to store the previous equity value
     previous_equity = 0
 
@@ -27,6 +29,6 @@ def calculate_equity(data):
     # Get the equity value from the last data entry
     last_equity = last_entry['equity']
 
-    return last_equity  # Return the last calculated equity value
+    return jsonify(data)  # Return the updated data as a JSON response
 
 
