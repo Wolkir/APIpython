@@ -9,7 +9,7 @@ from routes.calcul.session import determine_session
 from routes.calcul.calculate_duration import calculate_time_duration
 from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
-from route.calcul.Equity import calculate_equity
+from routes.calcul.Equity import calculate_equity
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
