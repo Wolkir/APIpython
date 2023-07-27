@@ -11,7 +11,9 @@ def get_recuperationStrategie():
         if not username:
             return jsonify({"error": "L'argument 'username' est manquant dans la requête"}), 400
 
-        mongo = PyMongo(app)  # En supposant que "app" est défini dans server.py
+        app = recuperationStrategie.app  # Accéder à l'application via l'attribut app du blueprint
+        app.config['MONGO_URI'] = 'mongodb://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
+        mongo = PyMongo(app)
         collection = mongo.db['strategies']
 
         strategies = list(collection.find({"username": username}))
@@ -20,8 +22,3 @@ def get_recuperationStrategie():
 
     except Exception as e:
         return jsonify({"error": "Erreur lors de la récupération des stratégies pour l'utilisateur donné", "details": str(e)}), 500
-
-def setup_recuperationStrategie(app):
-    # Vous pouvez effectuer d'autres opérations si nécessaire
-    # avant de retourner le blueprint
-    return recuperationStrategie
