@@ -16,7 +16,7 @@ def add_weekday(data):
         return "Nom d'utilisateur ou dateAndTimeOpening manquant dans les arguments de requête.", 400
 
     # Convertir la date et l'heure d'ouverture en objet datetime
-    opening_datetime = datetime.strptime(date_and_time_opening, "%Y-%m-%d %H:%M:%S")
+    opening_datetime = datetime.strptime(date_and_time_opening, "%Y-%m-%dT%H:%M:%S.%f%z")
 
     # Obtenir le jour de la semaine en chaîne de caractères (en anglais)
     weekday_str = opening_datetime.strftime("%A")
