@@ -10,8 +10,7 @@ Equity = Blueprint('Equity', __name__)
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
     latest_entry = db.test2_close.find_one({}, sort=[("Equity", DESCENDING)])
-    previous_entry = float(latest_entry["Equity"]) if latest_entry is not None else 2
-    #previous_equity = 2
+    previous_entry = latest_entry.get("Equity", 2)
     profit = data['profit']
     equity = profit + previous_entry
     
