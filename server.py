@@ -24,9 +24,9 @@ from connexion.user.getUser import setup_user_routes
 
 from connexion.tradReq.tradReq import trade_blueprint
 
-from recuperationStrategie import setup_recuperationStrategie
+from recuperation_strategie import recuperationStrategie
 #from connexion.strategie.recuperationStrategie import recuperationStrategie, setup_recuperationStrategie
-app.register_blueprint(setup_recuperationStrategie(app))
+app.register_blueprint(recuperationStrategie)
 
 # calcul
 #from routes.calcul.BE_RR.RR import RR
