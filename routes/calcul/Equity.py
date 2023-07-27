@@ -27,6 +27,6 @@ def calculate_equity(data):
         # Get the equity value from the last data entry
         data['last_equity'] = str(last_entry) #['equity']
 
-        return last_equity  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
+        return data  # Renvoyer la nouvelle équité sous forme de nombre à virgule flottante
     except Exception as e:
         return {"error": str(e)}  # Return an error response if an exception occurs
