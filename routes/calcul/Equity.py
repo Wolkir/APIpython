@@ -8,7 +8,7 @@ Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
-    latest_entry = db.test2_close.find_one({}, sort=[("Equity", DESCENDING)])
+    latest_entry = db.things_close.find_one({}, sort=[("Equity", DESCENDING)])
 
     # Vérifier si latest_entry existe et si "Equity" est une valeur numérique (int ou float)
     if latest_entry and isinstance(latest_entry["Equity"], (float, int)):
