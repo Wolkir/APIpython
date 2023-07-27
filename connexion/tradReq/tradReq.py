@@ -10,6 +10,7 @@ from routes.calcul.calculate_duration import calculate_time_duration
 from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
+from routes.calcul.weekday import add_weekday
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -106,6 +107,9 @@ def save_trade_request():
 
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
+
+            weekday_str = add_weekday(data)
+            data['Day'] = weekday_str
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -147,7 +151,8 @@ def save_trade_request():
             "SLR": data.get('SLR'),
             "RR": data.get('RR'),
             "RRT": data.get('RRT'),
-            "Equity": data.get('Equity')
+            "Equity": data.get('Equity'),
+            "Day": data.get('Day')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
