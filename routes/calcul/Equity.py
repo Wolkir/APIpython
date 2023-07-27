@@ -8,20 +8,13 @@ db = client["test"]
 Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['POST'])
-def calculate_equity():
-    data = request.get_json()
+def calculate_equity(data):
+    
+    previous_equity = 2
+    profit = data['profit']
+    equity = previous_equity + profit
+    
+    return equity
 
-    if 'profit' in data and isinstance(data['profit'], (int, float)):
-        previous_equity = 2
-        profit = data['profit']
-        equity = previous_equity + profit
-        return str(equity)  # Retourne la valeur de l'équité sous forme de chaîne de caractères
-    else:
-        return 'Invalid data. Expected JSON with "profit" field as a number.', 400
 
-# Enregistrez le Blueprint sur l'application principale
-app.register_blueprint(Equity)
 
-# Exécutez le serveur Flask
-if __name__ == '__main__':
-    app.run()
