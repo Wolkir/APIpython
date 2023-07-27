@@ -22,15 +22,13 @@ from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
 from connexion.user.getUser import setup_user_routes
 
+# recuperation trade de mt5
 from connexion.tradReq.tradReq import trade_blueprint
 
 #from recuperationStrategie import recuperationStrategie
 from connexion.strategie.recuperationStrategie import recuperationStrategie
 from connexion.strategie.createStrategie import createStrategie
 from connexion.strategie.suppressionStrategie import suppressionStrategie
-app.register_blueprint(recuperationStrategie)
-app.register_blueprint(createStrategie)
-app.register_blueprint(suppressionStrategie)
 
 # calcul
 #from routes.calcul.BE_RR.RR import RR
@@ -102,9 +100,18 @@ app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
 app.register_blueprint(setup_user_routes(app))
 
+# recuperation trade de mt5
 app.register_blueprint(trade_blueprint)
 
-#journal
+# strategie
+app.register_blueprint(recuperationStrategie)
+app.register_blueprint(createStrategie)
+app.register_blueprint(suppressionStrategie)
+
+# envoie
+app.register_blueprint(envoie)
+
+# journal
 app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
 
