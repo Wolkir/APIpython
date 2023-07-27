@@ -10,7 +10,7 @@ def add_weekday(data):
     db = client['test']
 
     username = data.get('username')  # Récupérer le nom d'utilisateur depuis les arguments de requête
-    date_and_time_opening = username = data.get('dateAndTimeOpening')  # Récupérer la date et l'heure d'ouverture depuis les arguments de requête
+    date_and_time_opening = data.get('dateAndTimeOpening')  # Récupérer la date et l'heure d'ouverture depuis les arguments de requête
 
     if not username or not date_and_time_opening:
         return "Nom d'utilisateur ou dateAndTimeOpening manquant dans les arguments de requête.", 400
