@@ -34,4 +34,6 @@ def calculate_equity(data):
 
     equity = profit + previous_entry
 
+    equity = round(equity, 2)
+
     return equity
