@@ -1,9 +1,10 @@
 from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
 
-Equity = Blueprint('Equity', __name__)
-db = client["test"]
 
+client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
+db = client["test"]
+Equity = Blueprint('Equity', __name__)
 def calculate_equity(data):
     try:
         # Récupérer la dernière valeur d'équité de la collection username_close
