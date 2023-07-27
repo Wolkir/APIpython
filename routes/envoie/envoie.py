@@ -103,7 +103,6 @@ def update_envoie():
         data = json.loads(json.dumps(data, default=json_serial))
 
         return jsonify({'data': data})
-    except PyMongoError as e:
-        print("An error occurred:", str(e))
+    except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
-        return jsonify({'message': 'Error occurred'})
+        return jsonify({"error": "Erreur lors de la enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
