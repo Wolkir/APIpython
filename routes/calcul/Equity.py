@@ -9,13 +9,11 @@ Equity = Blueprint('Equity', __name__)
 
 @Equity.route('/equity', methods=['GET'])
 def calculate_equity(data):
-    previous_equity = 0
+    previous_equity = 2
 
     for document in data:
         if 'profit' in document:
             profit = document['profit']
             equity = previous_equity + profit
-            document['equity'] = equity
-            previous_equity = equity
-
-    return data
+            
+    return equity
