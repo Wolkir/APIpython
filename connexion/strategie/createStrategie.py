@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from flask_pymongo import PyMongo
 
 createStrategie = Blueprint('createStrategie', __name__)
@@ -26,4 +26,5 @@ def setup_createStrategie_routes(app):
 
             return jsonify({"message": "Stratégie enregistrée avec succès"}), 200
         except Exception as e:
-            return jsonify({"error": "Erreur lors de l'enregistrement de la stratégie", "details": str(e)}), 500
+            current_app.logger.error(f"Error occurred: {e}")
+            return jsonify({"error": "Erreur lors de la enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
