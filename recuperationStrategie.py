@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, current_app
 from flask_pymongo import PyMongo
+from bson import ObjectId  # Importer ObjectId
 
 recuperationStrategie = Blueprint('recuperationStrategie', __name__)
 
@@ -14,7 +15,10 @@ def get_recuperationStrategie():
         mongo = PyMongo(current_app)
         collection = mongo.db['strategies']
 
+        # Convertir les objets ObjectId en chaînes de caractères
         strategies = list(collection.find({"username": username}))
+        for strategy in strategies:
+            strategy['_id'] = str(strategy['_id'])
 
         return jsonify(strategies), 200
 
