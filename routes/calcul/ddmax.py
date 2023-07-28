@@ -27,7 +27,7 @@ def calculate_ddmax(data):
     result = list(collection.aggregate(pipeline))
 
     # Vérification du résultat
-    max_equity = result[0]['equity'] if result else None
+    max_equity = result[0]['Equity'] if result else None
 
     # Ajouter le résultat à la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
