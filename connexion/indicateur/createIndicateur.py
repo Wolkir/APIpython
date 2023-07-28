@@ -14,10 +14,10 @@ def create_indicateur():
         collection = mongo.db['indicateurs']
         indicateurs = list(collection.find({"nomIndicateur": nomIndicateur}))
         if indicateurs:
-            return jsonify({"error": "Cette stratégie existe déjà"}), 400
+            return jsonify({"error": "Cette indicateur existe déjà"}), 400
 
         indicateurs = {
-            "nomStrategie": nomIndicateur,
+            "nomIndicateur": nomIndicateur,
             "username": username
         }
         mongo.db.indicateurs.insert_one(indicateurs)
