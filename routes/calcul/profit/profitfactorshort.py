@@ -36,4 +36,4 @@ def calculate_profit_factor_short(data):
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {'$set': {'profitfactorshort': (profit_factor)}}, upsert=True)
     unitaire_collection.update_one({}, {'$set': {'total loss Short': (total_loss)}}, upsert=True)
-    unitaire_collection.update_one({}, {'$set': {'total gain Short': (total_gain)}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'total gain Short': (total_profit)}}, upsert=True)
