@@ -34,6 +34,8 @@ def setup_modificationTrade_routes(app):
             indicateur2_data = data.get('indicateur2', [])
             indicateur3_data = data.get('indicateur3', [])
             strategie_data = data.get('strategie', [])
+            timeEntree_data = data.get('timeEntree', [])
+            timeSetup_data = data.get('timeSetup', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -117,6 +119,22 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_strategie:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'strategie': value_strategie}}, upsert=True)
+
+            # Mise à jour ou création des champs timeEntree
+            for timeEntree_item in timeEntree_data:
+                trade_id = timeEntree_item.get('id')
+                value_timeEntree = timeEntree_item.get('timeEntree')
+
+                if trade_id and value_timeEntree:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeEntree': value_timeEntree}}, upsert=True)
+
+            # Mise à jour ou création des champs timeSetup
+            for timeSetup_item in timeSetup_data:
+                trade_id = timeSetup_item.get('id')
+                value_timeSetup = timeSetup_item.get('timeSetup')
+
+                if trade_id and value_timeSetup:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeSetup': value_timeSetup}}, upsert=True)
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
