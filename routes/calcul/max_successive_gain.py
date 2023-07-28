@@ -21,15 +21,15 @@ def find_max_successive_gains(data):
     # Initialisation des variables
     max_successive_gains_count = 0
     current_successive_gains_count = 0
-    previous_ticket_number = None
+    previous_identifier = None
 
     # Parcourir les documents de la collection
-    for doc in collection.find().sort("ticketNumber"):
+    for doc in collection.find().sort("identifier"):
         profit = doc['profit']
-        ticket_number = doc['ticketNumber']
+        identifier = doc['identifier']
 
         if profit > 0:
-            if ticket_number != previous_ticket_number:
+            if identifier != previous_identifier:
                 current_successive_gains_count = 1
             else:
                 current_successive_gains_count += 1
