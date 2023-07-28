@@ -20,6 +20,7 @@ from routes.calcul.max_successive_losses import find_max_successive_losses
 from routes.calcul.winrate import calculate_winrate
 from routes.calcul.winratestd  import calculate_winratestd
 from routes.calcul.profit.profitfactor  import calculate_profit_factor
+from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
@@ -111,7 +112,7 @@ def save_trade_request():
             calculate_winrate(data)
             calculate_winratestd(data)
             calculate_profit_factor(data)
-                 
+            calculate_profit_factor_long(data)                 
 
           
 
