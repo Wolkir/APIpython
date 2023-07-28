@@ -34,7 +34,7 @@ def calculate_average_duration():
     average_duration = total_duration / document_count if document_count > 0 else timedelta()
     
     # Insérer la durée moyenne dans la collection "unitaire"
-    unitaire_collection = db['unitaire']
+    unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {'$set': {'average_duration': str(average_duration)}}, upsert=True)
     
-    return jsonify({"average_duration": str(average_duration)})
+
