@@ -36,4 +36,4 @@ def calculate_profit_factor(data):
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {'$set': {'profitfactor': (profit_factor)}}, upsert=True)
     unitaire_collection.update_one({}, {'$set': {'total loss': (total_loss)}}, upsert=True)
-    unitaire_collection.update_one({}, {'$set': {'total gain': (total gain)}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'total gain': (total_gain)}}, upsert=True)
