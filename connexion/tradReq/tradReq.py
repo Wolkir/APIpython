@@ -21,6 +21,9 @@ from routes.calcul.winrate import calculate_winrate
 from routes.calcul.winratestd  import calculate_winratestd
 from routes.calcul.profit.profitfactor  import calculate_profit_factor
 from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
+from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short
+from routes.calcul.profit.minloss  import find_min_loss
+
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
@@ -112,7 +115,9 @@ def save_trade_request():
             calculate_winrate(data)
             calculate_winratestd(data)
             calculate_profit_factor(data)
-            calculate_profit_factor_long(data)                 
+            calculate_profit_factor_long(data) 
+            calculate_profit_factor_short(data)
+            find_min_loss(data)               
 
           
 
