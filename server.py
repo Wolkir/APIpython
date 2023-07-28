@@ -48,7 +48,7 @@ from routes.calcul.winrate import winrate
 # envoie
 from routes.envoie.envoie import envoie
 # image
-from routes.journal.enregistrementImage import enregistrerImage
+#from routes.journal.enregistrementImage import enregistrerImage
 from routes.journal.modificationTrade import setup_modificationTrade_routes
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
