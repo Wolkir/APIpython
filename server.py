@@ -107,7 +107,7 @@ app.register_blueprint(tradecount)
 app.register_blueprint(weekday)
 app.register_blueprint(winrate)
 app.register_blueprint(envoie)
-app.register_blueprint(calculate_winratestd)
+app.register_blueprint(winratestd)
 
 # user
 app.register_blueprint(setup_signup_route(app))
