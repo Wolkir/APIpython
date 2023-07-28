@@ -19,7 +19,7 @@ def calculate_profit_factor_short(data):
     total_loss = 0
 
     # Parcourir les documents de la collection
-    for doc in collection.find({"typeOfTransaction": "sell"}):
+    for doc in collection.find({"typeOfTransaction": "Sell"}):
         profit = doc['profit']
         if profit > 0:
             total_profit += profit
