@@ -26,4 +26,4 @@ def calculate_average_rr(data):
     unitaire_collection = db['collection_name']
     unitaire_collection.update_one({}, {"$set": {"RRaverage": average_rr}}, upsert=True)
 
-    return jsonify({"average_rr": average_r
+return jsonify({"average_rr": average_rr})
