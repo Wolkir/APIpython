@@ -33,6 +33,7 @@ def setup_modificationTrade_routes(app):
             indicateur1_data = data.get('indicateur1', [])
             indicateur2_data = data.get('indicateur2', [])
             indicateur3_data = data.get('indicateur3', [])
+            strategie_data = data.get('strategie', [])
             things_collection = mongo.db.things
 
             # Mise à jour ou création des champs psychologie
@@ -108,6 +109,14 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_indicateur3:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur3': value_indicateur3}}, upsert=True)
+
+            # Mise à jour ou création des champs strategie
+            for strategie_item in strategie_data:
+                trade_id = strategie_item.get('id')
+                value_strategie = strategie_item.get('valueStrategie')
+
+                if trade_id and value_strategie:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'strategie': value_strategie}}, upsert=True)
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
