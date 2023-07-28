@@ -10,7 +10,8 @@ db = client['test']
 @average_rr.route('/average_rr', methods=['GET'])
 def calculate_average_rr(data):
     username = data.get('username')
-    collection_name = f"{username}_unitaire"
+    collection_name = f"{username}_close"
+    collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
     rr_values = []
     for document in collection.find():
@@ -23,7 +24,7 @@ def calculate_average_rr(data):
     rr_count = len(rr_values)
     average_rr = rr_total / rr_count if rr_count > 0 else 0
 
-    unitaire_collection = db[collection_name]
+    unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {"$set": {"RRaverage": average_rr}}, upsert=True)
 
 
