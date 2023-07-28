@@ -12,6 +12,9 @@ from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
 from routes.calcul.average.average_rr import calculate_average_rr
+from routes.calcul.average.average_duration import calculate_average_duration
+
+
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
