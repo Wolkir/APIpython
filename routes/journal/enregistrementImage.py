@@ -1,9 +1,10 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, Flask
 import pymongo
 from bson import ObjectId
 import gridfs
 import io
 
+app = Flask(__name__)
 
 enregistrerImage = Blueprint('enregistrerImage', __name__)
 
@@ -15,8 +16,9 @@ def enregistrer_image():
 
         image = request.files['image']
 
-        db = current_app.config['MONGO_DB']
-        fs = gridfs.GridFS(db)
+        app.config['MONGO_URI'] = 'mongodb://localhost:27017/nom_de_votre_base_de_donnees'
+        mongo = MongoClient(app.config['MONGO_URI'])
+        fs = gridfs.GridFS(mongo)
 
         image_id = fs.put(image.stream, filename=image.filename)
 
