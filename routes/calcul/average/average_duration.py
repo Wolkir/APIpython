@@ -17,7 +17,7 @@ def calculate_average_duration(data):
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
-    documents = collection_name.find()
+    documents = collection.find()
     
     # Initialiser les variables
     total_duration = timedelta()
