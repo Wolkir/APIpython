@@ -8,7 +8,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @maxprofit.route('/maxprofit', methods=['GET'])
-def find_max_profit():
+def find_max_profit(data):
     # Recherche de la ligne avec le profit > 0 le plus grand
     max_profit = collection.find_one({"profit": {"$gt": 0}}, sort=[("profit", -1)])
 
