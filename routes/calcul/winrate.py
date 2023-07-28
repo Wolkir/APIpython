@@ -22,7 +22,7 @@ def calculate_winrate(data):
     negative_profits_count = collection.count_documents({"profit": {"$lt": 0}})
     
     # Calcul du winrate
-    winrate = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+    winrate = (positive_profits_count / (positive_profits_count + negative_profits_count)) * 100
     
     # Insérer le winrate_value dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
