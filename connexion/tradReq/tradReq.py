@@ -22,8 +22,8 @@ from routes.calcul.winratestd  import calculate_winratestd
 from routes.calcul.profit.profitfactor  import calculate_profit_factor
 from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
 from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short
-from routes.calcul.profit.minloss  import find_min_loss
-from routes.calcul.profit.maxprofit  import find_max_profit
+from routes.calcul.minloss  import find_min_loss
+from routes.calcul.maxprofit  import find_max_profit
 from routes.calcul.ddmax import calculate_ddmax
 
 # Connexion à la base de données MongoDB
