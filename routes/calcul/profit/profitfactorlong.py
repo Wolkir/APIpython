@@ -33,7 +33,7 @@ def calculate_profit_factor_long(data):
     profit_factor = total_profit / abs(total_loss)
 
    # Insérer le winrate_value dans la collection "unitaire"
-    unitaire_collection = db[collection_name]
+    unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {'$set': {'profitfactorlong': (profit_factor)}}, upsert=True)
     unitaire_collection.update_one({}, {'$set': {'total loss long': (total_loss)}}, upsert=True)
     unitaire_collection.update_one({}, {'$set': {'total gain long': (total_gain)}}, upsert=True)
