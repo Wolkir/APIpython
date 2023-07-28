@@ -26,9 +26,9 @@ def calculate_equity(data):
         if "Equity" in latest_entry and isinstance(latest_entry["Equity"], (float, int)):
             previous_entry = float(latest_entry["Equity"])
         else:
-            previous_entry = 2.0  # Valeur par défaut si "Equity" n'est pas un nombre
+            previous_entry = 0.0  # Valeur par défaut si "Equity" n'est pas un nombre
     else:
-        previous_entry = 2.0  # Valeur par défaut si la collection est vide
+        previous_entry = 0.0  # Valeur par défaut si la collection est vide
 
     profit = data['profit']
 
