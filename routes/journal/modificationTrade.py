@@ -123,7 +123,7 @@ def setup_modificationTrade_routes(app):
             # Mise à jour ou création des champs timeEntree
             for timeEntree_item in timeEntree_data:
                 trade_id = timeEntree_item.get('id')
-                value_timeEntree = timeEntree_item.get('timeEntree')
+                value_timeEntree = timeEntree_item.get('valueTimeEntree')
 
                 if trade_id and value_timeEntree:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeEntree': value_timeEntree}}, upsert=True)
@@ -131,7 +131,7 @@ def setup_modificationTrade_routes(app):
             # Mise à jour ou création des champs timeSetup
             for timeSetup_item in timeSetup_data:
                 trade_id = timeSetup_item.get('id')
-                value_timeSetup = timeSetup_item.get('timeSetup')
+                value_timeSetup = timeSetup_item.get('valueTimeSetup')
 
                 if trade_id and value_timeSetup:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeSetup': value_timeSetup}}, upsert=True)
