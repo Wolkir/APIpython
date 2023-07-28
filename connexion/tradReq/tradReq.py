@@ -15,7 +15,7 @@ from routes.calcul.average.average_rr import calculate_average_rr
 from routes.calcul.average.average_duration import calculate_average_duration
 from routes.calcul.average.averagegain import calculate_average_gain
 from routes.calcul.average.averageloss import calculate_average_loss
-
+from routes.calcul.average.max_successive_gain import find_max_successive_gains
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
@@ -102,6 +102,7 @@ def save_trade_request():
             calculate_average_duration(data)
             calculate_average_gain(data)
             calculate_average_loss(data)
+            find_max_successive_gains(data)
 
                  
 
