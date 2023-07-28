@@ -22,4 +22,5 @@ def enregistrer_image():
 
         return jsonify({'message': 'Image enregistrée avec succès', 'image_id': str(image_id)})
     except Exception as e:
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
