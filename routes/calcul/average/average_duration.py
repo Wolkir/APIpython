@@ -12,7 +12,7 @@ db = client['test']
 @average_duration.route('/average_duration', methods=['GET'])
 def calculate_average_duration(data):
     # Récupérer les documents avec les durées
-    data= request.json
+    
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
