@@ -18,8 +18,8 @@ def calculate_ddmax(data):
   
     # Requête pour trouver le montant négatif le plus grand
     pipeline = [
-        {'$match': {'equity': {'$lt': 0}}},
-        {'$sort': {'equity': 1}},
+        {'$match': {'Equity': {'$lt': 0}}},
+        {'$sort': {'Equity': 1}},
         {'$limit': 1}
     ]
 
