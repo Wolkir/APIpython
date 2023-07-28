@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app, Flask
-import pymongo
+from pymongo import MongoClient
 from bson import ObjectId
 import gridfs
 import io
