@@ -9,6 +9,10 @@ db = client['test']
 
 @maxprofit.route('/maxprofit', methods=['GET'])
 def find_max_profit(data):
+    username = data.get('username')
+    collection_name = f"{username}_close"
+    collection_unitaire = f"{username}_unitaire"
+    collection = db[collection_name]
     # Recherche de la ligne avec le profit > 0 le plus grand
     max_profit = collection.find_one({"profit": {"$gt": 0}}, sort=[("profit", -1)])
 
