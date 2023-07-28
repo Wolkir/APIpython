@@ -45,6 +45,8 @@ from routes.calcul.TPR import tpr
 from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 from routes.calcul.winrate import winrate
+from routes.calcul.winratestd import winratestd
+
 # envoie
 from routes.envoie.envoie import envoie
 # image
@@ -105,6 +107,7 @@ app.register_blueprint(tradecount)
 app.register_blueprint(weekday)
 app.register_blueprint(winrate)
 app.register_blueprint(envoie)
+app.register_blueprint(calculate_winratestd)
 
 # user
 app.register_blueprint(setup_signup_route(app))
