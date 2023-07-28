@@ -132,7 +132,7 @@ app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
 
 # image
-app.register_blueprint(enregistrerImage)
+#app.register_blueprint(enregistrerImage)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
