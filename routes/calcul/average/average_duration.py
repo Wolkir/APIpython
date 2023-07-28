@@ -7,14 +7,16 @@ average_duration = Blueprint('average_duration', __name__)
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
-username = data.get('username')
-collection_name = f"{username}_close"
-collection_unitaire = f"{username}_unitaire"
-collection = db[collection_name]
+
 
 @average_duration.route('/average_duration', methods=['GET'])
 def calculate_average_duration():
     # Récupérer les documents avec les durées
+    data= request.json
+    username = data.get('username')
+    collection_name = f"{username}_close"
+    collection_unitaire = f"{username}_unitaire"
+    collection = db[collection_name]
     documents = collection_name.find()
     
     # Initialiser les variables
