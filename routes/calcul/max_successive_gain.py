@@ -17,6 +17,7 @@ def find_max_successive_gains(data):
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
+
     # Initialisation des variables
     max_successive_gains_count = 0
     current_successive_gains_count = 0
@@ -36,6 +37,6 @@ def find_max_successive_gains(data):
             if current_successive_gains_count > max_successive_gains_count:
                 max_successive_gains_count = current_successive_gains_count
 
-     # Insérer le winrate_value dans la collection "unitaire"
-     unitaire_collection = db[collection_unitaire]
-     unitaire_collection.update_one({}, {'$set': {'max_successive_gain': (max_successive_gains_count)}}, upsert=True)
+    # Insérer le winrate_value dans la collection "unitaire"
+    unitaire_collection = db[collection_unitaire]
+    unitaire_collection.update_one({}, {'$set': {'max_successive_gain': (max_successive_gains_count)}}, upsert=True)
