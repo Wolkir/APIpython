@@ -181,33 +181,33 @@ def save_trade_request():
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
         user_collection.insert_one(trade_request)
-            calculate_average_rr(data)
+calculate_average_rr(data)
             
-            calculate_average_duration(data)
+calculate_average_duration(data)
             
-            calculate_average_gain(data)
+calculate_average_gain(data)
             
-            calculate_average_loss(data)
+calculate_average_loss(data)
             
-            find_max_successive_gains(data)
+find_max_successive_gains(data)
             
-            find_max_successive_losses(data)
+find_max_successive_losses(data)
             
-            calculate_winrate(data)
+calculate_winrate(data)
             
-            calculate_winratestd(data)
+calculate_winratestd(data)
             
-            calculate_profit_factor(data)
+calculate_profit_factor(data)
             
-            calculate_profit_factor_long(data) 
+calculate_profit_factor_long(data) 
             
-            calculate_profit_factor_short(data)
+calculate_profit_factor_short(data)
             
-            find_min_loss(data)  
+find_min_loss(data)  
             
-            find_max_profit(data) 
+find_max_profit(data) 
             
-            calculate_ddmax(data)
+calculate_ddmax(data)
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
