@@ -5,10 +5,13 @@ average_rr = Blueprint('average_rr', __name__)
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
-collection = db['things']
+
 
 @average_rr.route('/average_rr', methods=['GET'])
-def calculate_average_rr():
+def calculate_average_rr(data):
+    username = data.get('username')
+    collection_name = f"{username}_unitaire"
+    collection = db['collection_name']
     rr_values = []
     for document in collection.find():
         if "RR" in document:
@@ -20,7 +23,7 @@ def calculate_average_rr():
     rr_count = len(rr_values)
     average_rr = rr_total / rr_count if rr_count > 0 else 0
 
-    unitaire_collection = db['unitaire']
+    unitaire_collection = db['collection_name']
     unitaire_collection.update_one({}, {"$set": {"RRaverage": average_rr}}, upsert=True)
 
     return jsonify({"average_rr": average_r
