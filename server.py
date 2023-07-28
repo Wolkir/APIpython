@@ -48,7 +48,7 @@ from routes.calcul.winrate import winrate
 # envoie
 from routes.envoie.envoie import envoie
 # image
-#from routes.journal.enregistrementImage import enregistrerImage
+from routes.journal.enregistrementImage import enregistrerImage
 from routes.journal.modificationTrade import setup_modificationTrade_routes
 #journal
 from routes.journal.recuperationTrade import setup_things_routes
@@ -132,7 +132,7 @@ app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
 
 # image
-#app.register_blueprint(enregistrerImage)
+app.register_blueprint(enregistrerImage)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
