@@ -11,6 +11,7 @@ db = client['collection']
 @winrate.route('/winrate', methods=['GET'])
 def calculate_winrate(data):
     username = data.get('username')
+    identifier = data.get('identifier')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
@@ -25,7 +26,7 @@ def calculate_winrate(data):
     
     for doc in documents:
         profit = doc['profit']
-        identifier = doc['identifier']
+        
         
         if profit > 0 and identifier not in positive_identifiers:
             positive_profits_count += 1
