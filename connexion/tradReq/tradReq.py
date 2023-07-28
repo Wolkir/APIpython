@@ -13,7 +13,7 @@ from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
 from routes.calcul.average.average_rr import calculate_average_rr
 from routes.calcul.average.average_duration import calculate_average_duration
-
+from routes.calcul.average.averagegain import calculate_average_gain
 
 
 # Connexion à la base de données MongoDB
@@ -100,6 +100,7 @@ def save_trade_request():
 
             calculate_average_rr(data)
             calculate_average_duration(data)
+            calculate_average_gain(data)
 
                  
 
