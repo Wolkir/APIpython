@@ -99,6 +99,7 @@ def save_trade_request():
             data['Day'] = weekday_str
 
             calculate_average_rr(data)
+            calculate_average_duration(data)
 
                  
 
