@@ -82,45 +82,60 @@ def save_trade_request():
             # Calculate SLR only for 'Close' orders
             slr_value = calculate_slr(data)
             data['SLR'] = slr_value['SLR']
+            time.sleep(5)
 
             # Calculate TPR only for 'Close' orders
             tpr_value = calculate_tpr(data)
             data['TPR'] = tpr_value['TPR']
-
+            time.sleep(5)
+            
             killzone = calculate_killzone(data)
             data['killzone'] = killzone
-
+            time.sleep(5)
             session = determine_session(data)
             data['session'] = session
-
+            time.sleep(5)
             duration = calculate_time_duration(data)
             data['duration'] = duration['duration']
-
+            time.sleep(5)
             rr = calculate_rr(data)
             data['RR'] = rr
-
+            time.sleep(5)
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
-
+            time.sleep(5)
             equity = calculate_equity(data)
             data['Equity'] = equity
-
+            time.sleep(5)
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
-
+            time.sleep(5)
             calculate_average_rr(data)
+            time.sleep(5)
             calculate_average_duration(data)
+            time.sleep(5)
             calculate_average_gain(data)
+            time.sleep(5)
             calculate_average_loss(data)
+            time.sleep(5)
             find_max_successive_gains(data)
+            time.sleep(5)
             find_max_successive_losses(data)
+            time.sleep(5)
             calculate_winrate(data)
+            time.sleep(5)
             calculate_winratestd(data)
+            time.sleep(5)
             calculate_profit_factor(data)
+            time.sleep(5)
             calculate_profit_factor_long(data) 
+            time.sleep(5)
             calculate_profit_factor_short(data)
+            time.sleep(5)
             find_min_loss(data)  
-            find_max_profit(data)  
+            time.sleep(5)
+            find_max_profit(data) 
+            time.sleep(5)
             calculate_ddmax(data)           
 
           
