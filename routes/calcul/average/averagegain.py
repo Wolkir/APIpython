@@ -35,5 +35,5 @@ def calculate_average_gain(data):
 
     # Insérer le winrate_value dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.insert_one({"averagegain": average_gain})
+    unitaire_collection.update_one({"averagegain": average_gain})
 
