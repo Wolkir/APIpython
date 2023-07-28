@@ -25,10 +25,15 @@ from connexion.user.getUser import setup_user_routes
 # recuperation trade de mt5
 from connexion.tradReq.tradReq import trade_blueprint
 
-#from recuperationStrategie import recuperationStrategie
+# strategie
 from connexion.strategie.recuperationStrategie import recuperationStrategie
 from connexion.strategie.createStrategie import createStrategie
 from connexion.strategie.suppressionStrategie import suppressionStrategie
+
+# indicateur
+from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
+from connexion.indicateur.createIndicateur import createIndicateur
+from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
 
 # calcul
 #from routes.calcul.BE_RR.RR import RR
@@ -56,8 +61,8 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_rr import average_rr
 #from routes.calcul.conversion_map import conversion_map
-from routes.calcul.RR import RR
-from routes.calcul.RRT import RRT
+#from routes.calcul.RR import RR
+#from routes.calcul.RRT import RRT
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -108,9 +113,13 @@ app.register_blueprint(recuperationStrategie)
 app.register_blueprint(createStrategie)
 app.register_blueprint(suppressionStrategie)
 
+# indicateur
+app.register_blueprint(recuperationIndicateur)
+app.register_blueprint(createIndicateur)
+app.register_blueprint(suppressionIndicateur)
+
 # envoie
 app.register_blueprint(envoie)
-CORS(envoie)
 
 # journal
 app.register_blueprint(setup_things_routes(app))
