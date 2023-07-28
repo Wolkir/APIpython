@@ -25,7 +25,7 @@ def calculate_average_duration(data):
     
     # Calculer la durée totale et le nombre de documents
     for doc in documents:
-        if 'durée' in doc:
+        if 'duration' in doc:
             duration_str = doc['duration']
             duration_parts = duration_str.split(':')
             duration = timedelta(hours=int(duration_parts[0]), minutes=int(duration_parts[1]), seconds=int(duration_parts[2]))
