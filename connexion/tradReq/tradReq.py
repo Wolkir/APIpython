@@ -24,6 +24,7 @@ from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
 from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short
 from routes.calcul.profit.minloss  import find_min_loss
 from routes.calcul.profit.maxprofit  import find_max_profit
+from routes.calcul.ddmax import calculate_ddmax
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -119,7 +120,8 @@ def save_trade_request():
             calculate_profit_factor_long(data) 
             calculate_profit_factor_short(data)
             find_min_loss(data)  
-            find_max_profit(data)             
+            find_max_profit(data)  
+            calculate_ddmax(data)           
 
           
 
