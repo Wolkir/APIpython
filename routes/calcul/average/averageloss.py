@@ -33,6 +33,6 @@ def calculate_average_loss(data):
     # Calcul de la moyenne des pertes
     average_loss = negative_losses_total / negative_losses_count if negative_losses_count > 0 else 0
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'averagelosse': str(average_loss)}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'averagelosse': (average_loss)}}, upsert=True)
 
 
