@@ -32,13 +32,10 @@ def calculate_average_duration(data):
             total_duration += duration
             document_count += 1
  
-    # Calculer la durée moyenne arrondie à deux décimales
-    average_duration_seconds = average_duration.total_seconds()
-    rounded_average_duration_seconds = round(average_duration_seconds, 2)
-    rounded_average_duration = timedelta(seconds=rounded_average_duration_seconds)
-
-    # Insérer la durée moyenne arrondie dans la collection "unitaire"
-    unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'average_duration': str(rounded_average_duration)}}, upsert=True)
+     # Calculer la durée moyenne
+    average_duration = total_duration / document_count if document_count > 0 else timedelta()
     
+    # Insérer la durée moyenne dans la collection "unitaire"
+    unitaire_collection = db[collection_unitaire]
+    unitaire_collection.update_one({}, {'$set': {'average_duration': str(average_duration)}}, upsert=True)
 
