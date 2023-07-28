@@ -72,8 +72,8 @@ CORS(app, origins='*', allow_headers='*', methods='*')
 
 
 #from routes.calcul.conversion_map import conversion_map
-#from routes.calcul.RR import RR
-#from routes.calcul.RRT import RRT
+from routes.calcul.RR import RR
+from routes.calcul.RRT import RRT
 
 
 
