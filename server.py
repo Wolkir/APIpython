@@ -95,8 +95,7 @@ app.register_blueprint(BE)
 app.register_blueprint(RR)
 app.register_blueprint(RRT)
 app.register_blueprint(calculate_duration)
-#app.register_blueprint(conversion_map)
-app.register_blueprint(ddmax)
+
 app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 app.register_blueprint(session)
@@ -123,6 +122,8 @@ app.register_blueprint(averagegainloss)
 #app.register_blueprint(averageloss)
 #app.register_blueprint(winratestd)
 #app.register_blueprint(winrate)
+#app.register_blueprint(conversion_map)
+#app.register_blueprint(ddmax)
 
 # user
 app.register_blueprint(setup_signup_route(app))
