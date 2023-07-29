@@ -114,6 +114,7 @@ app.register_blueprint(winratestd)
 app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
 
+
 # user
 app.register_blueprint(setup_signup_route(app))
 app.register_blueprint(setup_login_routes(app))
