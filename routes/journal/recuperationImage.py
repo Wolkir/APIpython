@@ -1,6 +1,5 @@
-from flask import Blueprint, jsonify, send_file, current_app, request
+from flask import Blueprint, jsonify, send_file, current_app, request, Flask
 from pymongo import MongoClient
-from flask import Flask
 from bson import ObjectId
 import gridfs
 import io
@@ -20,7 +19,7 @@ def recuperation_image():
 
         image = fs.get(ObjectId(image_id))
         if image is None:
-            return jsonify({'message': 'Image non trouvée'}), 500
+            return jsonify({'message': 'Image non trouvée'}), 404
 
         return send_file(io.BytesIO(image.read()), mimetype='image/jpeg')
     except Exception as e:
