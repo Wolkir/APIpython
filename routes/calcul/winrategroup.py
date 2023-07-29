@@ -8,7 +8,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 
-@winrate_group.route('/winrategroup', methods=['GET'])
+@winrategroup.route('/winrategroup', methods=['GET'])
 def calculate_winrate_group(data):
     username = data.get('username')
     identifier = data.get('identifier')
