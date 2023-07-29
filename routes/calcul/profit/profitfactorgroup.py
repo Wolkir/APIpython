@@ -8,9 +8,9 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 # Blueprint pour les routes profitfactorgroup
-profitfactorgroup_bp = Blueprint('profitfactorgroup', __name__)
+profitfactorgroup= Blueprint('profitfactorgroup', __name__)
 
-@profitfactorgroup_bp.route('/profitfactorgroup', methods=['GET'])
+@profitfactorgroup.route('/profitfactorgroup', methods=['GET'])
 
 # Fonction pour calculer le profit factor
 def calculate_profit_factor_custom(collection, filter_query):
@@ -61,7 +61,7 @@ def calculate_profit_factor_group():
         unitaire_collection.update_one({}, {'$set': {'total_loss_all': total_loss}}, upsert=True)
         unitaire_collection.update_one({}, {'$set': {'total_gain_all': total_profit}}, upsert=True)
 
-    return jsonify({'message': 'Profit factor calculated and updated successfully!'})
+   
 
 
 
