@@ -65,7 +65,7 @@ from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
 from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
-
+from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -113,6 +113,7 @@ app.register_blueprint(envoie)
 app.register_blueprint(winratestd)
 app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
+app.register_blueprint(profitfactorgroup_bp)
 
 
 # user
