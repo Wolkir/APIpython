@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 def process_argument_date(argumentDate, debutDate, finDate):
+    print(argumentDate)
     if argumentDate == "aujourd'hui":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date
@@ -27,6 +28,7 @@ def process_argument_date(argumentDate, debutDate, finDate):
         end_date = start_date.replace(month=start_date.month + 1)
         return start_date, end_date
     elif argumentDate == "choixLibre":
+        # Convertir les chaînes de caractères au format ISO
         start_date = datetime.fromisoformat(debutDate)
         end_date = datetime.fromisoformat(finDate)
         return start_date, end_date
