@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 def process_argument_date(argumentDate, debutDate, finDate):
-    print(argumentDate)
     if argumentDate == "aujourd'hui":
         date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start_date = date
@@ -28,10 +27,11 @@ def process_argument_date(argumentDate, debutDate, finDate):
         end_date = start_date.replace(month=start_date.month + 1)
         return start_date, end_date
     elif argumentDate == "choixLibre":
-        start_date = datetime.fromisoformat(debutDate) if debutDate else None
-        end_date = datetime.fromisoformat(finDate) if finDate else None
+        # Utilisez le format exact des dates de la requête (YYYY-MM-DDTHH:MM:SS.sssZ)
+        date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
+        start_date = datetime.strptime(debutDate, date_format)
+        end_date = datetime.strptime(finDate, date_format)
         return start_date, end_date
     else:
         return None, None
-
 
