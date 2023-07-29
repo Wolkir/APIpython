@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, current_app
-
+import logging
 import atexit
 import json
 from datetime import datetime, timedelta
@@ -15,6 +15,8 @@ from .XY import process_argument_xy
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
+app = Flask(__name__)
+app.logger.setLevel(logging.DEBUG)
 
 def json_serial(obj):
     if isinstance(obj, ObjectId):
@@ -104,5 +106,5 @@ def update_envoie():
 
         return jsonify({'data': data})
     except Exception as e:
-        current_app.logger.error(f"Error occurred: {e}")
+        app.logger.error("An error occurred: %s", str(e))
         return jsonify({"error": "Erreur lors de la enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
