@@ -1,5 +1,7 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
+from datetime import timedelta
+
 app = Flask(__name__)
 averagegainloss = Blueprint('averagegainloss', __name__)
 
