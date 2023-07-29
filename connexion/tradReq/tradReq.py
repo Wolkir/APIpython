@@ -15,20 +15,23 @@ from routes.calcul.average.average_rr import calculate_average_rr
 from routes.calcul.average.average_duration import calculate_average_duration
 from routes.calcul.average.averagegain import calculate_average_gain
 from routes.calcul.average.averageloss import calculate_average_loss
-#from routes.calcul.max_successive_gain import find_max_successive_gains // remplacé par code groupé max_successive_count
-#from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
+
 from routes.calcul.winrate import calculate_winrate
 from routes.calcul.winratestd  import calculate_winratestd
+
+from routes.calcul.ddmax import calculate_ddmax
+from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
+from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code groupé max profit max loss
+from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
+from routes.calcul.winrategroup import calculate_winrate_group
+
 #from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
 #from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long  // remplacé par le code groupé profit_factor_group
 #from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short  // remplacé par le code groupé profit_factor_group
 #from routes.calcul.minloss  import find_min_loss // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.maxprofit  import find_max_profit // remplacé par le code groupé maxprofit_minloss
-from routes.calcul.ddmax import calculate_ddmax
-from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
-from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code groupé max profit max loss
-from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
-
+#from routes.calcul.max_successive_gain import find_max_successive_gains // remplacé par code groupé max_successive_count
+#from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
