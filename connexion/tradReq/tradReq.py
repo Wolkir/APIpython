@@ -27,7 +27,7 @@ from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_shor
 from routes.calcul.ddmax import calculate_ddmax
 from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
 from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code groupé max profit max loss
-from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_custom, calculate_profit_factor_group
+from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 
 
 # Connexion à la base de données MongoDB
