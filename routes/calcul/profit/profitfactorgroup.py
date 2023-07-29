@@ -31,7 +31,7 @@ def calculate_profit_factor_custom(collection, filter_query):
     return total_profit, total_loss, profit_factor
 
 
-def calculate_profit_factor_group():
+def calculate_profit_factor_group(data):
     username = request.args.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
