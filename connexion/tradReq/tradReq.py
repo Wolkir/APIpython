@@ -15,8 +15,8 @@ from routes.calcul.average.average_rr import calculate_average_rr
 from routes.calcul.average.average_duration import calculate_average_duration
 from routes.calcul.average.averagegain import calculate_average_gain
 from routes.calcul.average.averageloss import calculate_average_loss
-from routes.calcul.max_successive_gain import find_max_successive_gains
-from routes.calcul.max_successive_losses import find_max_successive_losses
+#from routes.calcul.max_successive_gain import find_max_successive_gains // remplacé par code groupé max_successive_count
+#from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
 from routes.calcul.winrate import calculate_winrate
 from routes.calcul.winratestd  import calculate_winratestd
 from routes.calcul.profit.profitfactor  import calculate_profit_factor
@@ -190,9 +190,9 @@ def save_trade_request():
             
         calculate_average_loss(data)
             
-        find_max_successive_gains(data)
+        #find_max_successive_gains(data) // remplacé par code groupé max_successive_count
             
-        find_max_successive_losses(data)
+        #find_max_successive_losses(data) // remplacé par code groupé max_successive_count
             
         calculate_winrate(data)
             
