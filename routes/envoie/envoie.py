@@ -11,7 +11,9 @@ from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
 from .date import process_argument_date
-from .XY import process_argument_xy
+from .XY import process_argument_xyTPR
+from .XY import process_argument_xySL
+from .XY import process_argument_xyBE
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
@@ -35,7 +37,6 @@ atexit.register(close_mongo_client)
 def process_argument_value(arg):
     if arg == "":
         return None
-    print(arg)
     return arg
 
 @envoie.route('/envoie', methods=['GET'])
@@ -73,17 +74,17 @@ def update_envoie():
 
     start_date, end_date = process_argument_date(argD, debutDate, finDate)
     
-    argTPRbinaire = ""
-    argSLbinaire = ""
-    argBEbinaire = ""
+    argTPRbinaire = None
+    argSLbinaire = None
+    argBEbinaire = None
     if argTPR is not None:
-        argTPRbinaire = process_argument_xy(argTPR)
+        argTPRbinaire = process_argument_xyTPR(argTPR)
     
     if argSL is not None:
-        argSLbinaire = process_argument_xy(argSL)
+        argSLbinaire = process_argument_xySL(argSL)
     
     if argBE is not None:
-        argBEbinaire = process_argument_xy(argBE)
+        argBEbinaire = process_argument_xyBE(argBE)
 
     try:
         query = {
@@ -92,44 +93,56 @@ def update_envoie():
             ]
         }
 
+        print(query)
+
         # date
-        if start_date is not None and end_date is not None or start_date != "" and end_date != "":
+        if start_date is not None and end_date is not None:
+            print("pute")
             query['$and'].append({'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}})
 
         # indice
-        if argI is not None or argI != "":
+        if argI is not None:
+            print("pute")
             query['$and'].append({'symbole': argI})
 
         # TPR
-        if argTPRbinaire is not None or argTPRbinaire != "":
+        if argTPRbinaire is not None:
+            print("pute")
             query['$and'].append({'TPR': argTPRbinaire})
 
         # SL
-        if argSLbinaire is not None or argSLbinaire != "":
+        if argSLbinaire is not None:
+            print("pute")
             query['$and'].append({'slr': argSLbinaire})
 
         # BE
-        if argBEbinaire is not None or argBEbinaire != "":
+        if argBEbinaire is not None:
+            print("pute")
             query['$and'].append({'slr': argBEbinaire})
 
         # psy
-        if argPsy is not None or argPsy != "":
+        if argPsy is not None:
+            print("pute")
             query['$and'].append({'psychologie': argPsy})
 
         # strat
-        if argStrat is not None or argStrat != "":
+        if argStrat is not None:
+            print("pute")
             query['$and'].append({'strategie': argStrat})
 
         # annonce economique
-        if argAnnEco is not None or argAnnEco != "":
+        if argAnnEco is not None:
+            print("pute")
             query['$and'].append({'annonceEconomique': argAnnEco})
 
         # position
-        if argPos is not None or argPos != "":
+        if argPos is not None:
+            print("pute")
             query['$and'].append({'position': argPos})
 
         # type ordre
-        if argTypOrd is not None or argTypOrd != "":
+        if argTypOrd is not None:
+            print("pute")
             query['$and'].append({'typeOrdre': argTypOrd})
 
         print(query)
