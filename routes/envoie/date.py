@@ -28,10 +28,10 @@ def process_argument_date(argumentDate, debutDate, finDate):
         end_date = start_date.replace(month=start_date.month + 1)
         return start_date, end_date
     elif argumentDate == "choixLibre":
-        # Convertir les chaînes de caractères au format ISO
-        start_date = datetime.fromisoformat(debutDate)
-        end_date = datetime.fromisoformat(finDate)
+        start_date = datetime.fromisoformat(debutDate) if debutDate else None
+        end_date = datetime.fromisoformat(finDate) if finDate else None
         return start_date, end_date
     else:
         return None, None
+
 
