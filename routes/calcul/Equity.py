@@ -28,7 +28,7 @@ def calculate_equity(data):
         else:
             previous_entry = 0.0  # Valeur par défaut si "Equity" n'est pas un nombre
     else:
-        previous_entry = 0.0  # Valeur par défaut si la collection est vide
+        previous_entry = ['profit']  # Valeur par défaut si la collection est vide
 
     profit = data['profit']
 
