@@ -41,8 +41,8 @@ def process_argument_value(arg):
 def update_envoie():
     argD = process_argument_value(request.args.get('argD', None))
     argI = process_argument_value(request.args.get('argI', None))
-    debutDate = process_argument_value(request.args.get('argSD', None))
-    finDate = process_argument_value(request.args.get('argED', None))
+    debutDateStr = process_argument_value(request.args.get('argSD', None))
+    finDateStr = process_argument_value(request.args.get('argED', None))
     argTPR = process_argument_value(request.args.get('argTPR', None))
     argSL = process_argument_value(request.args.get('argSL', None))
     argBE = process_argument_value(request.args.get('argBE', None))
