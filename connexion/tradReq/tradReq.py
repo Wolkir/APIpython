@@ -22,8 +22,8 @@ from routes.calcul.winratestd  import calculate_winratestd
 from routes.calcul.profit.profitfactor  import calculate_profit_factor
 from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
 from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short
-from routes.calcul.minloss  import find_min_loss
-from routes.calcul.maxprofit  import find_max_profit
+#from routes.calcul.minloss  import find_min_loss // remplacé par le code groupé maxprofit_minloss
+#from routes.calcul.maxprofit  import find_max_profit // remplacé par le code groupé maxprofit_minloss
 from routes.calcul.ddmax import calculate_ddmax
 from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
 from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code groupé max profit max loss
@@ -205,9 +205,9 @@ def save_trade_request():
             
         calculate_profit_factor_short(data)
             
-        find_min_loss(data)  
+        #find_min_loss(data)   // remplacé par le code groupé maxprofit_minloss
             
-        find_max_profit(data) 
+        #find_max_profit(data)  // remplacé par le code groupé maxprofit_minloss
             
         calculate_ddmax(data)
         find_max_successive_counts(data)
