@@ -25,7 +25,6 @@ def find_max_successive_losses(data):
     previous_identifier = None
     successive_losses_counts = []  # Initialisation de la liste
 
-
     # Parcourir les documents de la collection
     for doc in collection.find().sort("identifier"):
         profit = doc['profit']
