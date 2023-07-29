@@ -11,12 +11,9 @@ from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
-from routes.calcul.average.average_rr import calculate_average_rr
 from routes.calcul.average.average_duration import calculate_average_duration
-from routes.calcul.average.averagegain import calculate_average_gain
-from routes.calcul.average.averageloss import calculate_average_loss
 
-
+#code groupé
 from routes.calcul.ddmax import calculate_ddmax
 from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
 from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code groupé max profit max loss
@@ -33,6 +30,10 @@ from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 #from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
 #from routes.calcul.winrate import calculate_winrate // remplacé par le code winrategroup
 #from routes.calcul.winratestd  import calculate_winratestd // remplacé par le code winrategroup
+#from routes.calcul.average.averagegain import calculate_average_gain // remplace par averagegainloss
+#from routes.calcul.average.averageloss import calculate_average_loss // remplace par averagegainloss
+#from routes.calcul.average.average_rr import calculate_average_rr // remplace par averagegainloss
+
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -189,14 +190,10 @@ def save_trade_request():
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
         user_collection.insert_one(trade_request)
-        calculate_average_rr(data)
-            
-        calculate_average_duration(data)
-            
-        calculate_average_gain(data)
-            
-        calculate_average_loss(data)  
         
+            
+        calculate_average_duration(data) 
+                    
         calculate_ddmax(data)
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
@@ -213,7 +210,9 @@ def save_trade_request():
         #find_max_successive_losses(data) // remplacé par code groupé max_successive_count
         #calculate_winrate(data) // remplacé par le code winrategroup           
         #calculate_winratestd(data) // remplacé par le code winrategroup
-
+        #calculate_average_gain(data)  // remplace par averagegainloss
+        #calculate_average_loss(data) // remplace par averagegainloss 
+        #calculate_average_rr(data) // remplace par averagegainloss
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
