@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 
-winrate_group = Blueprint('winrate_group', __name__)
+winrategroup = Blueprint('winrategroup', __name__)
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
