@@ -63,6 +63,7 @@ from routes.calcul.winratestd import winratestd
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
+from routes.calcul.max_succesive_counts import max_successive_counts
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -108,6 +109,7 @@ app.register_blueprint(weekday)
 app.register_blueprint(winrate)
 app.register_blueprint(envoie)
 app.register_blueprint(winratestd)
+app.register_blueprint(max_successive_counts)
 
 # user
 app.register_blueprint(setup_signup_route(app))
