@@ -1,9 +1,7 @@
 from dns.rdatatype import NULL
 
-def process_argument_xy(argTPR, argSL, argBE):
+def process_argument_xyTPR(argTPR):
     argTPRbinaire = None
-    argSLbinaire = None
-    argBEbinaire = None
     
     if argTPR == "atteint":
         argTPRbinaire = True
@@ -11,20 +9,35 @@ def process_argument_xy(argTPR, argSL, argBE):
         argTPRbinaire = False
     elif argTPR == "":
         argTPRbinaire = None
-    elif argSL == "atteint":
+    else:
+        argTPRbinaire = None
+        return None
+
+    return argTPRbinaire
+
+def process_argument_xySL(argSL):
+    argSLbinaire = None
+    if argSL == "atteint":
         argSLbinaire = True
     elif argSL == "partiel":
         argSLbinaire = False
     elif argSL == "":
         argSLbinaire = None
-    elif argBE == "true":
+    else:
+        argSLbinaire = None
+        return None
+
+    return argSLbinaire
+
+def process_argument_xyBE(argBE):
+    argBEbinaire = None
+    
+    if argBE == "true":
         argBEbinaire = True
     elif argBE == "":
         argBEbinaire = None
     else:
-        argTPRbinaire = None
-        argSLbinaire = None
         argBEbinaire = None
-        return None  # Ou lever une exception appropriée selon le cas
+        return None
 
-    return argTPRbinaire, argSLbinaire, argBEbinaire
+    return argBEbinaire
