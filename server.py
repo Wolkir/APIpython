@@ -113,7 +113,7 @@ app.register_blueprint(envoie)
 app.register_blueprint(winratestd)
 app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
-app.register_blueprint(profitfactorgroup_bp)
+app.register_blueprint(profitfactorgroup)
 
 
 # user
