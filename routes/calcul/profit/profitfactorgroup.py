@@ -69,14 +69,15 @@ def calculate_profit_factor_group(data):
         {
             '$set': {
                 'profitfactor': profit_factor,
-                'profitfactorbuy': profit_factor_buy,
-                'profitfactorsell': profit_factor_sell,
-                'total loss': total_loss,
-                'total loss buy': total_loss_buy,
-                'total loss sell': total_loss_sell,
+                'profitfactorlong': profit_factor_buy,
+                'profitfactorshort': profit_factor_sell,
                 'total gain': total_profit,
-                'total gain buy': total_profit_buy,
-                'total gain sell': total_profit_sell
+                'total loss': total_loss,
+                'total gain long': total_profit_buy,
+                'total loss long': total_loss_buy,
+                'total gain short': total_profit_sell,
+                'total loss short': total_loss_sell            
+                
             }
         },
         upsert=True
