@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
-
+profitfactorgrpup = Blueprint('profitfactorgroup', __name__)
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
