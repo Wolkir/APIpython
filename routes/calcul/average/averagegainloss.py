@@ -65,9 +65,9 @@ def calculate_average_gain_loss_rr(data):
         {},
         {
             '$set': {
-                'averagegain': average_gain,
-                'averagelosse': average_loss,
-                'RRaverage': average_rr
+                'averagegain2': average_gain,
+                'averageloss2': average_loss,
+                'RRaverage2': average_rr
             }
         },
         upsert=True
