@@ -18,21 +18,6 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 envoie = Blueprint('envoie', __name__)
 app = Flask(__name__)
 
-# Créer un logger
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
-
-# Définir le format du log
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# Créer un gestionnaire de fichier pour enregistrer les logs dans un fichier
-file_handler = logging.FileHandler('error.log')
-file_handler.setLevel(logging.ERROR)
-file_handler.setFormatter(formatter)
-
-# Ajouter le gestionnaire de fichier au logger
-logger.addHandler(file_handler)
-
 def json_serial(obj):
     if isinstance(obj, ObjectId):
         return str(obj)
@@ -62,17 +47,6 @@ def update_envoie():
     argAnnEco = request.args.get('argAnnEco', None)
     argPos = request.args.get('argPos', None)
     argTypOrd = request.args.get('argTypOrd', None)
-
-    print("argD : " + argD)
-    print("argI : " + argI)
-    print("argTPR : " + argTPR)
-    print("argSL : " + argSL)
-    print("argBE : " + argBE)
-    print("argPsy : " + argPsy)
-    print("argStrat : " + argStrat)
-    print("argAnnEco : " + argAnnEco)
-    print("argPos : " + argPos)
-    print("argTypOrd : " + argTypOrd)
     
     db = client['test']
     collection = db['things']
@@ -80,39 +54,61 @@ def update_envoie():
     start_date, end_date = process_argument_date(argD, debutDate, finDate)
     if start_date is None or end_date is None:
         return jsonify({'message': 'Invalid date arguments date'})
-    debutDate = debutDate.replace('Z', '')
-    finDate = finDate.replace('Z', '')
-    print(start_date, end_date)
     
-    argTPRbinaire, argSLbinaire, argBEbinaire = process_argument_xy(argTPR, argSL, argBE)
-    if argTPRbinaire is None and argSLbinaire is None and argBEbinaire is None:
-        print("ereaca")
-        return jsonify({'message': 'Invalid argument tpr sl be'})
+    argTPRbinaire = ""
+    argSLbinaire = ""
+    argBEbinaire = ""
+    if argTPR is not None:
+        argTPRbinaire = process_argument_xy(argTPR)
+    
+    if argSL is not None:
+        argSLbinaire = process_argument_xy(argSL)
+    
+    if argBE is not None:
+        argBEbinaire = process_argument_xy(argBE)
 
     try:
         query = {
-            '$and': [
-                {'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}},
-                {'symbole': argI}
-            ]
+            '$and': []
         }
 
+        # date
+        if start_date is not None and end_date is not None:
+            query['$and'].append({'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}})
+
+        # indice
         if argI is not None:
             query['$and'].append({'symbole': argI})
+
+        # TPR
         if argTPRbinaire is not None:
             query['$and'].append({'TPR': argTPRbinaire})
+
+        # SL
         if argSLbinaire is not None:
             query['$and'].append({'slr': argSLbinaire})
+
+        # BE
         if argBEbinaire is not None:
             query['$and'].append({'slr': argBEbinaire})
+
+        # psy
         if argPsy is not None:
             query['$and'].append({'psychologie': argPsy})
+
+        # strat
         if argStrat is not None:
             query['$and'].append({'strategie': argStrat})
+
+        # annonce economique
         if argAnnEco is not None:
             query['$and'].append({'annonceEconomique': argAnnEco})
+
+        # position
         if argPos is not None:
             query['$and'].append({'position': argPos})
+
+        # type ordre
         if argTypOrd is not None:
             query['$and'].append({'typeOrdre': argTypOrd})
 
@@ -121,5 +117,5 @@ def update_envoie():
 
         return jsonify({'data': data})
     except Exception as e:
-        app.logger.error("An error occurred: %s", str(e))
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": "Erreur lors de la enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
