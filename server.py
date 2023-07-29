@@ -46,11 +46,7 @@ from routes.calcul.calculate_duration import calculate_duration
 from routes.calcul.ddmax import ddmax
 from routes.calcul.Equity import Equity
 from routes.calcul.killzone import killzone
-#from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
-#from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
-#from routes.calcul.profit.profitfactor import profitfactor // remplacé par le code groupé profit_factor_group
-#from routes.calcul.profit.profitfactorlong import profitfactorlong // remplacé par le code groupé profit_factor_group
-#from routes.calcul.profit.profitfactorshort import profitfactorshort // remplacé par le code groupé profit_factor_group
+
 from routes.calcul.session import session
 from routes.calcul.sharp import sharp_ratio
 from routes.calcul.SLR import slr
@@ -58,8 +54,7 @@ from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import tpr
 from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
-from routes.calcul.winrate import winrate
-from routes.calcul.winratestd import winratestd
+
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
@@ -67,6 +62,16 @@ from routes.calcul.max_successive_counts import max_successive_counts #code grou
 from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
+from routes.calcul.average.averagegainloss import averagegainloss
+
+#from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
+#from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
+#from routes.calcul.profit.profitfactor import profitfactor // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorlong import profitfactorlong // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorshort import profitfactorshort // remplacé par le code groupé profit_factor_group
+#from routes.calcul.winrate import winrate // remplacé par winrategroup
+#from routes.calcul.winratestd import winratestd // remplacé par winrategroup
+
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -116,6 +121,7 @@ app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
 app.register_blueprint(profitfactorgroup)
 app.register_blueprint(winrategroup)
+app.register_blueprint(averagegainloss)
 
 # user
 app.register_blueprint(setup_signup_route(app))
