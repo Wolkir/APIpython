@@ -11,7 +11,6 @@ from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
 from .date import process_argument_date
-#from .indice import process_argument_indice
 from .XY import process_argument_xy
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
@@ -47,6 +46,31 @@ def update_envoie():
     argAnnEco = request.args.get('argAnnEco', None)
     argPos = request.args.get('argPos', None)
     argTypOrd = request.args.get('argTypOrd', None)
+
+    if argD == "":
+        argD = None
+    if argI == "":
+        argI = None
+    if debutDate == "":
+        debutDate = None
+    if finDate == "":
+        finDate = None
+    if argTPR == "":
+        argTPR = None
+    if argSL == "":
+        argSL = None
+    if argBE == "":
+        argBE = None
+    if argPsy == "":
+        argPsy = None
+    if argStrat == "":
+        argStrat = None
+    if argAnnEco == "":
+        argAnnEco = None
+    if argPos == "":
+        argPos = None
+    if argTypOrd == "":
+        argTypOrd = None
     
     db = client['test']
     collection = db['things']
