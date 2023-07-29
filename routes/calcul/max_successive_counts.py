@@ -52,6 +52,6 @@ def find_max_successive_counts(data):
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
-        {'$set': {'max_successive_gain': max_successive_gains_count, 'max_successive_loss': max_successive_losses_count}},
+        {'$set': {'max_successive_gain2': max_successive_gains_count, 'max_successive_loss2': max_successive_losses_count}},
         upsert=True
     )
