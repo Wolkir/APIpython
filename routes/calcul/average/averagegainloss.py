@@ -45,11 +45,5 @@ def calculate_average_gain_loss(data):
 
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'averagegain': average_gain, 'averagelosse': average_loss}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'averagegain2': average_gain, 'averageloss2': average_loss}}, upsert=True)
 
-    # Vous pouvez retourner les valeurs calculées sous forme de réponse JSON si nécessaire
-    response_data = {
-        'averagegain2': average_gain,
-        'averageloss2': average_loss
-    }
-    return jsonify(response_data)
