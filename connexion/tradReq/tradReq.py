@@ -214,7 +214,7 @@ def save_trade_request():
         calculate_ddmax(data)
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
-        calculate_profit_factor_group(data)
+        #calculate_profit_factor_group(data)
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
