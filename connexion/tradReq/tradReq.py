@@ -195,29 +195,24 @@ def save_trade_request():
         calculate_average_gain(data)
             
         calculate_average_loss(data)
-            
-        #find_max_successive_gains(data) // remplacé par code groupé max_successive_count
-            
-        #find_max_successive_losses(data) // remplacé par code groupé max_successive_count
-            
+                       
         calculate_winrate(data)
             
         calculate_winratestd(data)
-            
-        #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group
-            
-        #calculate_profit_factor_long(data)   // remplacé par le code groupé profit_factor_group
-            
-        #calculate_profit_factor_short(data)  // remplacé par le code groupé profit_factor_group
-            
-        #find_min_loss(data)   // remplacé par le code groupé maxprofit_minloss
-            
-        #find_max_profit(data)  // remplacé par le code groupé maxprofit_minloss
-            
+                   
         calculate_ddmax(data)
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
         calculate_profit_factor_group(data)
+        calculate_winrate_group(data)
+             
+        #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
+        #calculate_profit_factor_long(data)   // remplacé par le code groupé profit_factor_group            
+        #calculate_profit_factor_short(data)  // remplacé par le code groupé profit_factor_group           
+        #find_min_loss(data)   // remplacé par le code groupé maxprofit_minloss            
+        #find_max_profit(data)  // remplacé par le code groupé maxprofit_minloss
+        #find_max_successive_gains(data) // remplacé par code groupé max_successive_count          
+        #find_max_successive_losses(data) // remplacé par code groupé max_successive_count
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
