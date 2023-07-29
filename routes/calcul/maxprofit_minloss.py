@@ -17,6 +17,7 @@ def find_max_profit_and_min_loss(data):
     # Initialisation des variables
     max_profit_value = float('-inf')  # Valeur initiale de profit maximale
     min_loss_value = float('inf')  # Valeur initiale de perte minimale
+    max_equity = None  # Initialiser la variable pour 'dd max'
 
     # Parcourir les documents de la collection
     for doc in collection.find():
@@ -30,10 +31,22 @@ def find_max_profit_and_min_loss(data):
         if profit < min_loss_value:
             min_loss_value = profit
 
+        # Recherche de la valeur maximale de la perte ('dd max')
+        equity = doc.get('Equity')
+        if equity is not None and equity < 0:
+            if max_equity is None or equity < max_equity:
+                max_equity = equity
+
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
-        {'$set': {'Max profit2': max_profit_value, 'Max loss2': min_loss_value}},
+        {'$set': {'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
         upsert=True
     )
+
+
+
+
+
+
