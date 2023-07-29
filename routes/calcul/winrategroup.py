@@ -54,9 +54,4 @@ def calculate_winrate_group(data):
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one({}, {'$set': {'winratestdl': winratestd, 'winratereal': winrate_value_real}}, upsert=True)
 
-    # Vous pouvez retourner les valeurs calculées sous forme de réponse JSON si nécessaire
-    response_data = {
-        'winratestdl': winratestd,
-        'winratereal': winrate_value_real
-    }
-    return jsonify(response_data)
+
