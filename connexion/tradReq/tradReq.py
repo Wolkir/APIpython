@@ -25,6 +25,7 @@ from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_shor
 from routes.calcul.minloss  import find_min_loss
 from routes.calcul.maxprofit  import find_max_profit
 from routes.calcul.ddmax import calculate_ddmax
+from routes.calcul.max_successive_counts import find_max_successive_counts
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -208,7 +209,7 @@ def save_trade_request():
         find_max_profit(data) 
             
         calculate_ddmax(data)
-        max_successive_counts(data)
+        find_max_successive_counts(data)
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
