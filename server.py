@@ -63,7 +63,7 @@ from routes.calcul.winratestd import winratestd
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
-from routes.calcul.max_succesive_counts import max_successive_counts
+from routes.calcul.max_successive_counts import max_successive_counts
 
 # envoie
 from routes.envoie.envoie import envoie
