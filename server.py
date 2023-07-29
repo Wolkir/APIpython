@@ -1,31 +1,34 @@
 import sys
 from webbrowser import register
-
 from pymongo import MongoClient
-
 import requests
-from connexion.indicateur.createIndicateur import createIndicateur
-# indicateur
-from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
-from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
-from connexion.strategie.createStrategie import createStrategie
-# strategie
-from connexion.strategie.recuperationStrategie import recuperationStrategie
-from connexion.strategie.suppressionStrategie import suppressionStrategie
-# recuperation trade de mt5
-from connexion.tradReq.tradReq import trade_blueprint
-from connexion.user.getUser import setup_user_routes
-# user
-from connexion.user.login import setup_login_routes
-from connexion.user.signup import setup_signup_route
 from flask import Flask
 from flask_cors import CORS
+
+# indicateur
+from connexion.indicateur.createIndicateur import createIndicateur
+from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
+from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
+
+# strategie
+from connexion.strategie.createStrategie import createStrategie
+from connexion.strategie.recuperationStrategie import recuperationStrategie
+from connexion.strategie.suppressionStrategie import suppressionStrategie
+
+# recuperation trade de mt5
+from connexion.tradReq.tradReq import trade_blueprint
+
+# user
+from connexion.user.getUser import setup_user_routes
+from connexion.user.login import setup_login_routes
+from connexion.user.signup import setup_signup_route
+
+# calcul
 from routes.calcul.assign_order import assign_order
 from routes.calcul.average.average_duration import average_duration
 from routes.calcul.average.average_rr import average_rr
 from routes.calcul.average.averagegain import averagegain
 from routes.calcul.average.averageloss import averageloss
-# calcul
 #from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
 from routes.calcul.calculate_duration import calculate_duration
@@ -46,13 +49,19 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 from routes.calcul.winrate import winrate
 from routes.calcul.winratestd import winratestd
+#from routes.calcul.conversion_map import conversion_map
+from routes.calcul.RR import RR
+from routes.calcul.RRT import RRT
 
 # envoie
 from routes.envoie.envoie import envoie
+
 # image
 from routes.journal.enregistrementImage import enregistrerImage
-from routes.journal.modificationTrade import setup_modificationTrade_routes
+from routes.journal.recuperationImage import recuperationImage
+
 #journal
+from routes.journal.modificationTrade import setup_modificationTrade_routes
 from routes.journal.recuperationTrade import setup_things_routes
 
 app = Flask(__name__)
@@ -66,17 +75,8 @@ app.after_request(after_request)
 app.debug = True
 CORS(app, origins='*', allow_headers='*', methods='*')
 
+
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
-
-
-
-
-
-
-#from routes.calcul.conversion_map import conversion_map
-from routes.calcul.RR import RR
-from routes.calcul.RRT import RRT
-
 
 
 app.register_blueprint(tpr)
@@ -136,6 +136,7 @@ app.register_blueprint(setup_modificationTrade_routes(app))
 
 # image
 app.register_blueprint(enregistrerImage)
+app.register_blueprint(recuperationImage)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
