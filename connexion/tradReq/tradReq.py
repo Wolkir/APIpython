@@ -19,9 +19,9 @@ from routes.calcul.average.averageloss import calculate_average_loss
 #from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
 from routes.calcul.winrate import calculate_winrate
 from routes.calcul.winratestd  import calculate_winratestd
-from routes.calcul.profit.profitfactor  import calculate_profit_factor
-from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long
-from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short
+#from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long  // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorshort  import calculate_profit_factor_short  // remplacé par le code groupé profit_factor_group
 #from routes.calcul.minloss  import find_min_loss // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.maxprofit  import find_max_profit // remplacé par le code groupé maxprofit_minloss
 from routes.calcul.ddmax import calculate_ddmax
@@ -201,11 +201,11 @@ def save_trade_request():
             
         calculate_winratestd(data)
             
-        calculate_profit_factor(data)
+        #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group
             
-        calculate_profit_factor_long(data) 
+        #calculate_profit_factor_long(data)   // remplacé par le code groupé profit_factor_group
             
-        calculate_profit_factor_short(data)
+        #calculate_profit_factor_short(data)  // remplacé par le code groupé profit_factor_group
             
         #find_min_loss(data)   // remplacé par le code groupé maxprofit_minloss
             
@@ -214,7 +214,6 @@ def save_trade_request():
         calculate_ddmax(data)
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
-       
         calculate_profit_factor_group(data)
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
