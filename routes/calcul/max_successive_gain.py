@@ -36,7 +36,12 @@ def find_max_successive_gains(data):
 
             if current_successive_gains_count > max_successive_gains_count:
                 max_successive_gains_count = current_successive_gains_count
+        else:
+            # Réinitialiser le compteur si on trouve un profit négatif
+            current_successive_gains_count = 0
 
-    # Insérer le winrate_value dans la collection "unitaire"
+        previous_identifier = identifier
+
+    # Insérer le max_successive_gain dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'max_successive_gain': (max_successive_gains_count)}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'max_successive_gain': max_successive_gains_count}}, upsert=True)
