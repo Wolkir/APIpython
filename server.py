@@ -48,9 +48,9 @@ from routes.calcul.Equity import Equity
 from routes.calcul.killzone import killzone
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
-from routes.calcul.profit.profitfactor import profitfactor
-from routes.calcul.profit.profitfactorlong import profitfactorlong
-from routes.calcul.profit.profitfactorshort import profitfactorshort
+#from routes.calcul.profit.profitfactor import profitfactor // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorlong import profitfactorlong // remplacé par le code groupé profit_factor_group
+#from routes.calcul.profit.profitfactorshort import profitfactorshort // remplacé par le code groupé profit_factor_group
 from routes.calcul.session import session
 from routes.calcul.sharp import sharp_ratio
 from routes.calcul.SLR import slr
@@ -66,6 +66,7 @@ from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
 from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
+from routes.calcul.winrategroup import winrategroup
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -98,9 +99,9 @@ app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
 #app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
-app.register_blueprint(profitfactor)
-app.register_blueprint(profitfactorlong)
-app.register_blueprint(profitfactorshort)
+#app.register_blueprint(profitfactor) // remplacé par le code groupé profit_factor_group
+#app.register_blueprint(profitfactorlong) // remplacé par le code groupé profit_factor_group
+#app.register_blueprint(profitfactorshort) // remplacé par le code groupé profit_factor_group
 app.register_blueprint(session)
 app.register_blueprint(sharp_ratio)
 app.register_blueprint(slr)
@@ -114,7 +115,7 @@ app.register_blueprint(winratestd)
 app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
 app.register_blueprint(profitfactorgroup)
-
+app.register_blueprint(winrate_group)
 
 # user
 app.register_blueprint(setup_signup_route(app))
