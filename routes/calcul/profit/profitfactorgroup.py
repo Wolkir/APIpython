@@ -10,12 +10,8 @@ db = client['test']
 # Blueprint pour les routes profitfactorgroup
 profitfactorgroup = Blueprint('profitfactorgroup', __name__)
 
-@profitfactorgroup.route('/profitfactorgroup', methods=['GET'])
+# Fonction pour calculer le profit factor
 def calculate_profit_factor_custom(collection, filter_query):
-    username = request.args.get('username')
-    collection_name = f"{username}_close"
-    collection_unitaire = f"{username}_unitaire"
-    collection = db[collection_name]
     total_profit = 0
     total_loss = 0
 
@@ -32,8 +28,8 @@ def calculate_profit_factor_custom(collection, filter_query):
 
     return total_profit, total_loss, profit_factor
 
-
-def calculate_profit_factor_group(data):
+@profitfactorgroup.route('/profitfactorgroup', methods=['GET'])
+def calculate_profit_factor_group():
     username = request.args.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
@@ -64,4 +60,5 @@ def calculate_profit_factor_group(data):
         unitaire_collection.update_one({}, {'$set': {'profitfactor_all': profit_factor}}, upsert=True)
         unitaire_collection.update_one({}, {'$set': {'total_loss_all': total_loss}}, upsert=True)
         unitaire_collection.update_one({}, {'$set': {'total_gain_all': total_profit}}, upsert=True)
+
 
