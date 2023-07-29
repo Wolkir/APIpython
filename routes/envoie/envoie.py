@@ -35,6 +35,7 @@ atexit.register(close_mongo_client)
 def process_argument_value(arg):
     if arg == "":
         return None
+    print(arg)
     return arg
 
 @envoie.route('/envoie', methods=['GET'])
@@ -43,6 +44,7 @@ def update_envoie():
     argI = process_argument_value(request.args.get('argI', None))
     debutDate = request.args.get('argSD', None)
     finDate = request.args.get('argED', None)
+    username = request.args.get('username', None)
     argTPR = process_argument_value(request.args.get('argTPR', None))
     argSL = process_argument_value(request.args.get('argSL', None))
     argBE = process_argument_value(request.args.get('argBE', None))
@@ -71,7 +73,9 @@ def update_envoie():
 
     try:
         query = {
-            '$and': []
+            '$and': [
+                {'username': username}
+            ]
         }
 
         # date
