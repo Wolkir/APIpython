@@ -64,7 +64,7 @@ from routes.calcul.winratestd import winratestd
 from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
-from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss #code groupé max gain et max loss
+from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 
 
 # envoie
