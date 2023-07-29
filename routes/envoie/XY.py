@@ -41,3 +41,33 @@ def process_argument_xyBE(argBE):
         return None
 
     return argBEbinaire
+
+def process_argument_xySortieManuelle(argSortManu):
+    argSortManuBinaire = None
+    
+    if argSortManu == "true":
+        argSortManuBinaire = True
+    if argSortManu == "false":
+        argSortManuBinaire = False
+    elif argSortManu == "":
+        argSortManuBinaire = None
+    else:
+        argSortManuBinaire = None
+        return None
+
+    return argSortManuBinaire
+
+def process_argument_xyTilt(argTilt):
+    argTiltBinaire = None
+    
+    if argTilt == "true":
+        argTiltBinaire = True
+    if argTilt == "false":
+        argTiltBinaire = False
+    elif argTilt == "":
+        argTiltBinaire = None
+    else:
+        argTiltBinaire = None
+        return None
+
+    return argTiltBinaire
