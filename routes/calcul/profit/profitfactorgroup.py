@@ -61,4 +61,8 @@ def calculate_profit_factor_group():
         unitaire_collection.update_one({}, {'$set': {'total_loss_all': total_loss}}, upsert=True)
         unitaire_collection.update_one({}, {'$set': {'total_gain_all': total_profit}}, upsert=True)
 
+# Register the blueprint
+app.register_blueprint(profitfactorgroup)
 
+if __name__ == '__main__':
+    app.run()
