@@ -16,8 +16,6 @@ from routes.calcul.average.average_duration import calculate_average_duration
 from routes.calcul.average.averagegain import calculate_average_gain
 from routes.calcul.average.averageloss import calculate_average_loss
 
-from routes.calcul.winrate import calculate_winrate
-from routes.calcul.winratestd  import calculate_winratestd
 
 from routes.calcul.ddmax import calculate_ddmax
 from routes.calcul.max_successive_counts import find_max_successive_counts # code groupé max successive gain et max successive loss
@@ -32,6 +30,8 @@ from routes.calcul.winrategroup import calculate_winrate_group
 #from routes.calcul.maxprofit  import find_max_profit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.max_successive_gain import find_max_successive_gains // remplacé par code groupé max_successive_count
 #from routes.calcul.max_successive_losses import find_max_successive_losses // remplacé par code groupé max_successive_count
+#from routes.calcul.winrate import calculate_winrate // remplacé par le code winrategroup
+#from routes.calcul.winratestd  import calculate_winratestd // remplacé par le code winrategroup
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -194,12 +194,8 @@ def save_trade_request():
             
         calculate_average_gain(data)
             
-        calculate_average_loss(data)
-                       
-        calculate_winrate(data)
-            
-        calculate_winratestd(data)
-                   
+        calculate_average_loss(data)  
+        
         calculate_ddmax(data)
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
@@ -213,6 +209,9 @@ def save_trade_request():
         #find_max_profit(data)  // remplacé par le code groupé maxprofit_minloss
         #find_max_successive_gains(data) // remplacé par code groupé max_successive_count          
         #find_max_successive_losses(data) // remplacé par code groupé max_successive_count
+        #calculate_winrate(data) // remplacé par le code winrategroup           
+        #calculate_winratestd(data) // remplacé par le code winrategroup
+
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
