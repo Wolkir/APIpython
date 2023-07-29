@@ -53,6 +53,20 @@ def update_envoie():
     argAnnEco = process_argument_value(request.args.get('argAnnEco', None))
     argPos = process_argument_value(request.args.get('argPos', None))
     argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
+
+    print(argD)
+    print(argI)
+    print(debutDate)
+    print(finDate)
+    print(username)
+    print(argTPR)
+    print(argSL)
+    print(argBE)
+    print(argPsy)
+    print(argStrat)
+    print(argAnnEco)
+    print(argPos)
+    print(argTypOrd)
     
     db = client['test']
     collection = db['things']
@@ -79,44 +93,46 @@ def update_envoie():
         }
 
         # date
-        if start_date is not None and end_date is not None:
+        if start_date is not None and end_date is not None or start_date != "" and end_date != "":
             query['$and'].append({'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}})
 
         # indice
-        if argI is not None:
+        if argI is not None or argI != "":
             query['$and'].append({'symbole': argI})
 
         # TPR
-        if argTPRbinaire is not None:
+        if argTPRbinaire is not None or argTPRbinaire != "":
             query['$and'].append({'TPR': argTPRbinaire})
 
         # SL
-        if argSLbinaire is not None:
+        if argSLbinaire is not None or argSLbinaire != "":
             query['$and'].append({'slr': argSLbinaire})
 
         # BE
-        if argBEbinaire is not None:
+        if argBEbinaire is not None or argBEbinaire != "":
             query['$and'].append({'slr': argBEbinaire})
 
         # psy
-        if argPsy is not None:
+        if argPsy is not None or argPsy != "":
             query['$and'].append({'psychologie': argPsy})
 
         # strat
-        if argStrat is not None:
+        if argStrat is not None or argStrat != "":
             query['$and'].append({'strategie': argStrat})
 
         # annonce economique
-        if argAnnEco is not None:
+        if argAnnEco is not None or argAnnEco != "":
             query['$and'].append({'annonceEconomique': argAnnEco})
 
         # position
-        if argPos is not None:
+        if argPos is not None or argPos != "":
             query['$and'].append({'position': argPos})
 
         # type ordre
-        if argTypOrd is not None:
+        if argTypOrd is not None or argTypOrd != "":
             query['$and'].append({'typeOrdre': argTypOrd})
+
+        print(query)
 
         data = list(collection.find(query))
         data = json.loads(json.dumps(data, default=json_serial))
