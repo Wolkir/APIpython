@@ -46,8 +46,8 @@ from routes.calcul.calculate_duration import calculate_duration
 from routes.calcul.ddmax import ddmax
 from routes.calcul.Equity import Equity
 from routes.calcul.killzone import killzone
-from routes.calcul.maxprofit import maxprofit
-from routes.calcul.minloss import minloss
+#from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
+#from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
 from routes.calcul.profit.profitfactor import profitfactor
 from routes.calcul.profit.profitfactorlong import profitfactorlong
 from routes.calcul.profit.profitfactorshort import profitfactorshort
@@ -96,8 +96,8 @@ app.register_blueprint(calculate_duration)
 app.register_blueprint(ddmax)
 app.register_blueprint(Equity)
 app.register_blueprint(killzone)
-app.register_blueprint(maxprofit)
-app.register_blueprint(minloss)
+#app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
+#app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
 app.register_blueprint(profitfactor)
 app.register_blueprint(profitfactorlong)
 app.register_blueprint(profitfactorshort)
