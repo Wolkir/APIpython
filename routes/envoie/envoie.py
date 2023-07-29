@@ -17,7 +17,21 @@ from .XY import process_argument_xy
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
 app = Flask(__name__)
-app.logger.setLevel(logging.DEBUG)
+
+# Créer un logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.ERROR)
+
+# Définir le format du log
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# Créer un gestionnaire de fichier pour enregistrer les logs dans un fichier
+file_handler = logging.FileHandler('error.log')
+file_handler.setLevel(logging.ERROR)
+file_handler.setFormatter(formatter)
+
+# Ajouter le gestionnaire de fichier au logger
+logger.addHandler(file_handler)
 
 def json_serial(obj):
     if isinstance(obj, ObjectId):
