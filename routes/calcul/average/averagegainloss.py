@@ -59,6 +59,20 @@ def calculate_average_gain_loss_rr(data):
     rr_count = len(rr_values)
     average_rr = rr_total / rr_count if rr_count > 0 else 0
 
+    # Calculer la durée moyenne
+    total_duration = timedelta()
+    document_count = 0
+
+    for doc in collection.find():
+        if 'duration' in doc:
+            duration_str = doc['duration']
+            duration_parts = duration_str.split(':')
+            duration = timedelta(hours=int(duration_parts[0]), minutes=int(duration_parts[1]), seconds=int(duration_parts[2]))
+            total_duration += duration
+            document_count += 1
+
+    average_duration = total_duration / document_count if document_count > 0 else timedelta()
+
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
@@ -66,8 +80,9 @@ def calculate_average_gain_loss_rr(data):
         {
             '$set': {
                 'averagegain2': average_gain,
-                'averageloss2': average_loss,
-                'RRaverage2': average_rr
+                'averagelosse2': average_loss,
+                'RRaverage2': average_rr,
+                'average_duration2': str(average_duration)
             }
         },
         upsert=True
