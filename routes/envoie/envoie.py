@@ -51,6 +51,9 @@ def update_envoie():
     argAnnEco = process_argument_value(request.args.get('argAnnEco', None))
     argPos = process_argument_value(request.args.get('argPos', None))
     argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
+
+    debutDate = datetime.fromisoformat(debutDate_str) if debutDate_str else None
+    finDate = datetime.fromisoformat(finDate_str) if finDate_str else None
     
     db = client['test']
     collection = db['things']
