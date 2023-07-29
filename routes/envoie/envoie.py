@@ -41,8 +41,8 @@ def process_argument_value(arg):
 def update_envoie():
     argD = process_argument_value(request.args.get('argD', None))
     argI = process_argument_value(request.args.get('argI', None))
-    debutDateStr = process_argument_value(request.args.get('argSD', None))
-    finDateStr = process_argument_value(request.args.get('argED', None))
+    debutDate = request.args.get('argSD', None)
+    finDate = request.args.get('argED', None)
     argTPR = process_argument_value(request.args.get('argTPR', None))
     argSL = process_argument_value(request.args.get('argSL', None))
     argBE = process_argument_value(request.args.get('argBE', None))
@@ -51,9 +51,6 @@ def update_envoie():
     argAnnEco = process_argument_value(request.args.get('argAnnEco', None))
     argPos = process_argument_value(request.args.get('argPos', None))
     argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
-
-    debutDate = datetime.fromisoformat(debutDateStr) if debutDateStr else None
-    finDate = datetime.fromisoformat(finDateStr) if finDateStr else None
     
     db = client['test']
     collection = db['things']
