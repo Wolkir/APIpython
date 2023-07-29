@@ -10,7 +10,7 @@ profitfactorgroup = Blueprint('profitfactorgroup', __name__)
 
 
 @app.route('/profitfactorgroup', methods=['GET'])
-def calculate_profit_factor_group():
+def calculate_profit_factor_group(data):
     username = request.args.get('username')
     transaction_type = request.args.get('type', None)
 
