@@ -18,7 +18,8 @@ def enregistrer_image():
 
         app.config['MONGO_URI'] = 'mongodb://localhost:27017/nom_de_votre_base_de_donnees'
         mongo = MongoClient(app.config['MONGO_URI'])
-        fs = gridfs.GridFS(mongo)
+        db = mongo["test"]
+        fs = gridfs.GridFS(db)
 
         image_id = fs.put(image.stream, filename=image.filename)
 
