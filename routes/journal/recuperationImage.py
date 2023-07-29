@@ -19,7 +19,7 @@ def recuperation_image(image_id):
 
         image = fs.get(ObjectId(image_id))
         if image is None:
-            return jsonify({'message': 'Image non trouvée'}), 404
+            return jsonify({'message': 'Image non trouvée'}), 500
 
         return send_file(io.BytesIO(image.read()), mimetype='image/jpeg')
     except Exception as e:
