@@ -38,9 +38,9 @@ def calculate_profit_factor_group(data):
     collection = db[collection_name]
     transaction_type = request.args.get('type')  # Paramètre pour spécifier le type de transaction (buy, sell ou all)
 
-    if transaction_type == 'buy':
+    if transaction_type == 'Buy':
         filter_query = {"typeOfTransaction": "Buy"}
-    elif transaction_type == 'sell':
+    elif transaction_type == 'Sell':
         filter_query = {"typeOfTransaction": "Sell"}
     else:
         filter_query = {}
