@@ -10,38 +10,74 @@ profitfactorgroup = Blueprint('profitfactorgroup', __name__)
 
 
 @app.route('/profitfactorgroup', methods=['GET'])
-def calculate_profit_factor_group(data):
-    username = request.args.get('username')
-    transaction_type = request.args.get('type', None)
 
+def calculate_profit_factor_group(data):
+    username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
-    # Calcul du profit total et de la perte totale pour les transactions du type spécifié
+    # Calcul du profit total et du perte total pour toutes les transactions
     total_profit = 0
     total_loss = 0
 
-    # Parcourir les documents de la collection
-    filter_query = {} if transaction_type is None else {"typeOfTransaction": transaction_type}
+    # Calcul du profit total et du perte total pour les transactions de type "Buy" uniquement
+    total_profit_buy = 0
+    total_loss_buy = 0
 
-    for doc in collection.find(filter_query):
+    # Calcul du profit total et du perte total pour les transactions de type "Sell" uniquement
+    total_profit_sell = 0
+    total_loss_sell = 0
+
+    # Parcourir les documents de la collection
+    for doc in collection.find():
         profit = doc['profit']
+        type_of_transaction = doc['typeOfTransaction']
+        
         if profit > 0:
             total_profit += profit
         elif profit < 0:
             total_loss += profit
 
-    # Calcul du profit factor
+        # Si la transaction est de type "Buy"
+        if type_of_transaction == "Buy":
+            if profit > 0:
+                total_profit_buy += profit
+            elif profit < 0:
+                total_loss_buy += profit
+        
+        # Si la transaction est de type "Sell"
+        elif type_of_transaction == "Sell":
+            if profit > 0:
+                total_profit_sell += profit
+            elif profit < 0:
+                total_loss_sell += profit
+
+    # Calcul du profit factor pour toutes les transactions
     profit_factor = total_profit / abs(total_loss)
 
-    # Insérer le profit factor dans la collection "unitaire"
+    # Calcul du profit factor pour les transactions de type "Buy" uniquement
+    profit_factor_buy = total_profit_buy / abs(total_loss_buy)
+
+    # Calcul du profit factor pour les transactions de type "Sell" uniquement
+    profit_factor_sell = total_profit_sell / abs(total_loss_sell)
+
+    # Insérer toutes les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    if transaction_type is None:
-        unitaire_collection.update_one({}, {'$set': {'profitfactor': profit_factor}}, upsert=True)
-        unitaire_collection.update_one({}, {'$set': {'total loss': total_loss}}, upsert=True)
-        unitaire_collection.update_one({}, {'$set': {'total gain': total_profit}}, upsert=True)
-    elif transaction_type == "Buy":
-        unitaire_collection.update_one({}, {'$set': {'profitfactorlong': profit_factor}}, upsert=True)
-        unitaire_collection.update_one({}, {'$set': {'total loss long': total_loss}}, upsert=True)
-        unitaire_collection.update_one({}, {'$set': {'total gain long': total_profit}}, upsert=True)
+    unitaire_collection.update_one(
+        {},
+        {
+            '$set': {
+                'profitfactor': profit_factor,
+                'profitfactorbuy': profit_factor_buy,
+                'profitfactorsell': profit_factor_sell,
+                'total loss': total_loss,
+                'total loss buy': total_loss_buy,
+                'total loss sell': total_loss_sell,
+                'total gain': total_profit,
+                'total gain buy': total_profit_buy,
+                'total gain sell': total_profit_sell
+            }
+        },
+        upsert=True
+    )
