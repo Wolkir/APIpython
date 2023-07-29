@@ -32,45 +32,25 @@ def close_mongo_client():
 
 atexit.register(close_mongo_client)
 
+def process_argument_value(arg):
+    if arg == "":
+        return None
+    return arg
+
 @envoie.route('/envoie', methods=['GET'])
 def update_envoie():
-    argD = request.args.get('argD', None)
-    argI = request.args.get('argI', None)
-    debutDate = request.args.get('argSD', None)
-    finDate = request.args.get('argED', None)
-    argTPR = request.args.get('argTPR', None)
-    argSL = request.args.get('argSL', None)
-    argBE = request.args.get('argBE', None)
-    argPsy = request.args.get('argPsy', None)
-    argStrat = request.args.get('argStrat', None)
-    argAnnEco = request.args.get('argAnnEco', None)
-    argPos = request.args.get('argPos', None)
-    argTypOrd = request.args.get('argTypOrd', None)
-
-    if argD == "":
-        argD = None
-    if argI == "":
-        argI = None
-    if debutDate == "":
-        debutDate = None
-    if finDate == "":
-        finDate = None
-    if argTPR == "":
-        argTPR = None
-    if argSL == "":
-        argSL = None
-    if argBE == "":
-        argBE = None
-    if argPsy == "":
-        argPsy = None
-    if argStrat == "":
-        argStrat = None
-    if argAnnEco == "":
-        argAnnEco = None
-    if argPos == "":
-        argPos = None
-    if argTypOrd == "":
-        argTypOrd = None
+    argD = process_argument_value(request.args.get('argD', None))
+    argI = process_argument_value(request.args.get('argI', None))
+    debutDate = process_argument_value(request.args.get('argSD', None))
+    finDate = process_argument_value(request.args.get('argED', None))
+    argTPR = process_argument_value(request.args.get('argTPR', None))
+    argSL = process_argument_value(request.args.get('argSL', None))
+    argBE = process_argument_value(request.args.get('argBE', None))
+    argPsy = process_argument_value(request.args.get('argPsy', None))
+    argStrat = process_argument_value(request.args.get('argStrat', None))
+    argAnnEco = process_argument_value(request.args.get('argAnnEco', None))
+    argPos = process_argument_value(request.args.get('argPos', None))
+    argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
     
     db = client['test']
     collection = db['things']
