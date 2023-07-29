@@ -9,7 +9,18 @@ db = client['test']
 
 
 @averagegainloss.route('/averagegainloss', methods=['GET'])
-def calculate_average_gain_loss(data):
+from flask import Flask, Blueprint, jsonify
+from pymongo import MongoClient
+
+app = Flask(__name__)
+averagegainloss = Blueprint('averagegainloss', __name__)
+
+# Connexion à la base de données MongoDB
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+db = client['test']
+
+@averagegainloss.route('/averagegainloss', methods=['GET'])
+def calculate_average_gain_loss_rr(data):
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
@@ -23,6 +34,13 @@ def calculate_average_gain_loss(data):
     negative_losses_total = 0
     negative_losses_count = 0
     negative_ticket_numbers = set()
+
+    # Calcul de RR
+    price_close = data.get('priceClosure')
+    price_opening = data.get('priceOpening')
+    stop_loss = data.get('stopLoss')
+    rr = (price_close - price_opening) / (price_opening - stop_loss)
+    rr = round(rr, 2)
 
     # Parcourir les documents de la collection
     for doc in collection.find():
@@ -45,5 +63,14 @@ def calculate_average_gain_loss(data):
 
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'averagegain2': average_gain, 'averageloss2': average_loss}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'averagegain': average_gain, 'averagelosse': average_loss, 'RR': rr}}, upsert=True)
+
+    # Vous pouvez retourner les valeurs calculées sous forme de réponse JSON si nécessaire
+    response_data = {
+        'averagegain': average_gain,
+        'averagelosse': average_loss,
+        'RR2': rr
+    }
+    return jsonify(response_data)
+
 
