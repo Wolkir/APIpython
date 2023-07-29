@@ -5,6 +5,17 @@ import requests
 from flask import Flask
 from flask_cors import CORS
 
+app = Flask(__name__)
+def after_request(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+    return response
+
+app.after_request(after_request)
+app.debug = True
+CORS(app, origins='*', allow_headers='*', methods='*')
+
 # indicateur
 from connexion.indicateur.createIndicateur import createIndicateur
 from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
@@ -63,17 +74,6 @@ from routes.journal.recuperationImage import recuperationImage
 #journal
 from routes.journal.modificationTrade import setup_modificationTrade_routes
 from routes.journal.recuperationTrade import setup_things_routes
-
-app = Flask(__name__)
-def after_request(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-    return response
-
-app.after_request(after_request)
-app.debug = True
-CORS(app, origins='*', allow_headers='*', methods='*')
 
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
