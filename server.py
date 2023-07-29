@@ -36,14 +36,11 @@ from connexion.user.signup import setup_signup_route
 
 # calcul
 from routes.calcul.assign_order import assign_order
-from routes.calcul.average.average_duration import average_duration
-from routes.calcul.average.average_rr import average_rr
-from routes.calcul.average.averagegain import averagegain
-from routes.calcul.average.averageloss import averageloss
+
 #from routes.calcul.BE_RR.RR import RR
 from routes.calcul.BE_RR.BE import BE
 from routes.calcul.calculate_duration import calculate_duration
-from routes.calcul.ddmax import ddmax
+
 from routes.calcul.Equity import Equity
 from routes.calcul.killzone import killzone
 
@@ -62,7 +59,7 @@ from routes.calcul.max_successive_counts import max_successive_counts #code grou
 from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
-from routes.calcul.average.averagegainloss import averagegainloss
+from routes.calcul.average.averagegainloss import averagegainloss 
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
@@ -71,7 +68,11 @@ from routes.calcul.average.averagegainloss import averagegainloss
 #from routes.calcul.profit.profitfactorshort import profitfactorshort // remplacé par le code groupé profit_factor_group
 #from routes.calcul.winrate import winrate // remplacé par winrategroup
 #from routes.calcul.winratestd import winratestd // remplacé par winrategroup
-
+#from routes.calcul.ddmax import ddmax // remplacé par le code maxprofit_minloss
+#from routes.calcul.average.average_duration import average_duration // remplacé par le code groupe averagegainloss
+#from routes.calcul.average.average_rr import average_rr // remplacé par le code groupe averagegainloss
+#from routes.calcul.average.averagegain import averagegain // remplacé par le code groupe averagegainloss
+#from routes.calcul.average.averageloss import averageloss  // remplacé par le code groupe averagegainloss
 
 # envoie
 from routes.envoie.envoie import envoie
@@ -90,10 +91,6 @@ from routes.journal.recuperationTrade import setup_things_routes
 
 app.register_blueprint(tpr)
 app.register_blueprint(assign_order)
-app.register_blueprint(average_duration)
-app.register_blueprint(average_rr)
-app.register_blueprint(averagegain)
-app.register_blueprint(averageloss)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
 app.register_blueprint(RRT)
@@ -102,11 +99,6 @@ app.register_blueprint(calculate_duration)
 app.register_blueprint(ddmax)
 app.register_blueprint(Equity)
 app.register_blueprint(killzone)
-#app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
-#app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
-#app.register_blueprint(profitfactor) // remplacé par le code groupé profit_factor_group
-#app.register_blueprint(profitfactorlong) // remplacé par le code groupé profit_factor_group
-#app.register_blueprint(profitfactorshort) // remplacé par le code groupé profit_factor_group
 app.register_blueprint(session)
 app.register_blueprint(sharp_ratio)
 app.register_blueprint(slr)
@@ -114,14 +106,23 @@ app.register_blueprint(Tilts)
 app.register_blueprint(tpr)
 app.register_blueprint(tradecount)
 app.register_blueprint(weekday)
-#app.register_blueprint(winrate)
 app.register_blueprint(envoie)
-#app.register_blueprint(winratestd)
 app.register_blueprint(max_successive_counts)
 app.register_blueprint(maxprofit_minloss)
 app.register_blueprint(profitfactorgroup)
 app.register_blueprint(winrategroup)
 app.register_blueprint(averagegainloss)
+#app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
+#app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
+#app.register_blueprint(profitfactor) // remplacé par le code groupé profit_factor_group
+#app.register_blueprint(profitfactorlong) // remplacé par le code groupé profit_factor_group
+#app.register_blueprint(profitfactorshort) // remplacé par le code groupé profit_factor_group
+#app.register_blueprint(average_duration)
+#app.register_blueprint(average_rr)
+#app.register_blueprint(averagegain)
+#app.register_blueprint(averageloss)
+#app.register_blueprint(winratestd)
+#app.register_blueprint(winrate)
 
 # user
 app.register_blueprint(setup_signup_route(app))
