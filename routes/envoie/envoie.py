@@ -14,6 +14,8 @@ from .date import process_argument_date
 from .XY import process_argument_xyTPR
 from .XY import process_argument_xySL
 from .XY import process_argument_xyBE
+from .XY import process_argument_xySortieManuelle
+from .XY import process_argument_xyTilt
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
@@ -54,20 +56,8 @@ def update_envoie():
     argAnnEco = process_argument_value(request.args.get('argAnnEco', None))
     argPos = process_argument_value(request.args.get('argPos', None))
     argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
-
-    print(argD)
-    print(argI)
-    print(debutDate)
-    print(finDate)
-    print(username)
-    print(argTPR)
-    print(argSL)
-    print(argBE)
-    print(argPsy)
-    print(argStrat)
-    print(argAnnEco)
-    print(argPos)
-    print(argTypOrd)
+    argSortManu = process_argument_value(request.args.get('argSortManu', None))
+    argTilt = process_argument_value(request.args.get('argTilt', None))
     
     db = client['test']
     collection = db['things']
@@ -77,14 +67,19 @@ def update_envoie():
     argTPRbinaire = None
     argSLbinaire = None
     argBEbinaire = None
+    argSortManuBinaire = None
+    argTiltBinaire = None
+
     if argTPR is not None:
         argTPRbinaire = process_argument_xyTPR(argTPR)
-    
     if argSL is not None:
         argSLbinaire = process_argument_xySL(argSL)
-    
     if argBE is not None:
         argBEbinaire = process_argument_xyBE(argBE)
+    if argSortManu is not None:
+        argSortManuBinaire = process_argument_xySortieManuelle(argSortManu)
+    if argTilt is not None:
+        argTiltBinaire = process_argument_xyTilt(argTilt)
 
     try:
         query = {
@@ -93,59 +88,53 @@ def update_envoie():
             ]
         }
 
-        print(query)
+        # tilt
+        if argTiltBinaire is not None:
+            query['$and'].append({'journeeDeTilt': argTiltBinaire})
+
+        # sortie manuelle
+        if argSortManuBinaire is not None:
+            query['$and'].append({'sortieManuelle': argSortManuBinaire})
 
         # date
         if start_date is not None and end_date is not None:
-            print("pute")
             query['$and'].append({'dateAndTimeOpening': {'$gte': start_date, '$lt': end_date}})
 
         # indice
         if argI is not None:
-            print("pute")
             query['$and'].append({'symbole': argI})
 
         # TPR
         if argTPRbinaire is not None:
-            print("pute")
             query['$and'].append({'TPR': argTPRbinaire})
 
         # SL
         if argSLbinaire is not None:
-            print("pute")
             query['$and'].append({'slr': argSLbinaire})
 
         # BE
         if argBEbinaire is not None:
-            print("pute")
             query['$and'].append({'slr': argBEbinaire})
 
         # psy
         if argPsy is not None:
-            print("pute")
             query['$and'].append({'psychologie': argPsy})
 
         # strat
         if argStrat is not None:
-            print("pute")
             query['$and'].append({'strategie': argStrat})
 
         # annonce economique
         if argAnnEco is not None:
-            print("pute")
             query['$and'].append({'annonceEconomique': argAnnEco})
 
         # position
         if argPos is not None:
-            print("pute")
             query['$and'].append({'position': argPos})
 
         # type ordre
         if argTypOrd is not None:
-            print("pute")
             query['$and'].append({'typeOrdre': argTypOrd})
-
-        print(query)
 
         data = list(collection.find(query))
         data = json.loads(json.dumps(data, default=json_serial))
