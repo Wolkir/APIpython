@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, current_app
+from flask import Flask
 import logging
 import atexit
 import json
