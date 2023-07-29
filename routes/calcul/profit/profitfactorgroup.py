@@ -14,6 +14,10 @@ profitfactorgroup= Blueprint('profitfactorgroup', __name__)
 
 # Fonction pour calculer le profit factor
 def calculate_profit_factor_custom(collection, filter_query):
+    username = request.args.get('username')
+    collection_name = f"{username}_close"
+    collection_unitaire = f"{username}_unitaire"
+    collection = db[collection_name]
     total_profit = 0
     total_loss = 0
 
