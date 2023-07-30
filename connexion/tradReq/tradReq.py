@@ -187,7 +187,9 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle": None
+            "sortieManuelle": None,
+            "journeeDeTilt": None,
+            "TJS": None,
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
