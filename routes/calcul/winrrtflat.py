@@ -7,7 +7,7 @@ winrrtflat = Blueprint('winrrtflat', __name__)
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
-collection_unitaire = db['unitaire']
+
 
 @winrrtflat.route('/winrrtflat', methods=['GET'])
 def calculate_winrrtflat(data):
