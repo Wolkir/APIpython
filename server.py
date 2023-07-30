@@ -50,7 +50,7 @@ from routes.calcul.Equity import Equity
 from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
-from routes.calcul.sharp import sharp_ratio
+
 from routes.calcul.SLR import slr
 from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import tpr
