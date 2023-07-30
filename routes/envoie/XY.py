@@ -1,5 +1,6 @@
 from dns.rdatatype import NULL
 
+# TPR
 def process_argument_xyTPR(argTPR):
     argTPRbinaire = None
     
@@ -15,6 +16,7 @@ def process_argument_xyTPR(argTPR):
 
     return argTPRbinaire
 
+# SL
 def process_argument_xySL(argSL):
     argSLbinaire = None
     if argSL == "atteint":
@@ -29,6 +31,7 @@ def process_argument_xySL(argSL):
 
     return argSLbinaire
 
+# BE
 def process_argument_xyBE(argBE):
     argBEbinaire = None
     
@@ -42,6 +45,7 @@ def process_argument_xyBE(argBE):
 
     return argBEbinaire
 
+# sortie manuelle
 def process_argument_xySortieManuelle(argSortManu):
     argSortManuBinaire = None
     
@@ -57,6 +61,7 @@ def process_argument_xySortieManuelle(argSortManu):
 
     return argSortManuBinaire
 
+# tilt
 def process_argument_xyTilt(argTilt):
     argTiltBinaire = None
     
@@ -70,4 +75,35 @@ def process_argument_xyTilt(argTilt):
         argTiltBinaire = None
         return None
 
-    return argTiltBinaire
+# viole strategie
+def process_argument_xyVioleStrat(argVioleStrat):
+    argVioleStratBinaire = None
+    
+    if argVioleStrat == "true":
+        argVioleStratBinaire = True
+    if argVioleStrat == "false":
+        argVioleStratBinaire = False
+    elif argVioleStrat == "":
+        argVioleStratBinaire = None
+    else:
+        argVioleStratBinaire = None
+        return None
+
+    return argVioleStratBinaire
+
+# annonce economique
+def process_argument_xyAnnEco(argAnnEco):
+    argAnnEcoBinaire = None
+    
+    if argAnnEco == "true":
+        argAnnEcoBinaire = True
+    if argAnnEco == "false":
+        argAnnEcoBinaire = False
+    elif argAnnEco == "":
+        argAnnEcoBinaire = None
+    else:
+        argAnnEcoBinaire = None
+        return None
+
+    return argAnnEcoBinaire
+
