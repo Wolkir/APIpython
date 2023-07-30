@@ -202,7 +202,7 @@ def save_trade_request():
         calculate_profit_factor_group(data)
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
-        calculate_winrrt(data)
+        calculate_winrrtflat(data)
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
         #calculate_profit_factor_long(data)   // remplacé par le code groupé profit_factor_group            
