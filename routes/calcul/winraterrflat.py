@@ -2,14 +2,14 @@ from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 
 app = Flask(__name__)
-winrrt = Blueprint('winrrt', __name__)
+winrrtflat = Blueprint('winrrtflat', __name__)
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
 collection_unitaire = db['unitaire']
 
-@winrrt.route('/winrrt', methods=['GET'])
+@winrrtflat.route('/winrrtflat', methods=['GET'])
 def calculate_winrrt():
     # Récupérer la valeur de winrate de la collection "unitaire"
     winrate = collection_unitaire.find_one({}, {"winrate": 1})["winrate"]
