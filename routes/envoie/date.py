@@ -29,9 +29,13 @@ def process_argument_date(argumentDate, debutDate, finDate):
     elif argumentDate == "choixLibre":
         # Utilisez le format exact des dates de la requête (YYYY-MM-DDTHH:MM:SS.sssZ)
         date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
-        start_date = datetime.strptime(debutDate, date_format)
-        end_date = datetime.strptime(finDate, date_format)
-        return start_date, end_date
+        try:
+            start_date = datetime.strptime(debutDate, date_format)
+            end_date = datetime.strptime(finDate, date_format)
+            return start_date, end_date
+        except ValueError as e:
+            print("Erreur lors de la conversion des dates:", e)
+            return None, None
     else:
         return None, None
 
