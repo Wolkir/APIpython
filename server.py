@@ -20,7 +20,8 @@ app.after_request(after_request)
 app.debug = True
 CORS(app, resources={r"/envoie": {"origins": "http://localhost:3000"},
                      r"/recuperationIndicateur": {"origins": "http://localhost:3000"},
-                     r"/recuperationTrade": {"origins": "http://localhost:3000"}})
+                     r"/recuperationTrade": {"origins": "http://localhost:3000"}}),
+                     r"/recuperationStrategie": {"origins": "http://localhost:3000"}})
 
 # indicateur
 from connexion.indicateur.createIndicateur import createIndicateur
