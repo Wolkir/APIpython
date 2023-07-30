@@ -42,14 +42,9 @@ def calculate_average_gain_loss_rr(data):
             negative_losses_total += profit
             negative_losses_count += 1
             negative_ticket_numbers.add(ticket_number)
-
-      for document in collection.find():
-          if "RR" in document:
-              rr_values.append(document["RR"])
-              
-    
-
         
+        if "RR" in doc:
+            rr_values.append(doc["RR"])
 
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
