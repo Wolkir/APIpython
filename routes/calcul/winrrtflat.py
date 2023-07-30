@@ -13,8 +13,9 @@ db = client['test']
 def calculate_winrrtflat(data):
     username = data.get('username')
     collection_name = f"{username}_close"
-    collection_unitaire = f"{username}_unitaire"
-    collection = db[collection_name]
+    collection_unitaire1 = f"{username}_unitaire"
+    collection_unitaire = db[collection_unitaire1]
+    
     # Récupérer la valeur de winrate de la collection "unitaire"
     winrate = collection_unitaire.find_one({}, {"winratereal2": 1})["winratereal2"]
 
