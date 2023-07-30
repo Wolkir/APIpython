@@ -10,7 +10,7 @@ db = client['test']
 collection_unitaire = db['unitaire']
 
 @winrrtflat.route('/winrrtflat', methods=['GET'])
-def calculate_winrrt():
+def calculate_winrrtflat():
     # Récupérer la valeur de winrate de la collection "unitaire"
     winrate = collection_unitaire.find_one({}, {"winrate": 1})["winrate"]
 
