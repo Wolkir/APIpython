@@ -16,6 +16,22 @@ def process_argument_xyTPR(argTPR):
 
     return argTPRbinaire
 
+# TJS
+def process_argument_xyTJS(argTJS):
+    argTJSbinaire = None
+    
+    if argTJS == "true":
+        argTJSbinaire = True
+    elif argTJS == "false":
+        argTJSbinaire = False
+    elif argTJS == "":
+        argTJSbinaire = None
+    else:
+        argTJSbinaire = None
+        return None
+
+    return argTJSbinaire
+
 # SL
 def process_argument_xySL(argSL):
     argSLbinaire = None
