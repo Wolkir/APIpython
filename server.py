@@ -17,6 +17,7 @@ app.after_request(after_request)
 """
 app.debug = True
 cors = CORS(app, resources={r"/envoie": {"origins": "*"}})
+cors = CORS(app, resources={r"/recuperationStrategie": {"origins": "*"}})
 
 # indicateur
 from connexion.indicateur.createIndicateur import createIndicateur
