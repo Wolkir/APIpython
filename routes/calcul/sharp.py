@@ -7,7 +7,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 sharp = Blueprint('sharp', __name__)
 
-@sharp_ratio.route('/sharp_ratio', methods=['GET'])
+@sharp.route('/sharp', methods=['GET'])
 def calculate_sharp_ratio(data):
     username = data.get('username')
     collection_name = f"{username}_close"
