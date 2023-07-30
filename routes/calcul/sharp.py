@@ -8,7 +8,7 @@ db = client['test']
 sharp = Blueprint('sharp', __name__)
 
 @sharp_ratio.route('/sharp_ratio', methods=['GET'])
-def calculate_sharp_ratio():
+def calculate_sharp_ratio(data):
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
