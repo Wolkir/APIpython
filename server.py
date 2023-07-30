@@ -107,7 +107,7 @@ app.register_blueprint(calculate_duration)
 app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 app.register_blueprint(session)
-app.register_blueprint(sharp_ratio)
+
 app.register_blueprint(slr)
 app.register_blueprint(Tilts)
 app.register_blueprint(tpr)
