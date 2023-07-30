@@ -82,7 +82,7 @@ def update_envoie():
         argTiltBinaire = process_argument_xyTilt(argTilt)
 
     try:
-        query = {}
+        query = {'$and': []}
 
         # username
         if username is not None:
