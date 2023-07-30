@@ -65,7 +65,7 @@ from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max 
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
-from routes.calcul.winraterrtflat import winrrtflat
+from routes.calcul.winrrtflat import winrrtflat
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
