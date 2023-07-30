@@ -17,7 +17,7 @@ def after_request(response):
 app.after_request(after_request)
 
 
-app.debug = True
+app.debug = False
 CORS(app, resources={r"/envoie": {"origins": "*"},
                      r"/recuperationIndicateur": {"origins": "*"},
                      r"/recuperationTrade": {"origins": "*"}}),
