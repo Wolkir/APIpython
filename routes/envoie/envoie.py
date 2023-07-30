@@ -37,7 +37,7 @@ def close_mongo_client():
 atexit.register(close_mongo_client)
 
 def process_argument_value(arg):
-    if arg == "":
+    if arg == "" or arg == None:
         return None
     return arg
 
@@ -82,11 +82,11 @@ def update_envoie():
         argTiltBinaire = process_argument_xyTilt(argTilt)
 
     try:
-        query = {
-            '$and': [
-                {'username': username}
-            ]
-        }
+        query = {}
+
+        # username
+        if username is not None:
+            query['$and'].append({'username': username})
 
         # tilt
         if argTiltBinaire is not None:
