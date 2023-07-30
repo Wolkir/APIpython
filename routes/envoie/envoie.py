@@ -18,6 +18,7 @@ from .XY import process_argument_xySortieManuelle
 from .XY import process_argument_xyTilt
 from .XY import process_argument_xyAnnEco
 from .XY import process_argument_xyVioleStrat
+from .XY import process_argument_xyTJS
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
@@ -68,6 +69,7 @@ def update_envoie():
     argIndicateur3 = process_argument_value(request.args.get('argIndicateur3', None))
     argTimeEntree = process_argument_value(request.args.get('argTimeEntree', None))
     argTimeSetup = process_argument_value(request.args.get('argTimeSetup', None))
+    argTJS = process_argument_value(request.args.get('argTJS', None))
     
     db = client['test']
     collection = db['things']
@@ -81,7 +83,10 @@ def update_envoie():
     argTiltBinaire = None
     argVioleStratBinaire = None
     argAnnEcoBinaire = None
+    argTJSBinaire = None
 
+    if argTJS is not None:
+        argTJSBinaire = process_argument_xyTJS(argTJS)
     if argTPR is not None:
         argTPRbinaire = process_argument_xyTPR(argTPR)
     if argSL is not None:
@@ -99,6 +104,10 @@ def update_envoie():
 
     try:
         query = {'$and': []}
+
+        # TJS
+        if argTJSBinaire is not None:
+            query['$and'].append({'TJS': argTJSBinaire})
 
         # username
         if username is not None:
