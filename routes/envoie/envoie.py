@@ -16,6 +16,8 @@ from .XY import process_argument_xySL
 from .XY import process_argument_xyBE
 from .XY import process_argument_xySortieManuelle
 from .XY import process_argument_xyTilt
+from .XY import process_argument_xyAnnEco
+from .XY import process_argument_xyVioleStrat
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
@@ -58,6 +60,14 @@ def update_envoie():
     argTypOrd = process_argument_value(request.args.get('argTypOrd', None))
     argSortManu = process_argument_value(request.args.get('argSortManu', None))
     argTilt = process_argument_value(request.args.get('argTilt', None))
+    argBuySell = process_argument_value(request.args.get('argBuySell', None))
+    argVioleStrat = process_argument_value(request.args.get('argVioleStrat', None))
+    argSortie = process_argument_value(request.args.get('argSortie', None))
+    argIndicateur1 = process_argument_value(request.args.get('argIndicateur1', None))
+    argIndicateur2 = process_argument_value(request.args.get('argIndicateur2', None))
+    argIndicateur3 = process_argument_value(request.args.get('argIndicateur3', None))
+    argTimeEntree = process_argument_value(request.args.get('argTimeEntree', None))
+    argTimeSetup = process_argument_value(request.args.get('argTimeSetup', None))
     
     db = client['test']
     collection = db['things']
@@ -69,6 +79,8 @@ def update_envoie():
     argBEbinaire = None
     argSortManuBinaire = None
     argTiltBinaire = None
+    argVioleStratBinaire = None
+    argAnnEcoBinaire = None
 
     if argTPR is not None:
         argTPRbinaire = process_argument_xyTPR(argTPR)
@@ -80,6 +92,10 @@ def update_envoie():
         argSortManuBinaire = process_argument_xySortieManuelle(argSortManu)
     if argTilt is not None:
         argTiltBinaire = process_argument_xyTilt(argTilt)
+    if argVioleStrat is not None:
+        argVioleStratBinaire = process_argument_xyVioleStrat(argVioleStrat)
+    if argAnnEco is not None:
+        argAnnEcoBinaire = process_argument_xyAnnEco(argAnnEco)
 
     try:
         query = {'$and': []}
@@ -87,6 +103,38 @@ def update_envoie():
         # username
         if username is not None:
             query['$and'].append({'username': username})
+
+        # BuySell
+        if argBuySell is not None:
+            query['$and'].append({'orderType': argBuySell})
+
+        # VioleStrat
+        if argVioleStratBinaire is not None:
+            query['$and'].append({'violeStrategie': argVioleStratBinaire})
+
+        # Sortie
+        if argSortie is not None:
+            query['$and'].append({'sortie': argSortie})
+
+        # Indicateur 1
+        if argIndicateur1 is not None:
+            query['$and'].append({'indicateur1': argIndicateur1})
+
+        # Indicateur 2
+        if argIndicateur2 is not None:
+            query['$and'].append({'indicateur2': argIndicateur2})
+
+        # Indicateur 3
+        if argIndicateur3 is not None:
+            query['$and'].append({'indicateur3': argIndicateur3})
+
+        # TimeEntree
+        if argTimeEntree is not None:
+            query['$and'].append({'timeEntree': argTimeEntree})
+
+        # TimeSetup
+        if argTimeSetup is not None:
+            query['$and'].append({'timeSetup': argTimeSetup})
 
         # tilt
         if argTiltBinaire is not None:
@@ -125,8 +173,8 @@ def update_envoie():
             query['$and'].append({'strategie': argStrat})
 
         # annonce economique
-        if argAnnEco is not None:
-            query['$and'].append({'annonceEconomique': argAnnEco})
+        if argAnnEcoBinaire is not None:
+            query['$and'].append({'annonceEconomique': argAnnEcoBinaire})
 
         # position
         if argPos is not None:
@@ -136,6 +184,8 @@ def update_envoie():
         if argTypOrd is not None:
             query['$and'].append({'typeOrdre': argTypOrd})
 
+        print(query)
+        
         data = list(collection.find(query))
         data = json.loads(json.dumps(data, default=json_serial))
 
