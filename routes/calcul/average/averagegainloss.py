@@ -43,14 +43,13 @@ def calculate_average_gain_loss_rr(data):
             negative_losses_count += 1
             negative_ticket_numbers.add(ticket_number)
 
-        # Calcul de RR pour chaque document
-        price_close = doc.get('priceClosure')
-        price_opening = doc.get('priceOpening')
-        stop_loss = doc.get('stopLoss')
-        rr = (price_close - price_opening) / (price_opening - stop_loss)
-        rr = round(rr, 2)
+      for document in collection.find():
+          if "RR" in document:
+              rr_values.append(document["RR"])
+              
+    
 
-        rr_values.append(rr)  # Ajouter la valeur de RR à la liste
+        
 
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
