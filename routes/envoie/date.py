@@ -31,7 +31,9 @@ def process_argument_date(argumentDate, debutDate, finDate):
         date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
         try:
             start_date = datetime.strptime(debutDate, date_format)
-            end_date = datetime.strptime(finDate, date_format)
+            finDate_cleaned = finDate.strip()  # Supprimer les espaces en début et fin de chaîne
+            print("finDate_cleaned:", finDate_cleaned)  # Ajoutez ce log pour voir la valeur de finDate_cleaned
+            end_date = datetime.strptime(finDate_cleaned, date_format)
             return start_date, end_date
         except ValueError as e:
             print("Erreur lors de la conversion des dates:", e)
