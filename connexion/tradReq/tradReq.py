@@ -49,7 +49,7 @@ trade_blueprint = Blueprint('trade', __name__)
 
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
-
+SLOpen = {}
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
@@ -86,6 +86,11 @@ def save_trade_request():
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
+           
+            previous_stopLoss = SLOpen.get(data.get('identifier'), None)
+            if previous_stopLoss is not None:
+                # Set the stopLoss value for "Close" orders
+                data['stopLoss'] = previous_stopLoss
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
@@ -186,6 +191,7 @@ def save_trade_request():
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),
+            "SLopen": data.get('SLOpen'),
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
