@@ -12,12 +12,17 @@ def calculate_slr(entry):
     orderType = entry.get('orderType')
     price_closure = entry.get('priceClosure')
     stop_loss = entry.get('stopLoss')
+    profit = entry.get('profit')
 
-    if orderType == "BUY" and price_closure <= stop_loss:
+    if orderType == "BUY" and price_closure <= stop_loss and profit<0:
         entry['SLR'] = True
-    elif orderType == "SELL" and price_closure >= stop_loss:
+    elif orderType == "SELL" and price_closure >= stop_loss and profit <0:
         entry['SLR'] = True
-    else:
+    elif orderType == "BUY" and price_closure >= stop_loss and profit>0:
+        entry['SLR'] = 'Credit'
+    elif orderType == "SELL" and price_closure <= stop_loss and profit >0:
+        entry['SLR'] = 'Credit'
+    else
         entry['SLR'] = False
 
     return entry
