@@ -1,13 +1,13 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
-tradecount = Blueprint('tradecount', __name__)
+tradercount = Blueprint('tradercount', __name__)
 
 # Variable globale pour stocker le tradercount de la journée en cours
 tradercount_today = 0
 
-@tradecount.route('/tradecount/close', methods=['GET'])
-def tradecount(data):
+@tradercount.route('/tradercount', methods=['GET'])
+def tradercount(data):
     global tradercount_today
 
     
