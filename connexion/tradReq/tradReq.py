@@ -67,8 +67,14 @@ def save_trade_request():
         collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
 
         user_collection = db[collection_name]
-
-        if closure_position == "Open" or closure_position == "":
+        if  closure_position == "":
+            volume_remain = data.get('volume')
+            if volume_remain < 0.01:
+                volume_remain = 0
+                user_collection.delete_one({"identifier": data.get('identifier')})
+            
+        
+        if closure_position == "Open" :
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
