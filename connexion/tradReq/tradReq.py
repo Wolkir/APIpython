@@ -154,6 +154,7 @@ def save_trade_request():
             
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
+            calculate_tradercount(data)
 
            
 
@@ -181,6 +182,7 @@ def save_trade_request():
             data['Day'] = weekday_str
             
             RROpen[data.get('identifier')] = rrt
+            calculate_tradercount(data)
             
             
         # Insert the data into the collection
@@ -247,7 +249,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        calculate_tradercount(data)
+      
         
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
