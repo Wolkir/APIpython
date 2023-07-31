@@ -81,7 +81,7 @@ def save_trade_request():
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
             SLOpen[data.get('identifier')] = data.get('stopLoss')
-            RROpen[data.get('identifier')] = data.get('RRT')
+            #RROpen[data.get('identifier')] = data.get('RRT')
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
@@ -157,7 +157,8 @@ def save_trade_request():
 
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
-
+            
+            RROpen[data.get('identifier')] = data.get('RRT')
             
             
         # Insert the data into the collection
