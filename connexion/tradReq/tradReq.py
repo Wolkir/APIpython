@@ -89,7 +89,11 @@ def save_trade_request():
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
-           
+        
+        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
+           # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
+           open_orders = db[f"{username}_open"]
+           open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
         
 
         # Remove 'volume_remain' field for 'Close' orders
