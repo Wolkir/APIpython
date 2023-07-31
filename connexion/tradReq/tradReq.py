@@ -87,10 +87,10 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
            
-            previous_stopLoss = SLOpen.get(data.get('identifier'), None)
+            previous_stopLoss = SLOpen.get(data.get('stopLoss'), None)
             if previous_stopLoss is not None:
                 # Set the stopLoss value for "Close" orders
-                data['stopLoss'] = previous_stopLoss
+                data['SLOpen'] = previous_stopLoss
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
