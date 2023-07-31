@@ -50,6 +50,6 @@ def find_max_profit_and_min_loss(data):
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
-        {'$set': {'sharpe2': sharpe_ratio, 'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
+        {'$set': {'sharpe': sharpe_ratio, 'Max profit': max_profit_value, 'Max loss': min_loss_value, 'dd max': max_equity}},
         upsert=True
     )
