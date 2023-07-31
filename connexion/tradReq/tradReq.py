@@ -21,6 +21,7 @@ from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
+from routes.calcul.tradercount import tradercount
 
 
 #from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
@@ -208,6 +209,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
+            "tradercount" : data.get(tradercount),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
@@ -245,6 +247,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
+        tradercount(data)
         
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
