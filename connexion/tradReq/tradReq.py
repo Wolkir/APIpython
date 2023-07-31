@@ -191,13 +191,13 @@ def save_trade_request():
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),
-            "SLOpen' : data.get('SLOpen'),
+            "SLOpen" : data.get('SLOpen'),
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
             "sortieManuelle": None,
             "journeeDeTilt": None,
-            "TJS": None,
+            "TJS": None
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
