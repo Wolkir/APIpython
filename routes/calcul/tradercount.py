@@ -42,6 +42,7 @@ def calculate_tradercount(data):
 
         # Mettre à jour le tradercount de la journée en cours dans la variable globale
         daily_trade_counts[current_date] = tradecount
+        return tradecount
 
   
 
