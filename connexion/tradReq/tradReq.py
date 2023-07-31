@@ -141,8 +141,7 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
 
-            if identifier not in RROpen:
-                RROpen[identifier] = data.get('RRT')
+           
 
        
                        
