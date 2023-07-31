@@ -81,7 +81,7 @@ def save_trade_request():
                 user_collection.delete_one({"identifier": data.get('identifier')})
             SLOpen[data.get('identifier')] = data.get('stopLoss')
             
-        elif closure_position =! "":
+        elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
