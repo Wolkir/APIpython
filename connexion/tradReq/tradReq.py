@@ -68,7 +68,7 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
-        if closure_position == "Open":
+        if closure_position == "Open" or closure_position == "":
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
