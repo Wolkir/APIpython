@@ -66,6 +66,7 @@ from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
 from routes.calcul.winrrtflat import winrrtflat
+from routes.calcul.tradercount import tradercount
 
 
 
@@ -121,6 +122,7 @@ app.register_blueprint(profitfactorgroup)
 app.register_blueprint(winrategroup)
 app.register_blueprint(averagegainloss)
 app.register_blueprint(winrrtflat)
+app.register_blueprint(tradercount)
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
 #app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
