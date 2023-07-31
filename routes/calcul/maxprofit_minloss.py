@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
+import numpy as np
 
 maxprofit_minloss = Blueprint('maxprofit_minloss', __name__)
 
