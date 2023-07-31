@@ -48,6 +48,7 @@ app = Flask(__name__)
 trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
 RROpen = {}
+TPOpen = {}
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
@@ -76,7 +77,7 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
- 
+      
             
         
         if closure_position == "Open":
@@ -86,6 +87,7 @@ def save_trade_request():
                 user_collection.delete_one({"identifier": data.get('identifier')})
             identifier = data.get('identifier')
             SLOpen[identifier] = data.get('stopLoss')
+            TPOpen[identifier] = data.get('takeProfit')
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
@@ -188,6 +190,7 @@ def save_trade_request():
             "stopLoss": data.get('stopLoss'),
             "SLOpen" : SLOpen.get(data.get('identifier')),
             "takeProfit": data.get('takeProfit'),
+            "TPOpen" : TPOpen.get(data.get('identifier')),
             "dateAndTimeClosure": data.get('dateAndTimeClosure'),
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
