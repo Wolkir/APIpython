@@ -17,10 +17,10 @@ def calculate_winrrtflat(data):
     collection_unitaire = db[collection_unitaire1]
     
     # Récupérer la valeur de winrate de la collection "unitaire"
-    winrate = collection_unitaire.find_one({}, {"winratereal2": 1})["winratereal2"]
+    winrate = collection_unitaire.find_one({}, {"winratereal": 1})["winratereal"]
 
     # Récupérer la valeur de risk_reward de la collection "unitaire"
-    risk_reward = collection_unitaire.find_one({}, {"RRaverage2": 1})["RRaverage2"]
+    risk_reward = collection_unitaire.find_one({}, {"RRaverage": 1})["RRaverage"]
 
     # Calculer RRT
     RRT = ((1 - (winrate/100)) / (winrate/100))
