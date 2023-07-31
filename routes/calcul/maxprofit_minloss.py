@@ -36,12 +36,16 @@ def find_max_profit_and_min_loss(data):
         if equity is not None and equity < 0:
             if max_equity is None or equity < max_equity:
                 max_equity = equity
+    
+    # Calculer le ratio de Sharpe
+   
+    sharpe_ratio = np.mean(profit) / np.std(profit)
 
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
-        {'$set': {'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
+        {'$set': {'sharpe2': sharpe_ratio, 'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
         upsert=True
     )
 
