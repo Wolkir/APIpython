@@ -47,6 +47,7 @@ app = Flask(__name__)
 # Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
+RROpen = {}
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
@@ -80,6 +81,7 @@ def save_trade_request():
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
             SLOpen[data.get('identifier')] = data.get('stopLoss')
+            RROpen[data.get('identifier')] = data.get('RR')
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
@@ -198,6 +200,7 @@ def save_trade_request():
             "TPR": data.get('TPR'),
             "SLR": data.get('SLR'),
             "RR": data.get('RR'),
+            "RROpen": data.get('RROpen'),
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),           
