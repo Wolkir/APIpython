@@ -9,13 +9,13 @@ slr = Blueprint('slr', __name__)
 def calculate_slr(entry):
     # Your SLR calculation logic here based on the 'entry' data
     # For example:
-    type_of_transaction = entry.get('typeOfTransaction')
+    orderType = entry.get('orderType')
     price_closure = entry.get('priceClosure')
     stop_loss = entry.get('stopLoss')
 
-    if type_of_transaction == "Buy" and price_closure <= stop_loss:
+    if orderType == "BUY" and price_closure <= stop_loss:
         entry['SLR'] = True
-    elif type_of_transaction == "Sell" and price_closure >= stop_loss:
+    elif orderType == "SELL" and price_closure >= stop_loss:
         entry['SLR'] = True
     else:
         entry['SLR'] = False
