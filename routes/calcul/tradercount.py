@@ -1,45 +1,53 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
+from datetime import datetime
 
 tradercount = Blueprint('tradercount', __name__)
 
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+db = client['test']
+
 # Variable globale pour stocker le tradercount de la journée en cours
-tradercount_today = 0
+daily_trade_counts = {}
 
 @tradercount.route('/tradercount', methods=['GET'])
 def tradercount(data):
-    global tradercount_today
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No JSON data received'}), 400
 
-    
-    username = data.get('username')
+        username = data.get('username')
+        if not username:
+            return jsonify({'error': 'Username not provided in JSON data'}), 400
 
-    # Se connecter à la base de données
-    client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
-    db = client['test']
+ 
+        collection_close = f"{username}_close"
+        # Collection pour stocker les trades ouverts
+        collection_open = f"{username}_open"
 
-    # Identifier la collection appropriée en fonction du type de trade
-    if data.get("trade_type") == "Close":
-        collection_name = f"{username}_close"
-    else:
-        collection_name = f"{username}_open"
+        # Recherche de la dernière position fermée pour la date actuelle
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        last_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', -1)])
 
-        # Vérifier si le dernier trade "Close" était le même jour que l'ordre "Open" actuel
-        last_close_trade = db[f"{username}_close"].find_one(sort=[("dateAndTimeClosing", -1)])
-        if last_close_trade is not None:
-            last_close_date = last_close_trade.get("dateAndTimeClosing")
-            current_open_date = data.get("dateAndTimeOpening")
-            if last_close_date.date() == current_open_date.date():
-                tradercount_today = last_close_trade.get("tradercount", 0)
+        # Si aucun trade n'a été fermé aujourd'hui, alors le tradecount sera 1 pour la position ouverte
+        if not last_trade:
+            trade_count = 1
+        else:
+            trade_count = last_trade['tradecount'] + 1
 
-    # Incrémenter le tradercount pour le nouvel ordre
-    tradercount_today += 1
+        # Insérer la nouvelle position ouverte dans la collection_open avec le nouveau tradecount
+        db[collection_open].insert_one({
+            'date': current_date,
+            'closurePosition': 'Open',
+            'tradecount': trade_count
+        })
 
-    # Ajouter le nouvel ordre avec le tradercount mis à jour
-    collection = db[collection_name]
-    new_trade = {
-        "dateAndTimeOpening": data.get("dateAndTimeOpening"),
-        "dateAndTimeClosing": data.get("dateAndTimeClosing"),
-        "tradercount": tradercount_today
-    }
-    collection.insert_one(new_trade)
+        # Mettre à jour le tradercount de la journée en cours dans la variable globale
+        daily_trade_counts[current_date] = trade_count
+
+  
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
