@@ -35,22 +35,14 @@ def calculate_tradercount(data):
 
         # Si aucun trade n'a été fermé aujourd'hui, alors le tradecount sera 1 pour la position ouverte
         if not last_trade:
-            trade_count = 1
+            tradecount = 1
         else:
-            trade_count = last_trade['tradecount'] + 1
+            tradecount = last_trade['tradecount'] + 1
 
-        # Insérer la nouvelle position ouverte dans la collection_open avec le nouveau tradecount
-        db[collection_open].insert_one({
-            'date': current_date,
-            'closurePosition': 'Open',
-            'tradecount': trade_count
-        })
 
         # Mettre à jour le tradercount de la journée en cours dans la variable globale
-        daily_trade_counts[current_date] = trade_count
+        daily_trade_counts[current_date] = tradecount
 
   
 
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
