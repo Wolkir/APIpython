@@ -155,8 +155,7 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
             calculate_tradercount(data)
-
-           
+            data['tradercount'] = tradecount         
 
        
                        
@@ -183,7 +182,7 @@ def save_trade_request():
             
             RROpen[data.get('identifier')] = rrt
             calculate_tradercount(data)
-            
+            data['tradercount'] = tradecount 
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -211,7 +210,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            "tradercount" : None,
+            "tradercount" : data.get('tradecount') ,
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
