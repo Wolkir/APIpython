@@ -181,7 +181,7 @@ def save_trade_request():
             data['Day'] = weekday_str
             
             RROpen[data.get('identifier')] = rrt
-            calculate_tradercount(data)
+            tradecount=calculate_tradercount(data)
             data['tradercount'] = tradecount 
             
         # Insert the data into the collection
