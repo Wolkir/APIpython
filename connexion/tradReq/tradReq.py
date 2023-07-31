@@ -87,10 +87,7 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
            
-            previous_stopLoss = SLOpen.get(data.get('stopLoss'), None)
-            if previous_stopLoss is not None:
-                # Set the stopLoss value for "Close" orders
-                data['SLOpen'] = previous_stopLoss
+        
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
@@ -126,7 +123,8 @@ def save_trade_request():
             
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
-            
+
+       
                        
 
           
@@ -148,6 +146,8 @@ def save_trade_request():
 
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
+
+            data['SLOpen']= data.get['stopLoss']
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -191,7 +191,6 @@ def save_trade_request():
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),
-            "SLopen": data.get('SLOpen'),
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
