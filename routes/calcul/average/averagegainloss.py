@@ -10,14 +10,14 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @averagegainloss.route('/averagegainloss', methods=['GET'])
+
 def calculate_average_gain_loss_rr(data):
     username = data.get('username')
     collection_name = f"{username}_close"
-    collection_unitaire1 = f"{username}_unitaire"
-    collection_unitaire = db[collection_unitaire1]
+    collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
-
-    # Initialisation des variables pour le calcul des gains et pertes
+  
+    # Initialisation des variables
     positive_gains_total = 0
     positive_gains_count = 0
     positive_ticket_numbers = set()
@@ -28,21 +28,21 @@ def calculate_average_gain_loss_rr(data):
 
     rr_values = []  # Liste pour stocker les valeurs de RR
 
-    # Parcourir les documents de la collection pour le calcul des gains et pertes
+    # Parcourir les documents de la collection
     for doc in collection.find():
         profit = doc['profit']
         ticket_number = doc['ticketNumber']
-
+        
         if profit > 0 and ticket_number not in positive_ticket_numbers:
             positive_gains_total += profit
             positive_gains_count += 1
             positive_ticket_numbers.add(ticket_number)
-
+        
         elif profit < 0 and ticket_number not in negative_ticket_numbers:
             negative_losses_total += profit
             negative_losses_count += 1
             negative_ticket_numbers.add(ticket_number)
-
+        
         if "RR" in doc:
             rr_values.append(doc["RR"])
 
@@ -69,23 +69,8 @@ def calculate_average_gain_loss_rr(data):
 
     average_duration = total_duration / document_count if document_count > 0 else timedelta()
 
-    # Récupérer la valeur de winrate de la collection "unitaire"
-    winrate = collection_unitaire.find_one({}, {"winratereal2": 1})["winratereal2"]
-
-    # Récupérer la valeur de risk_reward de la collection "unitaire"
-    risk_reward = collection_unitaire.find_one({}, {"RRaverage2": 1})["RRaverage2"]
-
-    # Calculer RRT
-    RRT = ((1 - (winrate / 100)) / (winrate / 100))
-
-    # Calculer WinrateT
-    WinrateT = (1 / (1 + risk_reward)) * 100
-
-    # Ajouter les valeurs calculées à la collection "unitaire"
-    collection_unitaire.update_one({}, {"$set": {"RRFlat": RRT, "WinrateFlat": WinrateT}}, upsert=True)
-
     # Insérer les valeurs dans la collection "unitaire"
-    unitaire_collection = db[collection_unitaire1]
+    unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
         {
