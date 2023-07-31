@@ -83,6 +83,7 @@ def save_trade_request():
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
             SLOpen[data.get('identifier')] = data.get('stopLoss')
+            if identifier not in RROpen:
             RROpen[data.get('identifier')] = data.get('RRT')
             
         elif closure_position != "":
