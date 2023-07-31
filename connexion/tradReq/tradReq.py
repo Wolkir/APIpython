@@ -67,7 +67,11 @@ def save_trade_request():
         collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
 
         user_collection = db[collection_name]
-    
+
+        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
+           # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
+           open_orders = db[f"{username}_open"]
+           open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
             
         
         if closure_position == "Open" :
@@ -76,7 +80,7 @@ def save_trade_request():
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
             SLOpen[data.get('identifier')] = data.get('stopLoss')
-        else:
+        else closure_position == "Open" and closure_position =! "":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
@@ -90,10 +94,7 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
         
-        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
-           # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
-           open_orders = db[f"{username}_open"]
-           open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
+        
         
 
         # Remove 'volume_remain' field for 'Close' orders
