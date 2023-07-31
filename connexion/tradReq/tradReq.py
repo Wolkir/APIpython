@@ -46,10 +46,10 @@ app = Flask(__name__)
 
 # Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
-
+SLOpen = {}
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
-SLOpen = {}
+
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
@@ -73,6 +73,7 @@ def save_trade_request():
             if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
+            SLOpen[data.get('identifier')] = data.get('stopLoss')
         else:
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
@@ -147,7 +148,7 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
 
-            data['SLOpen']= data.get['stopLoss']
+            
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -191,7 +192,7 @@ def save_trade_request():
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),
-            "SLOpen" : data.get('SLOpen'),
+            "SLOpen" : SLOpen.get(data.get('identifier')),
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
