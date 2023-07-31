@@ -158,7 +158,7 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
             
-            RROpen[data.get('identifier')] = data.get['RRT'].copy()
+            RROpen[data.get('identifier')] = data.get('RRT')
             
             
         # Insert the data into the collection
@@ -201,7 +201,7 @@ def save_trade_request():
             "TPR": data.get('TPR'),
             "SLR": data.get('SLR'),
             "RR": data.get('RR'),
-            "RROpen": data.get('RROpen'),
+            "RROpen": RROpen.get(data.get('identifier')),
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),           
