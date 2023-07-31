@@ -98,5 +98,3 @@ def calculate_average_gain_loss_rr(data):
         },
         upsert=True
     )
-    )
-
