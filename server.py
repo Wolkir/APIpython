@@ -54,7 +54,7 @@ from routes.calcul.session import session
 from routes.calcul.SLR import slr
 from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import tpr
-from routes.calcul.tradecount import tradecount
+#from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
 #from routes.calcul.conversion_map import conversion_map
