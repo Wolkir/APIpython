@@ -9,13 +9,13 @@ tpr = Blueprint('tpr', __name__)
 def calculate_tpr(entry):
     # Your TPR calculation logic here based on the 'entry' data
     # For example:
-    type_of_transaction = entry.get('typeOfTransaction')
+    orderType = entry.get('orderType')
     price_closure = entry.get('priceClosure')
     take_profit = entry.get('takeProfit')
     
-    if type_of_transaction == "Buy" and price_closure >= take_profit:
+    if orderType == "BUY" and price_closure >= take_profit:
         entry['TPR'] = True
-    elif type_of_transaction == "Sell" and price_closure <= take_profit:
+    elif orderType == "SELL" and price_closure <= take_profit:
         entry['TPR'] = True
     else:
         entry['TPR'] = False
