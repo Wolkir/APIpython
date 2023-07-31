@@ -24,7 +24,6 @@ def calculate_tradercount(data):
         if not username:
             return jsonify({'error': 'Username not provided in JSON data'}), 400
 
- 
         collection_close = f"{username}_close"
         # Collection pour stocker les trades ouverts
         collection_open = f"{username}_open"
@@ -39,11 +38,11 @@ def calculate_tradercount(data):
         else:
             tradecount = last_trade['tradecount'] + 1
 
-
         # Mettre à jour le tradercount de la journée en cours dans la variable globale
         daily_trade_counts[current_date] = tradecount
+
+        # Renvoyer la valeur du tradecount
         return tradecount
 
-  
-
-
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
