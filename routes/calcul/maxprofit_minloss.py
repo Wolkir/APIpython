@@ -1,18 +1,16 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
-import numpy as np
 
-app = Flask(__name__)
+maxprofit_minloss = Blueprint('maxprofit_minloss', __name__)
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-maxprofit_minloss = Blueprint('maxprofit_minloss', __name__)
 
 @maxprofit_minloss.route('/maxprofit_minloss', methods=['GET'])
 def find_max_profit_and_min_loss(data):
-    username = request.args.get('username')
+    username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
@@ -39,19 +37,13 @@ def find_max_profit_and_min_loss(data):
             if max_equity is None or equity < max_equity:
                 max_equity = equity
 
-    # Calculer le ratio de Sharpe
-    profits = [doc['profit'] for doc in collection.find()]
-    sharpe_ratio = np.mean(profits) / np.std(profits)
-
-    # Insérer le ratio de Sharpe et les valeurs de profit dans la collection "unitaire"
+    # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
     unitaire_collection.update_one(
         {},
-        {'$set': {'sharpe2': sharpe_ratio, 'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
+        {'$set': {'Max profit2': max_profit_value, 'Max loss2': min_loss_value, 'dd max2': max_equity}},
         upsert=True
     )
-
-
 
 
 
