@@ -191,6 +191,7 @@ def save_trade_request():
             "RRT": data.get('RRT'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),
+            "SLOpen' : data.get('SLOpen'),
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
