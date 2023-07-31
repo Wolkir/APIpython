@@ -21,7 +21,7 @@ from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
-from routes.calcul.sharp import calculate_sharp_ratio
+
 
 #from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
 #from routes.calcul.profit.profitfactorlong  import calculate_profit_factor_long  // remplacé par le code groupé profit_factor_group
@@ -37,6 +37,7 @@ from routes.calcul.sharp import calculate_sharp_ratio
 #from routes.calcul.average.average_rr import calculate_average_rr // remplace par averagegainloss
 #from routes.calcul.average.average_duration import calculate_average_duration // remplace par le code averagegainloss
 #from routes.calcul.ddmax import calculate_ddmax // remplacé par le code maxprofit_minloss
+#from routes.calcul.sharp import calculate_sharp_ratio // groupé avec maxgain_minloss
 
 # Connexion à la base de données MongoDB
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
@@ -244,7 +245,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        calculate_sharp_ratio(data)
+        
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
         #calculate_profit_factor_long(data)   // remplacé par le code groupé profit_factor_group            
@@ -260,6 +261,7 @@ def save_trade_request():
         #calculate_average_rr(data) // remplace par averagegainloss
         #calculate_average_duration(data) // remplace par le code averagegainloss
         #calculate_ddmax(data)  // remplacé par le code maxprofit_minloss
+        #calculate_sharp_ratio(data) // groupé avec maxgain_minloss
         
         return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
     except Exception as e:
