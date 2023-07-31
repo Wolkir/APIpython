@@ -12,7 +12,7 @@ def calculate_rrt(data):
   
     take_profit = data['takeProfit']
     price_opening = data['priceOpening']
-    stop_loss = data['SLOpen']
+    stop_loss = data['stopLoss']
     rrt = (take_profit - price_opening) / (price_opening - stop_loss)
     rrt = round(rrt, 2)
     return rrt  # Renvoie la valeur de la clé "RR"
