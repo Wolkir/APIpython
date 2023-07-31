@@ -20,7 +20,7 @@ from routes.calcul.maxprofit_minloss import find_max_profit_and_min_loss # code 
 from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
-from routes.calcul.winrrtflat import calculate_winrrtflat
+#from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.sharp import calculate_sharp_ratio
 
 #from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
@@ -243,7 +243,7 @@ def save_trade_request():
         calculate_profit_factor_group(data)
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
-        calculate_winrrtflat(data)
+        #calculate_winrrtflat(data)
         calculate_sharp_ratio(data)
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
