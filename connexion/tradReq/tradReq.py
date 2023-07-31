@@ -70,21 +70,21 @@ def save_trade_request():
         user_collection = db[collection_name]
 
         if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
-           # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
-           open_orders = db[f"{username}_open"]
-           open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
-           calculate_rrt(data)
-           open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-            
+            # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
+            open_orders = db[f"{username}_open"]
+            open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
+            calculate_rrt(data)
+            open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
         
-        if closure_position == "Open" :
+        if closure_position == "Open":
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
-            SLOpen[data.get('identifier')] = data.get('stopLoss')
+            identifier = data.get('identifier')
+            SLOpen[identifier] = data.get('stopLoss')
             if identifier not in RROpen:
-            RROpen[data.get('identifier')] = data.get('RRT')
+                RROpen[identifier] = data.get('RRT')
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
