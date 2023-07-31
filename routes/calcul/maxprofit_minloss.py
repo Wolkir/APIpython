@@ -11,7 +11,7 @@ db = client['test']
 maxprofit_minloss = Blueprint('maxprofit_minloss', __name__)
 
 @maxprofit_minloss.route('/maxprofit_minloss', methods=['GET'])
-def find_max_profit_and_min_loss():
+def find_max_profit_and_min_loss(data):
     username = request.args.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
