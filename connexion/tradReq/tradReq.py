@@ -12,6 +12,7 @@ from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
 from routes.calcul.BE import find_BE
+from routes.calcul.limit import find_limit
 
 
 #code groupé
@@ -155,8 +156,12 @@ def save_trade_request():
             
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
+            
             resultBE = find_BE(data)  
             data['BE'] = resultBE
+
+            condi = find_limit(data)
+            data['Limit'] = condi
 
 
            
@@ -185,6 +190,10 @@ def save_trade_request():
             data['Day'] = weekday_str
             
             RROpen[data.get('identifier')] = rrt
+             
+            condi = find_limit(data)
+            data['Limit'] = condi
+
             
             
         # Insert the data into the collection
@@ -221,6 +230,7 @@ def save_trade_request():
             "strategie": None,
             "position": None,
             "typeOrdre": None,
+            "limit":data.get('Limit'),
             "violeStrategie": None,
             "sortie": None,
             "killzone": data.get("killzone"),
