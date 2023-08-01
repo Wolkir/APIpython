@@ -48,7 +48,7 @@ from connexion.user.signup import setup_signup_route
 from routes.calcul.assign_order import assign_order
 
 #from routes.calcul.BE_RR.RR import RR
-from routes.calcul.BE_RR.BE import BE
+#from routes.calcul.BE_RR.BE import BE
 from routes.calcul.calculate_duration import calculate_duration
 
 from routes.calcul.Equity import Equity
@@ -72,6 +72,7 @@ from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
 from routes.calcul.winrrtflat import winrrtflat
 from routes.calcul.tradercount import tradercount
+from routes.calcul.BE import BE
 
 
 
