@@ -11,7 +11,7 @@ from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
-from routes.calcul.BE import find_BE
+#from routes.calcul.BE import find_BE
 
 
 
@@ -53,7 +53,7 @@ trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
 RROpen = {}
 TPOpen = {}
-daily_trade_counts = {}
+
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
@@ -186,7 +186,7 @@ def save_trade_request():
             data['Day'] = weekday_str
             
             RROpen[data.get('identifier')] = rrt
-            tradecount=calculate_tradercount(data)
+            #tradecount=calculate_tradercount(data)
 
           
             
@@ -216,7 +216,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            "tradercount" : daily_trade_counts.get(data.get('identifier')),
+           # "tradercount" : daily_trade_counts.get(data.get('identifier')),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
@@ -234,7 +234,7 @@ def save_trade_request():
             "RR": data.get('RR'),
             "RROpen": RROpen.get(data.get('identifier')),
             "RRT": data.get('RRT'),
-            "BE": data.get('BE'),
+           # "BE": data.get('BE'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),           
             "strategie": None,
