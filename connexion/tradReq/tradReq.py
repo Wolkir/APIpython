@@ -213,7 +213,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            "tradercount" : data.get(tradercount),
+            #"tradercount" : data.get(tradercount),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
