@@ -17,13 +17,9 @@ def get_recuperationPorteFeuille():
 
         collections = [name for name in db.list_collection_names() if username in name]
 
-        nomSeul = []
+        data = [{"nomSeul": collection.replace("_" + username, "").replace(username + "_", "").replace(username, ""), "nomComplet": collection} for collection in collections]
 
-        for collection in collections:
-            nom_sans_username = collection.replace("_" + username, "").replace(username + "_", "").replace(username, "")
-            nomSeul.append(nom_sans_username)
-
-        return jsonify(nomSeul), 200  # Au lieu de renvoyer un objet JSON avec deux clés, renvoyez directement le tableau nomSeul
+        return jsonify(data), 200
 
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
