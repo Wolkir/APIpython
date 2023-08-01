@@ -10,7 +10,7 @@ db = client['test']
 daily_trade_counts = {}
 
 @tradercount.route('/tradercount', methods=['GET'])
-def calculate_tradercount():
+def calculate_tradercount(data):
     try:
         data = request.args.get('data')  # Récupérer le paramètre 'data' depuis l'URL
         if not data:
