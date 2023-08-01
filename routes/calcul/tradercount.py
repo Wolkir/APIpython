@@ -1,15 +1,13 @@
-# tradercount.py
-
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 from datetime import datetime
+
+tradercount = Blueprint('tradercount', __name__)
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-# Variable globale pour stocker le tradercount de la journée en cours
-daily_trade_counts = {}
-
-
+@tradercount.route('/tradercount', methods=['GET'])
 def calculate_tradercount(data):
     try:
         collection_close = f"{username}_close"
