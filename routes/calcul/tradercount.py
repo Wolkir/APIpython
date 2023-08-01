@@ -6,18 +6,12 @@ tradercount = Blueprint('tradercount', __name__)
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
+# Variable globale pour stocker le tradercount de la journée en cours
+daily_trade_counts = {}
 
 @tradercount.route('/tradercount', methods=['GET'])
-def calculate_tradercount(data):
+def calculate_tradercount(username):
     try:
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'No JSON data received'}), 400
-
-        username = data.get('username')
-        if not username:
-            return jsonify({'error': 'Username not provided in JSON data'}), 400
-
         collection_close = f"{username}_close"
         # Collection pour stocker les trades ouverts
         collection_open = f"{username}_open"
@@ -38,10 +32,9 @@ def calculate_tradercount(data):
         # Mettre à jour le tradercount de la journée en cours dans la variable globale
         daily_trade_counts[current_date] = tradecount
 
-        # Renvoyer la valeur du tradecount
-        print("TradeCount:", tradecount)
-        return tradecount  # Ajoutez cette ligne pour renvoyer la valeur du tradecount
+        # Renvoyer la valeur du tradecount (sans envelopper dans une réponse JSON)
+        return tradecount
 
     except Exception as e:
         print("Error:", e)
-        return jsonify({'error': str(e)}), 500
+        raise e
