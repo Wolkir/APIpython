@@ -154,8 +154,8 @@ def save_trade_request():
             
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
-            #tradecount=calculate_tradercount(data)
-            #data['tradercount'] = tradecount['tradercount']         
+            tradecount=calculate_tradercount(data)
+            data['tradercount'] = tradecount       
 
        
                        
