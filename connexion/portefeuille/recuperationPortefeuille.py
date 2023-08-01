@@ -7,8 +7,7 @@ recuperationPorteFeuille = Blueprint('recuperationPorteFeuille', __name__)
 @recuperationPorteFeuille.route('/recuperationPorteFeuille', methods=['GET'])
 def get_recuperationPorteFeuille():
     try:
-        data = request.json
-        username = data.get('username')
+        username = request.args.get('username')
 
         mongo = PyMongo(current_app)
         db = mongo.db
