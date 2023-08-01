@@ -142,7 +142,7 @@ def save_trade_request():
             data['session'] = session
             
             duration = calculate_time_duration(data)
-            data['duration'] = duration['duration']
+            data['duration'] = duration
             
             rr = calculate_rr(data)
             data['RR'] = rr
@@ -156,7 +156,7 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
             tradecount=calculate_tradercount(data)
-            data['tradercount'] = tradecount['tradercount']      
+            data['tradercount'] = tradecount    
 
        
                        
@@ -183,7 +183,7 @@ def save_trade_request():
             
             RROpen[data.get('identifier')] = rrt
             tradecount=calculate_tradercount(data)
-            data['tradercount'] = tradecount['tradercount']
+            data['tradercount'] = tradecount
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -211,7 +211,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            "tradercount" : data.get('tradecount'),
+            "tradercount" : TPOpen.get(data.get('tradecount')),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
