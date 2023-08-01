@@ -160,7 +160,7 @@ def save_trade_request():
             tradecount=calculate_tradercount(data)
 
             username = data.get('username')
-            resultBE=find_BE(data)
+            resultBE = find_BE(username)
             data['BE'] = resultBE
        
                        
