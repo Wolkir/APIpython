@@ -159,9 +159,9 @@ def save_trade_request():
             data['Day'] = weekday_str
             tradecount=calculate_tradercount(data)
 
-            username = data.get('username')
-            resultBE = find_BE(data)
-            data['BE'] = resultBE
+           
+            #resultBE = find_BE(data)
+            #data['BE'] = resultBE
        
                        
 
