@@ -11,6 +11,8 @@ from routes.calcul.RR import calculate_rr
 from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
+from routes.calcul.BE import find_BE
+
 
 
 #code groupé
@@ -156,9 +158,9 @@ def save_trade_request():
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
             tradecount=calculate_tradercount(data)
-      
-        
-
+            
+            resultBE=find_BE(data)
+            data['BE'] = resultBE
        
                        
 
@@ -231,6 +233,7 @@ def save_trade_request():
             "RR": data.get('RR'),
             "RROpen": RROpen.get(data.get('identifier')),
             "RRT": data.get('RRT'),
+            "BE": data.get('BE'),
             "Equity": data.get('Equity'),
             "Day": data.get('Day'),           
             "strategie": None,
