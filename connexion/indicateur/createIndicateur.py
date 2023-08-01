@@ -12,7 +12,7 @@ def create_indicateur():
     try:
         mongo = PyMongo(current_app)
         collection = mongo.db['indicateurs']
-        indicateurs = list(collection.find({"nomIndicateur": nomIndicateur}))
+        indicateurs = list(collection.find({"nomIndicateur": nomIndicateur}, {"username": username}))
         if indicateurs:
             return jsonify({"error": "Cette indicateur existe déjà"}), 400
 
