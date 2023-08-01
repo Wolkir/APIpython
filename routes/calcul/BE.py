@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
+from routes.calcul.RR import calculate_rr
 
 BE = Blueprint('BE', __name__)
 
