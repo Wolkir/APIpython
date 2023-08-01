@@ -26,6 +26,11 @@ from connexion.indicateur.createIndicateur import createIndicateur
 from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
 from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
 
+# porteFeuille
+from connexion.portefeuille.createPortefeuille import createPorteFeuille
+from connexion.portefeuille.suppressionPortefeuille import suppressionPorteFeuille
+from connexion.portefeuille.recuperationPortefeuille import recuperationPorteFeuille
+
 # strategie
 from connexion.strategie.createStrategie import createStrategie
 from connexion.strategie.recuperationStrategie import recuperationStrategie
@@ -150,6 +155,11 @@ app.register_blueprint(trade_blueprint)
 app.register_blueprint(recuperationStrategie)
 app.register_blueprint(createStrategie)
 app.register_blueprint(suppressionStrategie)
+
+# porteFeuille
+app.register_blueprint(recuperationPorteFeuille)
+app.register_blueprint(createPorteFeuille)
+app.register_blueprint(suppressionPorteFeuille)
 
 # indicateur
 app.register_blueprint(recuperationIndicateur)
