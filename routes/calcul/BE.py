@@ -9,7 +9,7 @@ db = client['test']
 
 
 @BE.route('/BE', methods=['GET'])
-def find_BE():
+def find_BE(data):
     try:
         data = request.json
         username = data.get('username')
