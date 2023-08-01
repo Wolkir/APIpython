@@ -12,16 +12,7 @@ daily_trade_counts = {}
 @tradercount.route('/tradercount', methods=['GET'])
 def calculate_tradercount(data):
     try:
-        data = request.args.get('data')  # Récupérer le paramètre 'data' depuis l'URL
-        if not data:
-            return jsonify({'error': 'No data provided in query parameters'}), 400
-
-        # Traiter les données JSON passées en tant que paramètre de requête
-        data_dict = json.loads(data)  # Vous devrez peut-être importer le module 'json'
-
-        username = data_dict.get('username')
-        if not username:
-            return jsonify({'error': 'Username not provided in JSON data'}), 400
+        username = data.get('username')
 
         collection_close = f"{username}_close"
         # Collection pour stocker les trades ouverts
