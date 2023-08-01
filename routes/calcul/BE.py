@@ -18,7 +18,7 @@ def find_BE(data):
 
     #resultBE = {}  # Initialize the 'resultBE' dictionary
 
-    if Closure == "Close" and -0.50 < rrcalculation < 0.50:
+    if -0.50 < rrcalculation < 0.50:
         resultBE = True
     else:
         resultBE= False
