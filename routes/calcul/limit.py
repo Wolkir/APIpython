@@ -16,6 +16,6 @@ def find_limit(data):
         condi = False
     elif orderType !="SELL":
         condi = False
-else:
+    else:
         condi = True
     return condi  # Renvoie la valeur de BE
