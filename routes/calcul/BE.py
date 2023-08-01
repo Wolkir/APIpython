@@ -15,11 +15,11 @@ def find_BE(data):
     rrcalculation = (price_close - price_opening) / (price_opening - stop_loss)
     rrcalculation = round(rrcalculation, 2)
 
-    resultBE = {}  # Initialize the 'resultBE' dictionary
+    #resultBE = {}  # Initialize the 'resultBE' dictionary
 
     if data['closurePosition'] == "Close" and -0.5 < rrcalculation < 0.5:
-        resultBE['BE'] = True
+        resultBE = True
     else:
-        resultBE['BE'] = False
+        resultBE= False
 
     return resultBE  # Renvoie la valeur de BE
