@@ -8,6 +8,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 def find_BE(data):
+    username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
 
