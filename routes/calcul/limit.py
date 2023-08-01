@@ -12,9 +12,10 @@ def find_limit(data):
     
     orderType = data['orderType']
     
-    if orderType !="BUY" or orderType !="SELL"
+    if orderType !="BUY" 
         condi = False
-    else:
+    elif orderType !="SELL"
+        condi = False
+    else
         condi = True
-
     return condi  # Renvoie la valeur de BE
