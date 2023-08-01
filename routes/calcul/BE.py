@@ -22,7 +22,6 @@ def find_BE(data):
             order['BE'] = True
         else:
             order['BE'] = False
-         resultBE.append(order)
+        resultBE.append(order)
 
     return resultBE
-
