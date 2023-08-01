@@ -21,7 +21,7 @@ from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
-from routes.calcul.tradercount import calculate_tradercount
+
 
 
 #from routes.calcul.profit.profitfactor  import calculate_profit_factor // remplacé par le code groupé profit_factor_group
@@ -51,7 +51,6 @@ trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
 RROpen = {}
 TPOpen = {}
-daily_trade_counts = {}
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
@@ -142,7 +141,7 @@ def save_trade_request():
             data['session'] = session
             
             duration = calculate_time_duration(data)
-            data['duration'] = duration
+            data['duration'] = duration['duration']
             
             rr = calculate_rr(data)
             data['RR'] = rr
@@ -155,9 +154,8 @@ def save_trade_request():
             
             weekday_str = add_weekday(data)
             data['Day'] = weekday_str
-            tradecount=calculate_tradercount(data)
-            data['tradercount'] = tradecount
-        
+
+           
 
        
                        
@@ -183,9 +181,7 @@ def save_trade_request():
             data['Day'] = weekday_str
             
             RROpen[data.get('identifier')] = rrt
-            tradecount=calculate_tradercount(data)
-            data['tradercount'] = tradecount
-          
+            
             
         # Insert the data into the collection
         #user_collection.insert_one(data)
@@ -213,7 +209,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            "tradercount" : (data.get('tradecount')),
+            "tradercount" : data.get(tradercount),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
@@ -251,7 +247,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-      
+   
         
              
         #calculate_profit_factor(data)  // remplacé par le code groupé profit_factor_group        
@@ -279,4 +275,5 @@ app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 
 if __name__ == '__main__':
+    app.run()
     app.run()
