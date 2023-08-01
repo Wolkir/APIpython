@@ -11,7 +11,7 @@ db = client['test']
 def find_BE(data):
     resultBE = {}  # Initialize the 'order' dictionary
 
-    rr = data['rr']
+    rr = data.get('rr')
 
     if data['closurePosition'] == "Close" and rr is not None and -0.5 < rr < 0.5:
         resultBE['BE'] = True
