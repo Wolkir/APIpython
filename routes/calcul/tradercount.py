@@ -40,14 +40,8 @@ def calculate_tradercount(data):
 
         # Renvoyer la valeur du tradecount
         print("TradeCount:", tradecount)
-        return tradecount
+        return tradecount  # Ajoutez cette ligne pour renvoyer la valeur du tradecount
 
     except Exception as e:
         print("Error:", e)
         return jsonify({'error': str(e)}), 500
-
-app = Flask(__name__)
-app.register_blueprint(tradercount)
-
-if __name__ == '__main__':
-    app.run()
