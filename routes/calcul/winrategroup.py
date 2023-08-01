@@ -9,7 +9,7 @@ db = client['test']
 
 @winrategroup.route('/winrategroup', methods=['GET'])
 def calculate_winrate_group(data):
-   username = data.get('username')
+    username = data.get('username')
     identifier = data.get('identifier')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
