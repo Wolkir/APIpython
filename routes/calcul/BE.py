@@ -9,7 +9,7 @@ db = client['test']
 
 
 def find_BE(data):
-   resultBE = {}  # Initialize the 'order' dictionary
+    resultBE = {}  # Initialize the 'order' dictionary
 
     rr = data['rr']
 
