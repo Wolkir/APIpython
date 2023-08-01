@@ -7,7 +7,7 @@ BE = Blueprint('BE', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-def find_BE(data):
+def find_BE(username):
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
