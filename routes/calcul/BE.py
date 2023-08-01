@@ -23,7 +23,7 @@ def find_BE(data):
 
     rrcalculation = rr_calculation(data)
 
-    if data['closurePosition'] == "Close" and rrcalculation is not None and -0.5 < rr < 0.5:
+    if data['closurePosition'] == "Close" and rrcalculation is not None and -0.5 < rrcalculation < 0.5:
         resultBE['BE'] = True
     else:
         resultBE['BE'] = False
