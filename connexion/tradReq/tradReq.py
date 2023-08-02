@@ -254,8 +254,8 @@ def save_trade_request():
             "timeSetup": None,
             "sortieManuelle": None,
             "journeeDeTilt": None,
-            "TJS": None
-            "totaltrade":data.get['position']
+            "TJS": None,
+            "totaltrade": data.get('position')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
