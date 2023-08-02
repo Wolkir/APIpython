@@ -83,7 +83,7 @@ def calculate_average_gain_loss_rr(data):
             negativeshort_ticket_numbers.add(ticket_number)
 
         if "RR" in doc:
-            rr_value = doc["RR"]
+            rr_values = doc["RR"]
             if typeofTransaction == "BUY":
                 rr_values_long.append(rr_value)
             elif typeofTransaction == "SELL":
