@@ -68,4 +68,4 @@ def calculate_winrate_group(data):
     
     # Insérer les deux winrates dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'winratestdl': winratestd, 'winratereal': winrate_value_real}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'winratestdl': winratestd, 'winratereal': winrate_value_real,'winratelongstd': winratelongstd}}, upsert=True)
