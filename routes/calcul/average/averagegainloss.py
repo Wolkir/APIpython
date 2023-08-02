@@ -108,32 +108,22 @@ def calculate_average_gain_loss_rr(data):
     average_rrlong = rr_total_long / rr_count_long if rr_count_long > 0 else 0
 
     # Calcul de la médiane
-    if rr_count_long > 0:
-        if rr_count_long % 2 == 0:
-            # Si le nombre d'éléments est pair, calculez la moyenne des deux éléments du milieu
-            median_rrlong = (rr_values_long[rr_count_long // 2 - 1] + rr_values_long[rr_count_long // 2]) / 2
-        else:
-            # Si le nombre d'éléments est impair, la médiane est l'élément du milieu
-            median_rrlong = rr_values_long[rr_count_long // 2]
-    else:
-        median_rrlong = 0
+    # Pour mediane_rrlong
+    sorted_rrlong = sorted(rr_values_long)
+    rr_count_long = len(sorted_rrlong)
+    median_rrlong = (sorted_rrlong[rr_count_long // 2 - 1] + sorted_rrlong[rr_count_long // 2]) / 2 if rr_count_long % 2 == 0 else sorted_rrlong[rr_count_long // 2]
 
-   
+
+  
     # Calcul de la moyenne des valeurs de RR pour les transactions de type "SELL"
     rr_total_short = sum(rr_values_short)
     rr_count_short = len(rr_values_short)
     average_rrshort = rr_total_short / rr_count_short if rr_count_short > 0 else 0
 
-    # Calcul de la médiane
-    if rr_count_short > 0:
-        if rr_count_short % 2 == 0:
-            # Si le nombre d'éléments est pair, calculez la moyenne des deux éléments du milieu
-            median_rrshort = (rr_values_short[rr_count_short // 2 - 1] + rr_values_short[rr_count_short // 2]) / 2
-        else:
-            # Si le nombre d'éléments est impair, la médiane est l'élément du milieu
-            median_rrshort = rr_values_short[rr_count_short // 2]
-    else:
-        median_rrshort = 0
+    # Pour mediane_rrshort
+   sorted_rrshort = sorted(rr_values_short)
+   rr_count_short = len(sorted_rrshort)
+   median_rrshort = (sorted_rrshort[rr_count_short // 2 - 1] + sorted_rrshort[rr_count_short // 2]) / 2 if rr_count_short % 2 == 0 else sorted_rrshort[rr_count_short // 2]
   
     # Calculer la durée moyenne
     total_duration = timedelta()
