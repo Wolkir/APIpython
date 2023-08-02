@@ -12,8 +12,7 @@ db = client['test']
 @averagegainloss.route('/averagegainloss', methods=['GET'])
 
 def calculate_average_gain_loss_rr(data):
-    data = request.args  # Récupérer les données de la requête
-
+   
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
