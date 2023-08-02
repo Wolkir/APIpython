@@ -10,9 +10,8 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @bestrr.route('/best', methods=['GET'])
-def calculate_best_rr(data):
-    username = data.get('username')
-    collection_name = f"{username}_close"
+def calculate_best_rr():
+  
     collection = db[test2_close]
 
     best_rr = 0
