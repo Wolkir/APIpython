@@ -38,8 +38,9 @@ def calculate_winrate_group(data):
     for doc in documents:
         profit = doc['profit']
         identifier = doc['identifier']
-        is_buy_order = orderType == "BUY"
-        is_sell_order = orderType == "SELL"
+        
+        is_buy_order = doc['orderType'] == "BUY"
+        is_sell_order = doc['orderType'] == "SELL"
 
         if profit > 0 and identifier not in positive_identifiers:
             positive_profits_count += 1
