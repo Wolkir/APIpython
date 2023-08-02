@@ -22,9 +22,16 @@ def calculate_average_gain_loss_rr(data):
     positive_gains_count = 0
     positive_ticket_numbers = set()
 
+    positivelong_gains_total = 0
+    positivelong_gains_count = 0
+    positivelong_ticket_numbers = set()
+
     negative_losses_total = 0
     negative_losses_count = 0
     negative_ticket_numbers = set()
+    negativelong_losses_total = 0
+    negativelong_losses_count = 0
+    negativelong_ticket_numbers = set()
 
     rr_values = []  # Liste pour stocker les valeurs de RR
 
@@ -32,16 +39,28 @@ def calculate_average_gain_loss_rr(data):
     for doc in collection.find():
         profit = doc['profit']
         ticket_number = doc['ticketNumber']
+        typeofTransaction = doc['orderType'] =="BUY
         
         if profit > 0 and ticket_number not in positive_ticket_numbers:
             positive_gains_total += profit
             positive_gains_count += 1
             positive_ticket_numbers.add(ticket_number)
+
+        if profit > 0 and typeofTransaction=="BUY" and ticket_number not in positivelong_ticket_numbers:
+            positivelong_gains_total += profit
+            positivelong_gains_count += 1
+            positivelong_ticket_numbers.add(ticket_number)
         
-        elif profit < 0 and ticket_number not in negative_ticket_numbers:
+        if profit < 0 and ticket_number not in negative_ticket_numbers:
             negative_losses_total += profit
             negative_losses_count += 1
             negative_ticket_numbers.add(ticket_number)
+
+        if profit < 0 and typeofTransaction=="BUY" and ticket_number not in negativelong_ticket_numbers:
+            negativelong_losses_total += profit
+            negativelong_losses_count += 1
+            negativelong_ticket_numbers.add(ticket_number)
+        
         
         if "RR" in doc:
             rr_values.append(doc["RR"])
@@ -49,6 +68,8 @@ def calculate_average_gain_loss_rr(data):
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
     average_loss = negative_losses_total / negative_losses_count if negative_losses_count > 0 else 0
+    averagelong_gain = positivelong_gains_total / positivelong_gains_count if positivelong_gains_count > 0 else 0
+    averagelong_loss = negativelong_losses_total / negativelong_losses_count if negativelong_losses_count > 0 else 0
 
     # Calcul de la moyenne des valeurs de RR
     rr_total = sum(rr_values)
@@ -76,7 +97,9 @@ def calculate_average_gain_loss_rr(data):
         {
             '$set': {
                 'averagegain': average_gain,
-                'averagelosse': average_loss,
+                'averageloss': average_loss,
+                'averagelonggain': averagelong_gain',
+                'averagelongloss': averagelong_loss',
                 'RRaverage': average_rr,
                 'average_duration': str(average_duration)
             }
