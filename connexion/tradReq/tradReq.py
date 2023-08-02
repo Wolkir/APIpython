@@ -259,7 +259,7 @@ def save_trade_request():
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
         calculate_profit_factor_group(data)
-        #calculate_winrate_group(data)
+        calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         #calculate_winrrtflat(data)
    
