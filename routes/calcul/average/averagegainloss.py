@@ -11,7 +11,9 @@ db = client['test']
 
 @averagegainloss.route('/averagegainloss', methods=['GET'])
 
-def calculate_average_gain_loss_rr(data):
+def calculate_average_gain_loss_rr():
+    data = request.args  # Récupérer les données de la requête
+
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
@@ -55,12 +57,12 @@ def calculate_average_gain_loss_rr(data):
             positive_gains_count += 1
             positive_ticket_numbers.add(ticket_number)
 
-        if profit > 0 and typeofTransaction=="BUY" and ticket_number not in positivelong_ticket_numbers:
+        if profit > 0 and typeofTransaction == "BUY" and ticket_number not in positivelong_ticket_numbers:
             positivelong_gains_total += profit
             positivelong_gains_count += 1
             positivelong_ticket_numbers.add(ticket_number)
 
-        if profit > 0 and typeofTransaction=="SELL" and ticket_number not in positiveshort_ticket_numbers:
+        if profit > 0 and typeofTransaction == "SELL" and ticket_number not in positiveshort_ticket_numbers:
             positiveshort_gains_total += profit
             positiveshort_gains_count += 1
             positiveshort_ticket_numbers.add(ticket_number)
@@ -70,12 +72,12 @@ def calculate_average_gain_loss_rr(data):
             negative_losses_count += 1
             negative_ticket_numbers.add(ticket_number)
 
-        if profit < 0 and typeofTransaction=="BUY" and ticket_number not in negativelong_ticket_numbers:
+        if profit < 0 and typeofTransaction == "BUY" and ticket_number not in negativelong_ticket_numbers:
             negativelong_losses_total += profit
             negativelong_losses_count += 1
             negativelong_ticket_numbers.add(ticket_number)
 
-        if profit < 0 and typeofTransaction=="SELL" and ticket_number not in negativeshort_ticket_numbers:
+        if profit < 0 and typeofTransaction == "SELL" and ticket_number not in negativeshort_ticket_numbers:
             negativeshort_losses_total += profit
             negativeshort_losses_count += 1
             negativeshort_ticket_numbers.add(ticket_number)
