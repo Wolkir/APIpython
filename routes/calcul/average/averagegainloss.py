@@ -98,8 +98,8 @@ def calculate_average_gain_loss_rr(data):
             '$set': {
                 'averagegain': average_gain,
                 'averageloss': average_loss,
-                'averagelonggain': averagelong_gain',
-                'averagelongloss': averagelong_loss',
+                'averagelonggain': averagelong_gain,
+                'averagelongloss': averagelong_loss,
                 'RRaverage': average_rr,
                 'average_duration': str(average_duration)
             }
