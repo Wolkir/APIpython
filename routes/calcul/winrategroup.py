@@ -65,9 +65,9 @@ def calculate_winrate_group(data):
                 negativeshort_identifiers.add(identifier)
 
     # Calcul du winrate standard
-    winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-    winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
-    winrateshortstd = positiveshort_profits_count / (positiveshort_profits_count + negativeshort_profits_count) * 100
+    winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100 if (positive_profits_count + negative_profits_count) > 0 else 0
+    winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100 if (positivelong_profits_count + negativelong_profits_count) > 0 else 0
+    winrateshortstd = positiveshort_profits_count / (positiveshort_profits_count + negativeshort_profits_count) * 100 if (positiveshort_profits_count + negativeshort_profits_count) > 0 else 0
     
     # Compter le nombre de documents avec profit > 0 pour le calcul du winrate real
     positive_profits_count_real = collection.count_documents({"profit": {"$gt": 0}})
@@ -76,7 +76,7 @@ def calculate_winrate_group(data):
     negative_profits_count_real = collection.count_documents({"profit": {"$lt": 0}})
     
     # Calcul du winrate real
-    winrate_value_real = positive_profits_count_real / (positive_profits_count_real + negative_profits_count_real) * 100
+    winrate_value_real = positive_profits_count_real / (positive_profits_count_real + negative_profits_count_real) * 100 if (positive_profits_count_real + negative_profits_count_real) > 0 else 0
     
     # Insérer les deux winrates dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
