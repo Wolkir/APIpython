@@ -163,9 +163,9 @@ def calculate_average_gain_loss_rr(data):
                 'averageshortgain': averageshort_gain,
                 'averageshortloss': averageshort_loss,
                 'averagelong_rr': average_rrlong,
-                'mediane-rrlong': median_rrlong,
+                'median_long': median_rrlong,
                 'averageshort_rr': average_rrshort,
-                'mediane-rrshort': median_rrshort,
+                'median_rrshort': median_rrshort,
                 'average_duration': str(average_duration)
             }
         },
