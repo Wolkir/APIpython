@@ -53,14 +53,22 @@ def calculate_profit_factor_group(data):
             elif profit < 0:
                 total_loss_sell += profit
 
-    # Calcul du profit factor pour toutes les transactions
-    profit_factor = total_profit / abs(total_loss)
+    if total_loss != 0:
+       profit_factor = total_profit / abs(total_loss)
+    else:
+       profit_factor = 0
 
     # Calcul du profit factor pour les transactions de type "Buy" uniquement
-    profit_factor_buy = total_profit_buy / abs(total_loss_buy)
+    if total_loss_buy != 0:
+       profit_factor_buy = total_profit_buy / abs(total_loss_buy)
+    else:
+       profit_factor_buy = 0
 
     # Calcul du profit factor pour les transactions de type "Sell" uniquement
-    profit_factor_sell = total_profit_sell / abs(total_loss_sell)
+    if total_loss_sell != 0:
+       profit_factor_sell = total_profit_sell / abs(total_loss_sell)
+    else:
+       profit_factor_sell = 0
 
     # Insérer toutes les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
