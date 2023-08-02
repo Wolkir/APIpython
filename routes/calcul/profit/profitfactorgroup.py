@@ -32,7 +32,7 @@ def calculate_profit_factor_group(data):
     # Parcourir les documents de la collection
     for doc in collection.find():
         profit = doc['profit']
-        orderType = doc['orderType']
+        type_of_transaction = doc['orderType']
         
         if profit > 0:
             total_profit += profit
