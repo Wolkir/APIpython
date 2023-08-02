@@ -81,8 +81,15 @@ def calculate_average_gain_loss_rr(data):
             negativeshort_losses_total += profit
             negativeshort_losses_count += 1
             negativeshort_ticket_numbers.add(ticket_number)
-
-    # Calcul de la moyenne des gains et pertes
+        
+         if "RR" in doc:
+             rr_values.append(doc["RR"])
+             if typeofTransaction == "BUY":
+                rr_values_long.append(rr_value)
+             elif typeofTransaction == "SELL":
+                rr_values_short.append(rr_value)
+   
+   # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
     average_loss = negative_losses_total / negative_losses_count if negative_losses_count > 0 else 0
     averagelong_gain = positivelong_gains_total / positivelong_gains_count if positivelong_gains_count > 0 else 0
@@ -90,6 +97,10 @@ def calculate_average_gain_loss_rr(data):
     averageshort_gain = positiveshort_gains_total / positiveshort_gains_count if positiveshort_gains_count > 0 else 0
     averageshort_loss = negativeshort_losses_total / negativeshort_losses_count if negativeshort_losses_count > 0 else 0
 
+   # Calcul de la moyenne des valeurs de RR
+    rr_total = sum(rr_values)
+    rr_count = len(rr_values)
+    average_rr = rr_total / rr_count if rr_count > 0 else 0
     # Calcul de la moyenne des valeurs de RR pour les transactions de type "BUY"
     rr_total_long = sum(rr_values_long)
     rr_count_long = len(rr_values_long)
