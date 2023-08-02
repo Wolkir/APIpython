@@ -18,7 +18,7 @@ def convert_to_json_serializable(data):
 
 def setup_modificationTrade_routes(app):
 
-    @modificationTrade.route('/modificationTrade', methods=['POST', 'OPTIONS']])
+    @modificationTrade.route('/modificationTrade', methods=['POST', 'OPTIONS'])
     def update_trade():
         if request.method == 'OPTIONS':
             return jsonify({}), 200
