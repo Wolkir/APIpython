@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from flask_pymongo import PyMongo
 import jwt
 from bson import ObjectId
@@ -19,12 +19,30 @@ def setup_things_routes(app):
     @things_blueprint.route('/recuperationTrade', methods=['GET'])
     def get_all_things():
         try:
+            """
             app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
             mongo = PyMongo(app)
+            """
+            mongo = PyMongo(current_app)
+            db = mongo.db
 
             argUsername = request.args.get('username', None)
             argTypeTrade = request.args.get('typeTrade', None)
+            argCollection = request.args.get('collection', None)
 
+            collection = None
+
+            if argCollection == "tout":
+                data = [name for name in db.list_collection_names() if argUsername in name]
+                collection = [name.replace("_" + argUsername, "").replace(argUsername + "_", "").replace(argUsername, "") for name in data]
+                print(collection)
+
+            else:
+                if argUsername is not None:
+                    collection = argUsername + "_" + argCollection
+                else:
+                    collection = argCollection
+            print(collection)
             query = {
                 '$and': [
                     {'username': argUsername},
@@ -36,7 +54,7 @@ def setup_things_routes(app):
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
-            things_collection = mongo.db.things
+            things_collection = mongo.db[collection]
             all_things = list(things_collection.find(query))
 
             for thing in all_things:
@@ -48,3 +66,4 @@ def setup_things_routes(app):
             return jsonify({"error": str(e)}), 500
         
     return things_blueprint
+
