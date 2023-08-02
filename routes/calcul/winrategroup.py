@@ -49,7 +49,7 @@ def calculate_winrate_group(data):
             if is_buy_order and identifier not in positivelong_identifiers:
                 positivelong_profits_count += 1
                 positivelong_identifiers.add(identifier)
-            if is_sell and identifier not in positiveshort_identifiers:
+            if is_sell_order and identifier not in positiveshort_identifiers:
                 positiveshort_profits_count += 1
                 positiveshort_identifiers.add(identifier)
 
