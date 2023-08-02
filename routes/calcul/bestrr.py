@@ -13,7 +13,7 @@ db = client['test']
 def calculate_best_rr(data):
     username = data.get('username')
     collection_name = f"{username}_close"
-    collection = db[collection_name]
+    collection = db[test2_close]
 
     best_rr = 0
     best_day = ""
