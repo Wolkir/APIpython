@@ -23,6 +23,8 @@ from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
+from routes.calcul.totaltrade import calculate_totaltrade
+
 
 
 
@@ -163,6 +165,9 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
+            position = calculate_totaltrade(data)
+            data['position'] = position
+
 
            
 
@@ -250,6 +255,7 @@ def save_trade_request():
             "sortieManuelle": None,
             "journeeDeTilt": None,
             "TJS": None
+            "totaltrade":data.get['position']
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
