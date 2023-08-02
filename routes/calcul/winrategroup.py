@@ -52,7 +52,7 @@ def calculate_winrate_group(data):
 
     # Calcul du winrate standard
     winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-    #winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
+    winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
     
     # Compter le nombre de documents avec profit > 0 pour le calcul du winrate real
     positive_profits_count_real = collection.count_documents({"profit": {"$gt": 0}})
