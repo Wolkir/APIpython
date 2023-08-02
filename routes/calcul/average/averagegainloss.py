@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 from datetime import timedelta
 
@@ -10,14 +10,14 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @averagegainloss.route('/averagegainloss', methods=['GET'])
-def calculate_average_gain_loss_rr(data):
-    data = request.args  # Récupérer les données de la requête
 
+def calculate_average_gain_loss_rr(data):
+   
     username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
-
+  
     # Initialisation des variables
     positive_gains_total = 0
     positive_gains_count = 0
@@ -34,7 +34,7 @@ def calculate_average_gain_loss_rr(data):
     negative_losses_total = 0
     negative_losses_count = 0
     negative_ticket_numbers = set()
-
+    
     negativelong_losses_total = 0
     negativelong_losses_count = 0
     negativelong_ticket_numbers = set()
@@ -43,8 +43,7 @@ def calculate_average_gain_loss_rr(data):
     negativeshort_losses_count = 0
     negativeshort_ticket_numbers = set()
 
-    rr_values_long = [] 
-    rr_values_short = []
+    rr_values = []  # Liste pour stocker les valeurs de RR
 
     # Parcourir les documents de la collection
     for doc in collection.find():
@@ -81,6 +80,10 @@ def calculate_average_gain_loss_rr(data):
             negativeshort_losses_total += profit
             negativeshort_losses_count += 1
             negativeshort_ticket_numbers.add(ticket_number)
+        
+        
+        if "RR" in doc:
+            rr_values.append(doc["RR"])
 
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
@@ -90,15 +93,10 @@ def calculate_average_gain_loss_rr(data):
     averageshort_gain = positiveshort_gains_total / positiveshort_gains_count if positiveshort_gains_count > 0 else 0
     averageshort_loss = negativeshort_losses_total / negativeshort_losses_count if negativeshort_losses_count > 0 else 0
 
-    # Calcul de la moyenne des valeurs de RR pour les transactions de type "BUY"
-    rr_total_long = sum(rr_values_long)
-    rr_count_long = len(rr_values_long)
-    average_rrlong = rr_total_long / rr_count_long if rr_count_long > 0 else 0
-
-    # Calcul de la moyenne des valeurs de RR pour les transactions de type "SELL"
-    rr_total_short = sum(rr_values_short)
-    rr_count_short = len(rr_values_short)
-    average_rrshort = rr_total_short / rr_count_short if rr_count_short > 0 else 0
+    # Calcul de la moyenne des valeurs de RR
+    rr_total = sum(rr_values)
+    rr_count = len(rr_values)
+    average_rr = rr_total / rr_count if rr_count > 0 else 0
 
     # Calculer la durée moyenne
     total_duration = timedelta()
@@ -126,8 +124,7 @@ def calculate_average_gain_loss_rr(data):
                 'averagelongloss': averagelong_loss,
                 'averageshortgain': averageshort_gain,
                 'averageshortloss': averageshort_loss,
-                'averagelong_rr': average_rrlong,
-                'averageshort_rr': average_rrshort,
+                'RRaverage': average_rr,
                 'average_duration': str(average_duration)
             }
         },
