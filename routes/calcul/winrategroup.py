@@ -37,17 +37,15 @@ def calculate_winrate_group(data):
         profit = doc['profit']
         identifier = doc['identifier']
         
-         if profit > 0 and identifier not in positive_identifiers:
+        if profit > 0 and identifier not in positive_identifiers:
             positive_profits_count += 1
             positive_identifiers.add(identifier)
         elif profit > 0 and orderType=="BUY" and identifier not in positivelong_identifiers:
             positivelong_profits_count += 1
             positivelong_identifiers.add(identifier)
-            
         elif profit < 0 and identifier not in negative_identifiers:
             negative_profits_count += 1
             negative_identifiers.add(identifier)
-
         elif profit < 0 and orderType=="BUY" and identifier not in negativelong_identifiers:
             negativelong_profits_count += 1
             negativelong_identifiers.add(identifier)
