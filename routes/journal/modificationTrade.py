@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from flask_pymongo import PyMongo
 import jwt
 from bson import ObjectId
@@ -36,7 +36,26 @@ def setup_modificationTrade_routes(app):
             strategie_data = data.get('strategie', [])
             timeEntree_data = data.get('timeEntree', [])
             timeSetup_data = data.get('timeSetup', [])
+            porteFeuille_data = data.get('porteFeuille', [])
+            collection_data = data.get('collection', [])
             things_collection = mongo.db.things
+
+            reinsertion = []
+
+            # transfert trade
+            if porteFeuille_data is not None:
+                for porteFeuille_item in porteFeuille_data:
+                    trade_id = porteFeuille_item.get('id')
+                    value_porteFeuille = porteFeuille_item.get('valuePorteFeuille')
+
+                    if trade_id and value_psy:
+                        existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                        
+                        if existing_line:
+                            existing_line['value_porteFeuille'] = value_porteFeuille
+                        else:
+                            line = {'trade_id': trade_id, 'value_porteFeuille': value_porteFeuille}
+                            reinsertion.append(line)
 
             # Mise à jour ou création des champs psychologie
             for psychologie_item in psychologie_data:
@@ -45,6 +64,14 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_psy:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'psychologie': value_psy}}, upsert=True)
+                    
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_psy'] = value_psy
+                    else:
+                        line = {'trade_id': trade_id, 'value_psy': value_psy}
+                        reinsertion.append(line)
             
             # Mise à jour du champ annonceEconomique
             for trade in trades_data:
@@ -135,6 +162,26 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_timeSetup:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeSetup': value_timeSetup}}, upsert=True)
+
+            def fonctionDeReinsertion(reinsertion, collection_data):
+                mongo = PyMongo(current_app)
+                db = mongo.db
+
+                for item in reinsertion:
+                    trade_id = item.get('id')
+                    value_porteFeuille = item.get('value_porteFeuille')
+
+                    if trade_id and value_porteFeuille:
+                        data_to_move = list(db[collection_data].find({'id': trade_id}))
+
+                        for data_item in data_to_move:
+                            db[value_porteFeuille].insert_one(data_item)
+
+                        db[collection_data].delete_many({'id': trade_id})
+                        return len(reinsertion)
+                
+            if porteFeuille_data is not None:
+                result = fonctionDeReinsertion(reinsertion, collection_data,)
 
             return jsonify({"message": "Trade details updated successfully."}), 200
 
