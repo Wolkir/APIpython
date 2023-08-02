@@ -33,23 +33,27 @@ def calculate_winrate_group(data):
     
     # Compter le nombre de documents avec profit > 0 et les identifiants uniques
     # pour le calcul du winrate standard et du winrate real
-    for doc in documents:
-        profit = doc['profit']
-        identifier = doc['identifier']
+for doc in documents:
+    profit = doc['profit']
+    identifier = doc['identifier']
+    is_buy_order = orderType == "BUY"
+
+    if profit > 0 and identifier not in positive_identifiers:
+        positive_profits_count += 1
+        positive_identifiers.add(identifier)
         
-        if profit > 0 and identifier not in positive_identifiers:
-            positive_profits_count += 1
-            positive_identifiers.add(identifier)
-        elif profit > 0 and orderType=="BUY" and identifier not in positivelong_identifiers:
+        if is_buy_order and identifier not in positivelong_identifiers:
             positivelong_profits_count += 1
             positivelong_identifiers.add(identifier)
-        elif profit < 0 and identifier not in negative_identifiers:
-            negative_profits_count += 1
-            negative_identifiers.add(identifier)
-        elif profit < 0 and orderType=="BUY" and identifier not in negativelong_identifiers:
+
+    elif profit < 0 and identifier not in negative_identifiers:
+        negative_profits_count += 1
+        negative_identifiers.add(identifier)
+
+        if is_buy_order and identifier not in negativelong_identifiers:
             negativelong_profits_count += 1
             negativelong_identifiers.add(identifier)
-
+            
     # Calcul du winrate standard
     winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
     winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
