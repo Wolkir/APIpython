@@ -97,6 +97,11 @@ def calculate_average_gain_loss_rr(data):
     averageshort_gain = positiveshort_gains_total / positiveshort_gains_count if positiveshort_gains_count > 0 else 0
     averageshort_loss = negativeshort_losses_total / negativeshort_losses_count if negativeshort_losses_count > 0 else 0
 
+   # Pour mediane_gain
+   sorted_positive_gains = sorted([profit for profit in positive_gains_total if profit > 0])
+   positive_gains_count = len(sorted_positive_gains)
+   mediane_gain = sorted_positive_gains[positive_gains_count // 2] if positive_gains_count > 0 else 0
+
     # Calcul de la moyenne des valeurs de RR pour les transactions de type "BUY"
     rr_total_long = sum(rr_values_long)
     rr_count_long = len(rr_values_long)
@@ -151,6 +156,7 @@ def calculate_average_gain_loss_rr(data):
         {
             '$set': {
                 'averagegain': average_gain,
+                'mediane_gain' : mediane_gain,
                 'averageloss': average_loss,
                 'averagelonggain': averagelong_gain,
                 'averagelongloss': averagelong_loss,
