@@ -23,7 +23,10 @@ def calculate_winrrtflat(data):
     risk_reward = collection_unitaire.find_one({}, {"RRaverage": 1})["RRaverage"]
 
     # Calculer RRT
-    RRT = ((1 - (winrate/100)) / (winrate/100))
+    if winrate != 0 :
+       RRT = ((1 - (winrate/100)) / (winrate/100))
+    else :
+       RRT = 0
 
     # Calculer WinrateT
     WinrateT = (1 / (1 + risk_reward))*100
