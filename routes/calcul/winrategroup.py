@@ -11,6 +11,7 @@ db = client['test']
 @winrategroup.route('/winrategroup', methods=['GET'])
 def calculate_winrate_group(data):
     username = data.get('username')
+    orderType = data.get('orderType')
     identifier = data.get('identifier')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
@@ -21,9 +22,14 @@ def calculate_winrate_group(data):
     
     positive_profits_count = 0
     negative_profits_count = 0
+    positivelong_profits_count = 0
+    negativeshort_profits_count = 0
+
     
     positive_identifiers = set()
     negative_identifiers = set()
+    positivelong_identifiers = set()
+    negativelong_identifiers = set()
     
     # Compter le nombre de documents avec profit > 0 et les identifiants uniques
     # pour le calcul du winrate standard et du winrate real
@@ -34,12 +40,21 @@ def calculate_winrate_group(data):
         if profit > 0 and identifier not in positive_identifiers:
             positive_profits_count += 1
             positive_identifiers.add(identifier)
+        elif profit > 0 and orderType=="BUY" and identifier not in positivelong_identifiers:
+            positivelong_profits_count += 1
+            positivelong_identifiers.add(identifier)
+            
         elif profit < 0 and identifier not in negative_identifiers:
             negative_profits_count += 1
             negative_identifiers.add(identifier)
 
+        elif profit < 0 and orderType=="BUY" and identifier not in negativelong_identifiers:
+            negativelong_profits_count += 1
+            negativelong_identifiers.add(identifier)
+
     # Calcul du winrate standard
     winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+    winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
     
     # Compter le nombre de documents avec profit > 0 pour le calcul du winrate real
     positive_profits_count_real = collection.count_documents({"profit": {"$gt": 0}})
