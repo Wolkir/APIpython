@@ -50,7 +50,7 @@ def setup_modificationTrade_routes(app):
                     trade_id = porteFeuille_item.get('id')
                     value_porteFeuille = porteFeuille_item.get('valuePorteFeuille')
 
-                    if trade_id and value_psy:
+                    if trade_id and value_porteFeuille:
                         existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
                         
                         if existing_line:
