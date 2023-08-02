@@ -98,7 +98,7 @@ def calculate_average_gain_loss_rr(data):
     averageshort_loss = negativeshort_losses_total / negativeshort_losses_count if negativeshort_losses_count > 0 else 0
 
     # Pour mediane_gain
-    sorted_positive_gains = sorted([profit for profit in positive_gains_total if profit > 0])
+    sorted_positive_gains = sorted([profit for profit in rr_values_long if profit > 0])
     positive_gains_count = len(sorted_positive_gains)
     mediane_gain = sorted_positive_gains[positive_gains_count // 2] if positive_gains_count > 0 else 0
 
