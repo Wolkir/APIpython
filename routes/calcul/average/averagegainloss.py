@@ -102,11 +102,23 @@ def calculate_average_gain_loss_rr(data):
     rr_count_long = len(rr_values_long)
     average_rrlong = rr_total_long / rr_count_long if rr_count_long > 0 else 0
 
+    # Calcul de la médiane
+    if rr_count_long > 0:
+        if rr_count_long % 2 == 0:
+            # Si le nombre d'éléments est pair, calculez la moyenne des deux éléments du milieu
+            median_rrlong = (rr_values_long[rr_count_long // 2 - 1] + rr_values_long[rr_count_long // 2]) / 2
+        else:
+            # Si le nombre d'éléments est impair, la médiane est l'élément du milieu
+            median_rrlong = rr_values_long[rr_count_long // 2]
+    else:
+        median_rrlong = 0
+
+   
     # Calcul de la moyenne des valeurs de RR pour les transactions de type "SELL"
     rr_total_short = sum(rr_values_short)
     rr_count_short = len(rr_values_short)
     average_rrshort = rr_total_short / rr_count_short if rr_count_short > 0 else 0
-
+  
     # Calculer la durée moyenne
     total_duration = timedelta()
     document_count = 0
@@ -134,6 +146,7 @@ def calculate_average_gain_loss_rr(data):
                 'averageshortgain': averageshort_gain,
                 'averageshortloss': averageshort_loss,
                 'averagelong_rr': average_rrlong,
+                'medianerr-long': median_rrlong,
                 'averageshort_rr': average_rrshort,
                 'average_duration': str(average_duration)
             }
