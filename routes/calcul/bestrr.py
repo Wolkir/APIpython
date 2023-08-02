@@ -11,7 +11,7 @@ db = client['test']
 
 @bestrr.route('/best', methods=['GET'])
 def calculate_best_rr():
-    collection = db["things_close"]
+    collection = db["test2_close"]
 
     best_rr = 0
     best_day = ""
