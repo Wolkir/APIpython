@@ -18,8 +18,10 @@ def convert_to_json_serializable(data):
 
 def setup_modificationTrade_routes(app):
 
-    @modificationTrade.route('/modificationTrade', methods=['POST'])
+    @modificationTrade.route('/modificationTrade', methods=['POST', 'OPTIONS']])
     def update_trade():
+        if request.method == 'OPTIONS':
+            return jsonify({}), 200
         try:
             app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority'
             mongo = PyMongo(app)
