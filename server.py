@@ -74,6 +74,7 @@ from routes.calcul.winrrtflat import winrrtflat
 from routes.calcul.tradercount import tradercount
 from routes.calcul.BE import BE
 from routes.calcul.limit import limit
+from routes.calcul.bestrr import bestrr
 
 
 
@@ -131,6 +132,7 @@ app.register_blueprint(averagegainloss)
 app.register_blueprint(winrrtflat)
 app.register_blueprint(tradercount)
 app.register_blueprint(limit)
+app.register_blueprint(bestrr)
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
 #app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
