@@ -166,7 +166,7 @@ def save_trade_request():
             data['Limit'] = condi
 
             position = calculate_totaltrade(data)
-            data['position'] = position
+            data['totaltrade'] = position
 
 
            
