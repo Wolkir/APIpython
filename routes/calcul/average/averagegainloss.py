@@ -77,10 +77,11 @@ def calculate_average_gain_loss_rr(data):
         if "RR" in doc:
             rr_values.append(doc["RR"])
             if typeofTransaction == "BUY":
-                rr_values_long.append(rr_values)
+                rr_values_long.append(doc["RR"])  # Ajouter la valeur directement, pas la liste entière
             elif typeofTransaction == "SELL":
-                rr_values_short.append(rr_values)
+                rr_values_short.append(doc["RR"])
 
+   
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
     average_loss = negative_losses_total / negative_losses_count if negative_losses_count > 0 else 0
