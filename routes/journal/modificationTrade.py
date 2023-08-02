@@ -168,19 +168,19 @@ def setup_modificationTrade_routes(app):
             def fonctionDeReinsertion(reinsertion, collection_data):
                 mongo = PyMongo(current_app)
                 db = mongo.db
-
+            
                 for item in reinsertion:
-                    trade_id = item.get('id')
+                    trade_id = item.get('trade_id')
                     value_porteFeuille = item.get('value_porteFeuille')
-
+            
                     if trade_id and value_porteFeuille:
                         data_to_move = list(db[collection_data].find({'id': trade_id}))
-
+            
                         for data_item in data_to_move:
                             db[value_porteFeuille].insert_one(data_item)
-
+            
                         db[collection_data].delete_many({'id': trade_id})
-                        return len(reinsertion)
+                return len(reinsertion)
                 
             if porteFeuille_data is not None:
                 result = fonctionDeReinsertion(reinsertion, collection_data,)
