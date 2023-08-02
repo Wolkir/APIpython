@@ -75,7 +75,7 @@ def calculate_average_gain_loss_rr(data):
             negativelong_losses_count += 1
             negativelong_ticket_numbers.add(ticket_number)
 
-         if profit < 0 and typeofTransaction=="SELL" and ticket_number not in negativeshort_ticket_numbers:
+        if profit < 0 and typeofTransaction=="SELL" and ticket_number not in negativeshort_ticket_numbers:
             negativeshort_losses_total += profit
             negativeshort_losses_count += 1
             negativeshort_ticket_numbers.add(ticket_number)
