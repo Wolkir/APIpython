@@ -23,7 +23,7 @@ def calculate_winrate_group(data):
     positive_profits_count = 0
     negative_profits_count = 0
     positivelong_profits_count = 0
-    negativeshort_profits_count = 0
+    negativelong_profits_count = 0
 
     
     positive_identifiers = set()
