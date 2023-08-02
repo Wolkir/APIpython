@@ -121,9 +121,9 @@ def calculate_average_gain_loss_rr(data):
     average_rrshort = rr_total_short / rr_count_short if rr_count_short > 0 else 0
 
     # Pour mediane_rrshort
-   sorted_rrshort = sorted(rr_values_short)
-   rr_count_short = len(sorted_rrshort)
-   median_rrshort = (sorted_rrshort[rr_count_short // 2 - 1] + sorted_rrshort[rr_count_short // 2]) / 2 if rr_count_short % 2 == 0 else sorted_rrshort[rr_count_short // 2]
+    sorted_rrshort = sorted(rr_values_short)
+    rr_count_short = len(sorted_rrshort)
+    median_rrshort = (sorted_rrshort[rr_count_short // 2 - 1] + sorted_rrshort[rr_count_short // 2]) / 2 if rr_count_short % 2 == 0 else sorted_rrshort[rr_count_short // 2]
   
     # Calculer la durée moyenne
     total_duration = timedelta()
