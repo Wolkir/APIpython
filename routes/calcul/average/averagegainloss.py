@@ -39,7 +39,7 @@ def calculate_average_gain_loss_rr(data):
     for doc in collection.find():
         profit = doc['profit']
         ticket_number = doc['ticketNumber']
-        typeofTransaction = doc['orderType'] =="BUY"
+        typeofTransaction = doc['orderType']
         
         if profit > 0 and ticket_number not in positive_ticket_numbers:
             positive_gains_total += profit
