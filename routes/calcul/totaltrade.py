@@ -14,7 +14,7 @@ def calculate_totaltrade(data):
 
     username = data.get('username')
     collection_name = f"{username}_close"
- 
+    collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
     # Obtenir tous les trades de la collection triés par ordre chronologique
