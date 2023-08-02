@@ -118,6 +118,17 @@ def calculate_average_gain_loss_rr(data):
     rr_total_short = sum(rr_values_short)
     rr_count_short = len(rr_values_short)
     average_rrshort = rr_total_short / rr_count_short if rr_count_short > 0 else 0
+
+    # Calcul de la médiane
+    if rr_count_short > 0:
+        if rr_count_short % 2 == 0:
+            # Si le nombre d'éléments est pair, calculez la moyenne des deux éléments du milieu
+            median_rrshort = (rr_values_short[rr_count_short // 2 - 1] + rr_values_short[rr_count_short // 2]) / 2
+        else:
+            # Si le nombre d'éléments est impair, la médiane est l'élément du milieu
+            median_rrshort = rr_values_short[rr_count_short // 2]
+    else:
+        median_rrshort = 0
   
     # Calculer la durée moyenne
     total_duration = timedelta()
@@ -148,6 +159,7 @@ def calculate_average_gain_loss_rr(data):
                 'averagelong_rr': average_rrlong,
                 'mediane-rrlong': median_rrlong,
                 'averageshort_rr': average_rrshort,
+                'mediane-rrshort': median_rrshort,
                 'average_duration': str(average_duration)
             }
         },
