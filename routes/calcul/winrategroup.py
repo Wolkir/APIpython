@@ -24,11 +24,15 @@ def calculate_winrate_group(data):
     negative_profits_count = 0
     positivelong_profits_count = 0
     negativelong_profits_count = 0
+    positiveshort_profits_count = 0
+    negativeshort_profits_count = 0
 
     positive_identifiers = set()
     negative_identifiers = set()
     positivelong_identifiers = set()
     negativelong_identifiers = set()
+    positiveshort_identifiers = set()
+    negativeshort_identifiers = set()
 
     # Compter le nombre de documents avec profit > 0 et les identifiants uniques
     # pour le calcul du winrate standard et du winrate real
@@ -36,6 +40,7 @@ def calculate_winrate_group(data):
         profit = doc['profit']
         identifier = doc['identifier']
         is_buy_order = orderType == "BUY"
+        is_sell_order = orderType == "SELL"
 
         if profit > 0 and identifier not in positive_identifiers:
             positive_profits_count += 1
@@ -44,6 +49,9 @@ def calculate_winrate_group(data):
             if is_buy_order and identifier not in positivelong_identifiers:
                 positivelong_profits_count += 1
                 positivelong_identifiers.add(identifier)
+            if is_sell and identifier not in positiveshort_identifiers:
+                positiveshort_profits_count += 1
+                positiveshort_identifiers.add(identifier)
 
         elif profit < 0 and identifier not in negative_identifiers:
             negative_profits_count += 1
@@ -52,10 +60,14 @@ def calculate_winrate_group(data):
             if is_buy_order and identifier not in negativelong_identifiers:
                 negativelong_profits_count += 1
                 negativelong_identifiers.add(identifier)
+            if is_sell_order and identifier not in negativeshort_identifiers:
+                negativeshort_profits_count += 1
+                negativeshort_identifiers.add(identifier)
 
     # Calcul du winrate standard
     winratestd = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
     winratelongstd = positivelong_profits_count / (positivelong_profits_count + negativelong_profits_count) * 100
+    winrateshortstd = positiveshort_profits_count / (positiveshort_profits_count + negativeshort_profits_count) * 100
     
     # Compter le nombre de documents avec profit > 0 pour le calcul du winrate real
     positive_profits_count_real = collection.count_documents({"profit": {"$gt": 0}})
@@ -68,4 +80,4 @@ def calculate_winrate_group(data):
     
     # Insérer les deux winrates dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': {'winratestdl': winratestd, 'winratereal': winrate_value_real,'winratelongstd': winratelongstd}}, upsert=True)
+    unitaire_collection.update_one({}, {'$set': {'winratestdl': winratestd, 'winratereal': winrate_value_real,'winratelongstd': winratelongstd, 'winrateshortstd': winrateshortstd }}, upsert=True)
