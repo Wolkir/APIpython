@@ -36,7 +36,4 @@ def calculate_totaltrade(data):
     new_trade = {'totaltrade': total_trades, 'timestamp': current_timestamp}  # Les détails du nouveau trade ici
     collection.insert_one(new_trade)
 
-    return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
 
-if __name__ == "__main__":
-    app.run(debug=True)
