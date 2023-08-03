@@ -44,7 +44,7 @@ def find_max_profit_and_min_loss(data):
     all_profits_arr = np.array(all_profits)
 
     # Calculer le ratio de Sharpe
-    sharpe_ratio = np.mean(all_profits_arr) / np.std(all_profits_arr) if (np.std(all_profits_arr) > 0 else 0
+    sharpe_ratio = np.mean(all_profits_arr) / np.std(all_profits_arr) if (all_profits_arr) > 0 else 0
 
     # Insérer les valeurs dans la collection "unitaire"
     unitaire_collection = db[collection_unitaire]
