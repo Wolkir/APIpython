@@ -165,6 +165,8 @@ def setup_modificationTrade_routes(app):
                 if trade_id and value_timeSetup:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeSetup': value_timeSetup}}, upsert=True)
 
+            print(reinsertion)
+            print(collection_data)
             def fonctionDeReinsertion(reinsertion, collection_data):
                 mongo = PyMongo(current_app)
                 db = mongo.db
@@ -174,20 +176,22 @@ def setup_modificationTrade_routes(app):
                     value_porteFeuille = item.get('value_porteFeuille')
             
                     if trade_id and value_porteFeuille:
-                        data_to_move = list(db[collection_data].find({'id': trade_id}))
+                        data_to_move = list(db[collection_data].find({'_id': ObjectId(trade_id)}))
+                        print(data_to_move)
             
                         for data_item in data_to_move:
                             db[value_porteFeuille].insert_one(data_item)
             
-                        db[collection_data].delete_many({'id': trade_id})
+                        db[collection_data].delete_many({'_id': ObjectId(trade_id)})
                 return len(reinsertion)
                 
             if porteFeuille_data is not None:
                 result = fonctionDeReinsertion(reinsertion, collection_data,)
 
-            return jsonify({"message": "Trade details updated successfully."}), 200
+                return jsonify({"message": "Trade details updated successfully."}), 200
 
         except Exception as e:
+            current_app.logger.error(f"Error occurred: {e}")
             return jsonify({"error": str(e)}), 500
 
     return modificationTrade
