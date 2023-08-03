@@ -11,7 +11,7 @@ db = client['test']
 
 
 @totaltrade.route('/totaltrade', methods=['GET'])
-def calculate_totaltrade():
+def calculate_totaltrade(data):
     username = "Trader"  # Remplacez ceci par le nom d'utilisateur approprié
 
     collection_name = f"{username}_close"
