@@ -1,39 +1,39 @@
-from flask import Flask, Blueprint, jsonify
-from pymongo import MongoClient
-from datetime import timedelta, datetime
-
-app = Flask(__name__)
-totaltrade = Blueprint('totaltrade', __name__)
-
-# Connexion à la base de données MongoDB
-client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
-db = client['test']
-
 @totaltrade.route('/totaltrade', methods=['GET'])
-def calculate_totaltrade(data):
+def calculate_totaltrade():
+    username = "Trader"  # Remplacez ceci par le nom d'utilisateur approprié
 
-    username = data.get('username')
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
-    # Obtenir le dernier trade de la collection triée par ordre chronologique
-    last_trade = collection.find_one(sort=[('timestamp', -1)])
+    # Vérifiez si l'utilisateur a déjà un trade dans la collection
+    has_trades = collection.count_documents({}) > 0
 
-    if last_trade:
-        # Si un dernier trade existe, obtenir le numéro de position actuel
+    if has_trades:
+        # Si l'utilisateur a déjà des trades, récupérez le dernier trade sans mise à jour
+        last_trade = collection.find_one(sort=[('timestamp', -1)])
         total_trades = last_trade.get('totaltrade', 0)
     else:
-        # Aucun trade dans la collection, initialiser le numéro de position à 0
-        total_trades = 0
+        # Si l'utilisateur n'a pas de trade, initialisez totaltrade à 1
+        total_trades = 1
+        # Insérez le premier trade avec totaltrade à 1
+        current_timestamp = datetime.now()
+        first_trade = {
+            'totaltrade': total_trades,
+            'timestamp': current_timestamp
+            # Les autres détails du premier trade ici
+        }
+        collection.insert_one(first_trade)
 
-    # Ajouter 1 pour le nouveau trade
-    total_trades += 1
+    # Ajouter 1 pour le nouveau trade seulement si l'utilisateur a déjà des trades
+    if has_trades:
+        total_trades += 1
 
-    # Insérer le numéro de position pour le nouveau trade dans la collection
-    # Notez qu'ici, nous n'essayons pas de mettre à jour les trades précédents
+    # Insérer le nouveau trade dans la collection avec le bon totaltrade
     current_timestamp = datetime.now()
-    new_trade = {'totaltrade': total_trades, 'timestamp': current_timestamp}  # Les détails du nouveau trade ici
+    new_trade = {
+        'totaltrade': total_trades,
+        'timestamp': current_timestamp
+        # Les autres détails du nouveau trade ici
+    }
     collection.insert_one(new_trade)
-
-
