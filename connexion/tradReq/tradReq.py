@@ -24,6 +24,8 @@ from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
+from routes.calcul.averagetrade import calculate_averagetrade
+
 
 
 
@@ -269,6 +271,7 @@ def save_trade_request():
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
         calculate_totaltrade(data)
+        calculate_averagetrade(data)
    
         
              
