@@ -30,10 +30,10 @@ def setup_things_routes(app):
             argTypeTrade = request.args.get('typeTrade', None)
             argCollection = request.args.get('collection', None)
 
-            collection = None
+            collection = argCollection
 
             if argCollection == "tout":
-                data = [name for name in db.list_collection_names() if argUsername in name]
+                #data = [name for name in db.list_collection_names() if argUsername in name]
                 #collection = [name.replace("_" + argUsername, "").replace(argUsername + "_", "").replace(argUsername, "") for name in data]
                 print(collection)
 
@@ -70,5 +70,4 @@ def setup_things_routes(app):
             return jsonify({"error": str(e)}), 500
         
     return things_blueprint
-
 
