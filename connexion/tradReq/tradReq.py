@@ -168,8 +168,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            position = calculate_totaltrade(data)
-            data['totaltrade'] = position
+            #position = calculate_totaltrade(data)
+            #data['totaltrade'] = position
 
 
            
@@ -260,7 +260,7 @@ def save_trade_request():
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('position'),
-            "daytrade": data.get('daytrade_value')
+            #"daytrade": data.get('daytrade_value')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
@@ -273,7 +273,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        calculate_totaltrade(data)
+        #calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
         
