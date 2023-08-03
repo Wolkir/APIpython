@@ -28,18 +28,7 @@ def setup_things_routes(app):
 
             collection = argCollection
 
-            if argCollection == "tout":
-                #data = [name for name in db.list_collection_names() if argUsername in name]
-                #collection = [name.replace("_" + argUsername, "").replace(argUsername + "_", "").replace(argUsername, "") for name in data]
-                print(collection)
-
-            else:
-                if argUsername is not None:
-                    #collection = argUsername + "_" + argCollection
-                    print("starfoulah")
-                else:
-                    collection = argCollection
-            print(collection)
+            collection = argCollection
             query = {
                 '$and': [
                     {'username': argUsername},
@@ -66,4 +55,5 @@ def setup_things_routes(app):
             return jsonify({"error": str(e)}), 500
         
     return things_blueprint
+
 
