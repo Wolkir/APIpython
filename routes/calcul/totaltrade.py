@@ -17,20 +17,36 @@ def calculate_totaltrade(data):
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
-    # Obtenir le dernier trade de la collection triée par ordre chronologique
+    # Obtenir tous les trades de la collection triés par ordre chronologique
+    trades = collection.find().sort("timestamp", 1)
+
+    # Compter le nombre total de trades dans la collection
+    total_trades = collection.count_documents({})
+
+    # Numéro de position initialisé à 1
+    position_number = 1
+
+    # Parcourir chaque trade et lui attribuer un numéro de position
+    for trade in trades:
+        # Ajouter une nouvelle clé "totaltrade" au trade avec le numéro de position
+        trade['totaltrade'] = position_number
+
+        # Incrémenter le numéro de position pour le prochain trade
+        position_number += 1
+
+        # Mettre à jour le trade dans la collection MongoDB
+        collection.update_one({'_id': trade['_id']}, {'$set': trade})
+
+    # Si la collection est vide, il n'y a pas de trade à numéroté
+    if total_trades == 0:
+        return jsonify({'message': 'Aucun trade à numéroter.'})
+
+    # Ajouter le numéro de position pour le dernier trade ajouté à la collection
     last_trade = collection.find_one(sort=[('timestamp', -1)])
+    last_trade['totaltrade'] = total_trades
+    collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
 
-    if last_trade is None:
-        # Aucun trade dans la collection, le numéro de position sera 1
-        total_trades = 1
-    else:
-        # Récupérer la valeur de totaltrade du dernier trade et ajouter 1 pour le nouveau trade
-        total_trades = last_trade.get('totaltrade', 0) + 1
-
-        # Mettre à jour le dernier trade avec le nouveau numéro de position "totaltrade"
-        collection.update_one({'_id': last_trade['_id']}, {'$set': {'totaltrade': total_trades}})
-
-    return jsonify({'totaltrade': total_trades})
+    return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
 
 if __name__ == "__main__":
     app.run(debug=True)
