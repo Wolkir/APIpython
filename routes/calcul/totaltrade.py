@@ -28,7 +28,10 @@ def calculate_totaltrade(data):
         total_trades = last_trade.get('totaltrade', 0) + 1
 
         # Mettre à jour le dernier trade avec le nouveau numéro de position "totaltrade"
-        collection.update_one({'_id': last_trade['_id']}, {'$set': {'totaltrade': total_trades}})
+        update_result = collection.update_one({'_id': last_trade['_id']}, {'$set': {'totaltrade': total_trades}})
+
+        if update_result.modified_count != 1:
+            return jsonify({'error': 'Échec de la mise à jour du dernier trade.'}), 500
 
     return jsonify({'totaltrade': total_trades})
 
