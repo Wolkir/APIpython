@@ -27,8 +27,11 @@ def calculate_totaltrade(data):
         total_trades = last_trade.get('totaltrade', 0) + 1
 
         # Ajouter le numéro de position pour le dernier trade ajouté à la collection
-        last_trade['totaltrade'] = total_trades
-        collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
+        if 'totaltrade' not in last_trade:
+            last_trade['totaltrade'] = total_trades
+            collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
+    else:
+        total_trades = 1
 
     return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
 
