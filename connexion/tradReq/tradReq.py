@@ -273,7 +273,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        #calculate_totaltrade(data)
+        calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
         
