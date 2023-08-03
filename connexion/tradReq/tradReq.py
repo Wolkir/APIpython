@@ -25,6 +25,7 @@ from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 from routes.calcul.average.averagetrade import calculate_averagetrade
+from routes.calcul.daytrade import calculate_daytrade
 
 
 
@@ -201,6 +202,9 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
+            daytrade_value = calculate_daytrade(data)
+            data['daytrade'] = daytrade_value
+
             
             
         # Insert the data into the collection
@@ -234,9 +238,7 @@ def save_trade_request():
             "broker": data.get('broker'),
             "annonceEconomique": None,
             "psychologie": None,
-            "strategie": None,
-            "position": None,
-            "typeOrdre": None,
+            "strategie": None,   
             "limit":data.get('Limit'),
             "violeStrategie": None,
             "sortie": None,
@@ -258,6 +260,7 @@ def save_trade_request():
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('position')
+            "daytrade": data.get('daytrade_value')
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
