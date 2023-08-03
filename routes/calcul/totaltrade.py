@@ -17,21 +17,29 @@ def calculate_totaltrade(data):
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
-    # Obtenir le dernier trade de la collection triée par ordre chronologique
-    last_trade = collection.find_one(sort=[('timestamp', -1)])
-
     # Compter le nombre total de trades dans la collection
     total_trades = collection.count_documents({})
 
     if total_trades == 0:
         # Aucun trade dans la collection, le numéro de position sera 1
         total_trades = 1
+        # Ajouter le numéro de position pour le premier trade ajouté à la collection
+        first_trade = {
+            "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%z"),
+            "symbol": "AAPL",
+            "price": 150.25,
+            "quantity": 100,
+            "totaltrade": total_trades
+        }
+        collection.insert_one(first_trade)
     else:
+        # Obtenir le dernier trade de la collection triée par ordre chronologique
+        last_trade = collection.find_one(sort=[('timestamp', -1)])
+        
         # Récupérer la valeur de totaltrade du dernier trade et ajouter 1 pour le nouveau trade
         total_trades = last_trade.get('totaltrade', 0) + 1
 
-    # Ajouter le numéro de position pour le dernier trade ajouté à la collection
-    if last_trade:
+        # Ajouter le numéro de position pour le dernier trade ajouté à la collection
         last_trade['totaltrade'] = total_trades
         collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
 
