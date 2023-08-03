@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from datetime import timedelta
 
 app = Flask(__name__)
-averagegainloss = Blueprint('totaltrade', __name__)
+totaltrade = Blueprint('totaltrade', __name__)
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
