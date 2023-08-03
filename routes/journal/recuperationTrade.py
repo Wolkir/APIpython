@@ -34,12 +34,13 @@ def setup_things_routes(app):
 
             if argCollection == "tout":
                 data = [name for name in db.list_collection_names() if argUsername in name]
-                collection = [name.replace("_" + argUsername, "").replace(argUsername + "_", "").replace(argUsername, "") for name in data]
+                #collection = [name.replace("_" + argUsername, "").replace(argUsername + "_", "").replace(argUsername, "") for name in data]
                 print(collection)
 
             else:
                 if argUsername is not None:
-                    collection = argUsername + "_" + argCollection
+                    #collection = argUsername + "_" + argCollection
+                    print("starfoulah")
                 else:
                     collection = argCollection
             print(collection)
@@ -57,13 +58,17 @@ def setup_things_routes(app):
             things_collection = mongo.db[collection]
             all_things = list(things_collection.find(query))
 
+            result = []
             for thing in all_things:
                 thing = convert_to_json_serializable(thing)
+                thing['collection'] = collection
+                result.append(thing)
 
-            return jsonify(all_things), 200
+            return jsonify(result), 200
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
         
     return things_blueprint
+
 
