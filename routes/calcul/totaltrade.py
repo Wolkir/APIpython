@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 app = Flask(__name__)
 totaltrade = Blueprint('totaltrade', __name__)
