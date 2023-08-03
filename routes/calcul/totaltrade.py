@@ -1,3 +1,15 @@
+from flask import Flask, Blueprint, jsonify
+from pymongo import MongoClient
+from datetime import timedelta
+
+app = Flask(__name__)
+totaltrade = Blueprint('totaltrade', __name__)
+
+# Connexion à la base de données MongoDB
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+db = client['test']
+
+
 @totaltrade.route('/totaltrade', methods=['GET'])
 def calculate_totaltrade():
     username = "Trader"  # Remplacez ceci par le nom d'utilisateur approprié
