@@ -24,7 +24,7 @@ from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
-from routes.calcul.averagetrade import calculate_averagetrade
+from routes.calcul.average.averagetrade import calculate_averagetrade
 
 
 
