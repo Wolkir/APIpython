@@ -25,8 +25,8 @@ def calculate_totaltrade(data):
 
     # Parcourir chaque trade et lui attribuer un numéro de position
     for trade in trades:
-        # Mettre à jour le trade avec le numéro de position
-        trade['position'] = position_number
+        # Ajouter une nouvelle clé "totaltrade" au trade avec le numéro de position
+        trade['totaltrade'] = position_number
 
         # Incrémenter le numéro de position pour le prochain trade
         position_number += 1
