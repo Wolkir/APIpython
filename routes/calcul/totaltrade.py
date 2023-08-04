@@ -10,7 +10,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @totaltrade.route('/totaltrade', methods=['GET'])
-def calculate_totaltrade():
+def calculate_totaltrade(data):
 
     data = request.get_json()
     username = data.get('username')
