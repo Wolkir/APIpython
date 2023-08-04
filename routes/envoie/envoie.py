@@ -50,7 +50,7 @@ def update_envoie():
     argI = process_argument_value(request.args.get('argI', None))
     debutDate = request.args.get('argSD', None)
     finDate = request.args.get('argED', None)
-    username = request.args.get('username', None)
+    #username = request.args.get('username', None)
     argTPR = process_argument_value(request.args.get('argTPR', None))
     argSL = process_argument_value(request.args.get('argSL', None))
     argBE = process_argument_value(request.args.get('argBE', None))
@@ -110,9 +110,11 @@ def update_envoie():
         if argTJSBinaire is not None:
             query['$and'].append({'TJS': argTJSBinaire})
 
-        # username
+        # username 
+        """
         if username is not None:
             query['$and'].append({'username': username})
+        """
 
         # BuySell
         if argBuySell is not None:
