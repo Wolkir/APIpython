@@ -44,12 +44,11 @@ def setup_things_routes(app):
             all_things = list(things_collection.find(query))
 
             result = []
-            """
+            
             for thing in all_things:
                 thing = convert_to_json_serializable(thing)
                 thing['collection'] = collection
                 result.append(thing)
-            """
 
             return jsonify(result), 200
 
