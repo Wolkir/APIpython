@@ -44,7 +44,6 @@ def setup_things_routes(app):
             all_things = list(things_collection.find(query))
 
             result = []
-            
             for thing in all_things:
                 thing = convert_to_json_serializable(thing)
                 thing['collection'] = collection
@@ -56,5 +55,4 @@ def setup_things_routes(app):
             return jsonify({"error": str(e)}), 500
         
     return things_blueprint
-
 
