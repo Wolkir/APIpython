@@ -20,14 +20,10 @@ def calculate_totaltrade(data):
     # Obtenir le dernier trade de la collection triée par ordre chronologique
     last_trade = collection.find_one(sort=[('timestamp', -1)])
 
-    # Compter le nombre total de trades dans la collection
-    total_trades = collection.count_documents({})
-
-    if total_trades == 0:
-        # Aucun trade dans la collection, le numéro de position sera 1
+    # Assigner le numéro du trade en fonction de la présence du dernier trade
+    if last_trade is None:
         total_trades = 1
     else:
-        # Récupérer la valeur de totaltrade du dernier trade et ajouter 1 pour le nouveau trade
         total_trades = last_trade.get('totaltrade', 0) + 1
 
     # Ajouter le numéro de position pour le dernier trade ajouté à la collection
