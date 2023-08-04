@@ -194,13 +194,11 @@ def update_envoie():
         # Vérifier si la liste $and n'est pas vide avant d'exécuter la requête
         if len(query['$and']) > 0:
             data = list(collection.find(query))
-            data = json.loads(json.dumps(data, default=json_serial))
-            return jsonify({'data': data})
         else:
             query = {}
             data = list(collection.find(query))
-            data = json.loads(json.dumps(data, default=json_serial))
-            return jsonify({'data': data})
+        data = json.loads(json.dumps(data, default=json_serial))
+        return jsonify({'data': data})
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": "Erreur lors de l'enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
