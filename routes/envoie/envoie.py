@@ -24,11 +24,17 @@ envoie = Blueprint('envoie', __name__)
 app = Flask(__name__)
 
 def json_serial(obj):
-    if isinstance(obj, ObjectId):
-        return str(obj)
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    raise TypeError("Type not serializable")
+    try:
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        raise TypeError("Type not serializable")
+    except Exception as e:
+        print("Error occurred during serialization:")
+        print("Object:", obj)
+        print("Error:", str(e))
+        raise TypeError(f"Type not serializable: {obj}, Error: {str(e)}")
 
 def close_mongo_client():
     try:
