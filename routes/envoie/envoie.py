@@ -70,7 +70,7 @@ def update_envoie():
     argTimeEntree = process_argument_value(request.args.get('argTimeEntree', None))
     argTimeSetup = process_argument_value(request.args.get('argTimeSetup', None))
     argTJS = process_argument_value(request.args.get('argTJS', None))
-    argCollection = process_argument_value(request.args.get('argCollection', None))
+    argCollection = request.args.get('argCollection', None)
     
     db = client['test']
     collection = db[argCollection]
