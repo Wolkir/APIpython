@@ -66,7 +66,6 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_psy:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'psychologie': value_psy}}, upsert=True)
-                    
                     existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
                     
                     if existing_line:
@@ -84,6 +83,13 @@ def setup_modificationTrade_routes(app):
                     annonce_economique = True if valeur_ann_eco == 'oui' else False
 
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'annonceEconomique': annonce_economique}})
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['valeur_ann_eco'] = valeur_ann_eco
+                    else:
+                        line = {'trade_id': trade_id, 'valeur_ann_eco': valeur_ann_eco}
+                        reinsertion.append(line)
             # Mise à jour du champ position
             for position in position_data:
                 trade_id = position.get('id')
@@ -91,6 +97,13 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and valeur_position:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'position': valeur_position}})
+
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['valeur_position'] = valeur_position
+                    else:
+                        line = {'trade_id': trade_id, 'valeur_position': valeur_position}
             
             # Mise à jour du champ type ordre
             for typeOrdre in typeOrdre_data:
@@ -100,6 +113,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and valeur_typeOrdre:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'typeOrdre': valeur_typeOrdre}})
 
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['valeur_typeOrdre'] = valeur_typeOrdre
+                    else:
+                        line = {'trade_id': trade_id, 'valeur_typeOrdre': valeur_typeOrdre}
+
             # Mise à jour du champ violeStrategie
             for viole in violeStrategie_data:
                 trade_id = viole.get('id')
@@ -108,6 +128,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and valeur_violeStrategie in ['oui', 'non']:
                     violeStrategie = True if valeur_violeStrategie == 'oui' else False
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'violeStrategie': violeStrategie}})
+
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['valeur_violeStrategie'] = valeur_violeStrategie
+                    else:
+                        line = {'trade_id': trade_id, 'valeur_violeStrategie': valeur_violeStrategie}
             
             # Mise à jour du champ sortie
             for sortie in sortie_data:
@@ -117,6 +144,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and valeur_sortie:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'sortie': valeur_sortie}})
 
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['valeur_sortie'] = valeur_sortie
+                    else:
+                        line = {'trade_id': trade_id, 'valeur_sortie': valeur_sortie}
+
             # Mise à jour ou création des champs indicateur1
             for indicateur1_item in indicateur1_data:
                 trade_id = indicateur1_item.get('id')
@@ -124,6 +158,13 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_indicateur1:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur1': value_indicateur1}}, upsert=True)
+
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_indicateur1'] = value_indicateur1
+                    else:
+                        line = {'trade_id': trade_id, 'value_indicateur1': value_indicateur1}
 
             # Mise à jour ou création des champs indicateur2
             for indicateur2_item in indicateur2_data:
@@ -133,6 +174,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and value_indicateur2:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur2': value_indicateur2}}, upsert=True)
 
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_indicateur2'] = value_indicateur2
+                    else:
+                        line = {'trade_id': trade_id, 'value_indicateur2': value_indicateur2}
+
             # Mise à jour ou création des champs indicateur3
             for indicateur3_item in indicateur3_data:
                 trade_id = indicateur3_item.get('id')
@@ -140,6 +188,13 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_indicateur3:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'indicateur3': value_indicateur3}}, upsert=True)
+
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_indicateur3'] = value_indicateur3
+                    else:
+                        line = {'trade_id': trade_id, 'value_indicateur3': value_indicateur3}
 
             # Mise à jour ou création des champs strategie
             for strategie_item in strategie_data:
@@ -149,6 +204,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and value_strategie:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'strategie': value_strategie}}, upsert=True)
 
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_strategie'] = value_strategie
+                    else:
+                        line = {'trade_id': trade_id, 'value_strategie': value_strategie}
+
             # Mise à jour ou création des champs timeEntree
             for timeEntree_item in timeEntree_data:
                 trade_id = timeEntree_item.get('id')
@@ -157,6 +219,13 @@ def setup_modificationTrade_routes(app):
                 if trade_id and value_timeEntree:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeEntree': value_timeEntree}}, upsert=True)
 
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_timeEntree'] = value_timeEntree
+                    else:
+                        line = {'trade_id': trade_id, 'value_timeEntree': value_timeEntree}
+
             # Mise à jour ou création des champs timeSetup
             for timeSetup_item in timeSetup_data:
                 trade_id = timeSetup_item.get('id')
@@ -164,6 +233,13 @@ def setup_modificationTrade_routes(app):
 
                 if trade_id and value_timeSetup:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'timeSetup': value_timeSetup}}, upsert=True)
+
+                    existing_line = next((line for line in reinsertion if line['trade_id'] == trade_id), None)
+                    
+                    if existing_line:
+                        existing_line['value_timeSetup'] = value_timeSetup
+                    else:
+                        line = {'trade_id': trade_id, 'value_timeSetup': value_timeSetup}
 
             print(reinsertion)
             print(collection_data)
