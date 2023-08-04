@@ -25,7 +25,7 @@ from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 from routes.calcul.average.averagetrade import calculate_averagetrade
-from routes.calcul.daytrade import calculate_daytrade
+#from routes.calcul.daytrade import calculate_daytrade
 
 
 
@@ -202,8 +202,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            daytrade_value = calculate_daytrade(data)
-            data['daytrade'] = daytrade_value
+            #daytrade_value = calculate_daytrade(data)
+            #data['daytrade'] = daytrade_value
 
             
             
@@ -259,7 +259,7 @@ def save_trade_request():
             "sortieManuelle": None,
             "journeeDeTilt": None,
             "TJS": None,
-            "totaltrade": data.get('position'),
+            #"totaltrade": data.get('position'),
             #"daytrade": data.get('daytrade_value')
         }
         #combined_data = [trade_request, data]
@@ -273,7 +273,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        #calculate_totaltrade(data)
+        calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
         
