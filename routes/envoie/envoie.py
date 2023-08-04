@@ -1,5 +1,4 @@
-from flask import Blueprint, jsonify, request, current_app
-from flask import Flask
+from flask import Blueprint, jsonify, request, current_app, Flask
 import logging
 import atexit
 import json
@@ -40,7 +39,7 @@ def close_mongo_client():
 atexit.register(close_mongo_client)
 
 def process_argument_value(arg):
-    if arg == "" or arg == None:
+    if arg == "" or arg is None:
         return None
     return arg
 
@@ -50,7 +49,7 @@ def update_envoie():
     argI = process_argument_value(request.args.get('argI', None))
     debutDate = request.args.get('argSD', None)
     finDate = request.args.get('argED', None)
-    #username = request.args.get('username', None)
+    # username = request.args.get('username', None)
     argTPR = process_argument_value(request.args.get('argTPR', None))
     argSL = process_argument_value(request.args.get('argSL', None))
     argBE = process_argument_value(request.args.get('argBE', None))
@@ -71,12 +70,12 @@ def update_envoie():
     argTimeSetup = process_argument_value(request.args.get('argTimeSetup', None))
     argTJS = process_argument_value(request.args.get('argTJS', None))
     argCollection = request.args.get('argCollection', None)
-    
+
     db = client['test']
     collection = db[argCollection]
 
     start_date, end_date = process_argument_date(argD, debutDate, finDate)
-    
+
     argTPRbinaire = None
     argSLbinaire = None
     argBEbinaire = None
@@ -109,12 +108,6 @@ def update_envoie():
         # TJS
         if argTJSBinaire is not None:
             query['$and'].append({'TJS': argTJSBinaire})
-
-        # username 
-        """
-        if username is not None:
-            query['$and'].append({'username': username})
-        """
 
         # BuySell
         if argBuySell is not None:
@@ -197,11 +190,17 @@ def update_envoie():
             query['$and'].append({'typeOrdre': argTypOrd})
 
         print(query)
-        
-        data = list(collection.find(query))
-        data = json.loads(json.dumps(data, default=json_serial))
 
-        return jsonify({'data': data})
+        # Vérifier si la liste $and n'est pas vide avant d'exécuter la requête
+        if len(query['$and']) > 0:
+            data = list(collection.find(query))
+            data = json.loads(json.dumps(data, default=json_serial))
+            return jsonify({'data': data})
+        else:
+            query = {}
+            data = list(collection.find(query))
+            data = json.loads(json.dumps(data, default=json_serial))
+            return jsonify({'data': data})
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
-        return jsonify({"error": "Erreur lors de la enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
+        return jsonify({"error": "Erreur lors de l'enregistrement des stratégies pour l'utilisateur donné", "details": str(e)}), 500
