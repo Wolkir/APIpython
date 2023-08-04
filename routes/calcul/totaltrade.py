@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 from datetime import timedelta
 
@@ -10,11 +10,11 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @totaltrade.route('/totaltrade', methods=['GET'])
-def calculate_totaltrade(data):
+def calculate_totaltrade():
 
+    data = request.get_json()
     username = data.get('username')
     collection_name = f"{username}_close"
-    collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
 
     # Obtenir le dernier trade de la collection triée par ordre chronologique
@@ -26,12 +26,8 @@ def calculate_totaltrade(data):
     else:
         total_trades = last_trade.get('totaltrade', 0) + 1
 
-    # Ajouter le numéro de position pour le dernier trade ajouté à la collection
-    if last_trade:
-        last_trade['totaltrade'] = total_trades
-        collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
-
-    return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
+    # Return the total trades
+    return jsonify({'total_trades': total_trades})
 
 if __name__ == "__main__":
     app.run(debug=True)
