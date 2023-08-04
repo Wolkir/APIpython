@@ -29,6 +29,8 @@ def json_serial(obj):
             return str(obj)
         if isinstance(obj, datetime):
             return obj.isoformat()
+        if isinstance(obj, bytes):
+            return obj.decode('utf-8')  # Convertir les bytes en chaînes
         raise TypeError("Type not serializable")
     except Exception as e:
         print("Error occurred during serialization:")
