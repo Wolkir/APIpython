@@ -10,15 +10,15 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @totaltrade.route('/totaltrade', methods=['POST'])
-def calculate_totaltrade(data):
+def calculate_totaltrade():
     data = request.get_json()
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
 
-    last_trade = collection.find().sort('date', pymongo.DESCENDING).limit(1)
+    last_trade = collection.find().sort('date', pymongo.DESCENDING).limit(1).to_list(length=1)
 
-    if last_trade.count() == 0:  # if the collection is empty
+    if len(last_trade) == 0:  # if the collection is empty
         totaltrade = 1
     else:
         totaltrade = last_trade[0]['totaltrade'] + 1
@@ -29,4 +29,3 @@ def calculate_totaltrade(data):
     collection.insert_one(new_trade)  # insert the new trade into the collection
 
     return str(totaltrade), 201  # return the totaltrade value as a string
-
