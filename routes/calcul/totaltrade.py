@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, request
 from pymongo import MongoClient
 from datetime import timedelta
 
@@ -9,26 +9,24 @@ totaltrade = Blueprint('totaltrade', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@totaltrade.route('/totaltrade', methods=['GET'])
+@totaltrade.route('/totaltrade', methods=['POST'])
 def calculate_totaltrade(data):
-    try:
-        username = data.get('username')
+    data = request.get_json()
+    username = data.get('username')
+    collection_name = f"{username}_close"
+    collection = db[collection_name]
 
-        collection_close = f"{username}_close"
+    last_trade = collection.find().sort('date', pymongo.DESCENDING).limit(1)
 
-        # Rechercher le dernier trade (le trade avec le totaltrade le plus élevé)
-        last_trade = db[collection_close].find_one(sort=[('totaltrade', -1)])
+    if last_trade.count() == 0:  # if the collection is empty
+        totaltrade = 1
+    else:
+        totaltrade = last_trade[0]['totaltrade'] + 1
 
-        # Si aucun trade n'a été fait jusqu'à présent, alors le totaltrade sera 1 pour le nouveau trade
-        if not last_trade:
-            totaltrade = 1
-        else:
-            # Sinon, le totaltrade du nouveau trade sera le totaltrade du dernier trade + 1
-            totaltrade = last_trade['totaltrade'] + 1
+    new_trade = data.get('trade')  # get the new trade from the request data
+    new_trade['totaltrade'] = totaltrade  # set the totaltrade field for the new trade
 
-        print("totaltrade:", totaltrade)
-        return str(totaltrade)
+    collection.insert_one(new_trade)  # insert the new trade into the collection
 
-    except Exception as e:
-        print("Error:", e)
-        return jsonify({'error': str(e)}), 500
+    return str(totaltrade), 201  # return the totaltrade value as a string
+
