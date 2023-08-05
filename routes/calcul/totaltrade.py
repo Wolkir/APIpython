@@ -36,4 +36,3 @@ def calculate_totaltrade(data):
     collection.insert_one(new_trade)
 
     return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
-
