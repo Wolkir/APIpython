@@ -1,4 +1,3 @@
-
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 from datetime import timedelta
@@ -31,9 +30,12 @@ def calculate_totaltrade(data):
         # Récupérer la valeur de totaltrade du dernier trade et ajouter 1 pour le nouveau trade
         total_trades = last_trade.get('totaltrade', 0) + 1
 
-    # Ajouter le numéro de position pour le nouveau trade ajouté à la collection
-    # Au lieu de mettre à jour le dernier trade, vous devriez probablement ajouter un nouveau trade ici.
-    new_trade = {"totaltrade": total_trades, "other_fields": "other_values"} # remplacez "other_fields" et "other_values" par les champs réels du nouveau trade
-    collection.insert_one(new_trade)
+    # Ajouter le numéro de position pour le dernier trade ajouté à la collection
+    if last_trade:
+        last_trade['totaltrade'] = total_trades
+        collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
 
     return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
+
+if __name__ == "__main__":
+    app.run(debug=True)
