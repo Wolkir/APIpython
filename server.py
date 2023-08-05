@@ -59,7 +59,7 @@ from routes.calcul.session import session
 from routes.calcul.SLR import slr
 from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import tpr
-#from routes.calcul.tradecount import tradecount
+from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
 #from routes.calcul.conversion_map import conversion_map
@@ -71,7 +71,7 @@ from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
 from routes.calcul.winrrtflat import winrrtflat
-from routes.calcul.tradercount import tradercount
+#from routes.calcul.tradecount import tradecount
 from routes.calcul.BE import BE
 from routes.calcul.limit import limit
 from routes.calcul.bestrr import bestrr
@@ -123,7 +123,7 @@ app.register_blueprint(session)
 app.register_blueprint(slr)
 app.register_blueprint(Tilts)
 app.register_blueprint(tpr)
-#app.register_blueprint(tradecount)
+app.register_blueprint(tradecount)
 app.register_blueprint(weekday)
 app.register_blueprint(envoie)
 app.register_blueprint(max_successive_counts)
