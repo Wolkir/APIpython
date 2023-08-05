@@ -26,6 +26,7 @@ from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 from routes.calcul.average.averagetrade import calculate_averagetrade
 #from routes.calcul.daytrade import calculate_daytrade
+from routes.calcul.sortiemanu import calculate_sortiemanu
 
 
 
@@ -171,6 +172,9 @@ def save_trade_request():
             total_trade = calculate_totaltrade(data)
             data['totaltrade'] = total_trade
 
+            Sortiemanu = calculate_sortiemanu(data)
+            data['Sortiemanu'] = Sortiemanu
+
 
            
 
@@ -256,7 +260,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle": None,
+            "sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
