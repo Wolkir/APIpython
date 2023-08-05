@@ -10,33 +10,25 @@ db = client['test']
 daily_trade_counts = {}
 
 @tradercount.route('/tradercount', methods=['GET'])
+@tradercount.route('/tradercount', methods=['GET'])
 def calculate_tradercount(data):
     try:
         username = data.get('username')
 
         collection_close = f"{username}_close"
-        # Collection pour stocker les trades ouverts
-        collection_open = f"{username}_open"
 
-        # Recherche de la dernière position fermée pour la date actuelle
-        current_date = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')
-        print("Current Date:", current_date)
+        # Rechercher le dernier trade (le trade avec le tradecount le plus élevé)
+        last_trade = db[collection_close].find_one(sort=[('tradecount', -1)])
 
-        last_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', -1)])
-        print("Last Trade:", last_trade)
-
-        # Si aucun trade n'a été fermé aujourd'hui, alors le tradecount sera 1 pour la position ouverte
+        # Si aucun trade n'a été fait jusqu'à présent, alors le tradecount sera 1 pour le nouveau trade
         if not last_trade:
             tradecount = 1
         else:
+            # Sinon, le tradecount du nouveau trade sera le tradecount du dernier trade + 1
             tradecount = last_trade['tradecount'] + 1
 
-        # Mettre à jour le tradercount de la journée en cours dans la variable globale
-        daily_trade_counts[current_date] = tradecount
-
-        # Renvoyer la valeur du tradecount
         print("TradeCount:", tradecount)
-        return str(tradecount)  # Renvoyer le tradecount en tant que chaîne de caractères
+        return str(tradecount)
 
     except Exception as e:
         print("Error:", e)
