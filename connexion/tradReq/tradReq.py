@@ -259,7 +259,7 @@ def save_trade_request():
             "sortieManuelle": None,
             "journeeDeTilt": None,
             "TJS": None,
-            #"totaltrade": data.get('position'),
+            "totaltrade": data.get('position'),
             #"daytrade": data.get('daytrade_value')
         }
         #combined_data = [trade_request, data]
