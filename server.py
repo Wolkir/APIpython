@@ -77,8 +77,9 @@ from routes.calcul.limit import limit
 from routes.calcul.bestrr import bestrr
 from routes.calcul.average.averagetrade import averagetrade
 from routes.calcul.daytrade import daytrade
+from routes.calcul.totaltrade import totaltrade
 
-
+#code 5 aout 23h52
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
@@ -132,11 +133,12 @@ app.register_blueprint(profitfactorgroup)
 app.register_blueprint(winrategroup)
 app.register_blueprint(averagegainloss)
 app.register_blueprint(winrrtflat)
-app.register_blueprint(tradercount)
+#app.register_blueprint(tradercount)
 app.register_blueprint(limit)
 app.register_blueprint(bestrr)
 app.register_blueprint(averagetrade)
 app.register_blueprint(daytrade)
+app.register_blueprint(totaltrade)
 
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
