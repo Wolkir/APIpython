@@ -76,7 +76,7 @@ from routes.calcul.BE import BE
 from routes.calcul.limit import limit
 from routes.calcul.bestrr import bestrr
 #from routes.calcul.average.averagetrade import averagetrade
-from routes.calcul.daytrade import daytrade
+#from routes.calcul.daytrade import daytrade
 from routes.calcul.totaltrade import totaltrade
 
 #code 5 aout 23h52
@@ -137,7 +137,7 @@ app.register_blueprint(winrrtflat)
 app.register_blueprint(limit)
 app.register_blueprint(bestrr)
 #app.register_blueprint(averagetrade)
-app.register_blueprint(daytrade)
+#app.register_blueprint(daytrade)
 app.register_blueprint(totaltrade)
 
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
