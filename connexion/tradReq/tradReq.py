@@ -298,4 +298,3 @@ app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run()
-    app.run()
