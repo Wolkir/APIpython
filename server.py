@@ -96,12 +96,12 @@ from routes.calcul.bestrr import bestrr
 from routes.envoie.envoie import envoie
 
 # image
-from routes.journal.enregistrementImage import enregistrerImage
-from routes.journal.recuperationImage import recuperationImage
+#from routes.journal.enregistrementImage import enregistrerImage
+#from routes.journal.recuperationImage import recuperationImage
 
 #journal
-from routes.journal.modificationTrade import setup_modificationTrade_routes
-from routes.journal.recuperationTrade import setup_things_routes
+#from routes.journal.modificationTrade import setup_modificationTrade_routes
+#from routes.journal.recuperationTrade import setup_things_routes
 
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
