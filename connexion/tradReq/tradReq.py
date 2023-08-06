@@ -268,8 +268,7 @@ def save_trade_request():
             "TJS": None,
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
-            "position": None,
-            "typeOrdre": None
+            
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
@@ -312,5 +311,4 @@ app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 
 if __name__ == '__main__':
-    app.run()
     app.run()
