@@ -12,7 +12,7 @@ from routes.calcul.RRT import calculate_rrt
 from routes.calcul.Equity import calculate_equity
 from routes.calcul.weekday import add_weekday
 from routes.calcul.BE import find_BE
-from routes.calcul.limit import find_limit
+#from routes.calcul.limit import find_limit
 
 
 #code groupé
@@ -151,20 +151,20 @@ def save_trade_request():
             duration = calculate_time_duration(data)
             data['duration'] = duration['duration']
             
-            rr = calculate_rr(data)
-            data['RR'] = rr
+            #rr = calculate_rr(data)
+            #data['RR'] = rr
             
-            rrt = calculate_rrt(data)
-            data['RRT'] = rrt
+            #rrt = calculate_rrt(data)
+            #data['RRT'] = rrt
             
-            equity = calculate_equity(data)
-            data['Equity'] = equity
+            #equity = calculate_equity(data)
+            #data['Equity'] = equity
             
-            weekday_str = add_weekday(data)
-            data['Day'] = weekday_str
+            #weekday_str = add_weekday(data)
+            #data['Day'] = weekday_str
             
-            resultBE = find_BE(data)  
-            data['BE'] = resultBE
+            #resultBE = find_BE(data)  
+            #data['BE'] = resultBE
 
             #condi = find_limit(data)
             #data['Limit'] = condi
