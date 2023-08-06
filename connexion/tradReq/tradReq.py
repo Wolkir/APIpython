@@ -151,8 +151,8 @@ def save_trade_request():
             duration = calculate_time_duration(data)
             data['duration'] = duration['duration']
             
-            #rr = calculate_rr(data)
-            #data['RR'] = rr
+            rr = calculate_rr(data)
+            data['RR'] = rr
             
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
@@ -168,6 +168,9 @@ def save_trade_request():
 
             condi = find_limit(data)
             data['Limit'] = condi
+
+            position = calculate_totaltrade(data)
+            data['totaltrade'] = position
 
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
@@ -263,8 +266,10 @@ def save_trade_request():
             #"sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
-            #"totaltrade": data.get('total_trade'),
-            #"daytrade": data.get('daytrade_value')
+            "totaltrade": data.get('total_trade'),
+            #"daytrade": data.get('daytrade_value'),
+            "position": None,
+            "typeOrdre": None
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
