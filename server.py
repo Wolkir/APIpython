@@ -161,7 +161,7 @@ app.register_blueprint(totaltrade)
 #app.register_blueprint(setup_user_routes(app))
 
 # recuperation trade de mt5
-app.register_blueprint(trade_blueprint)
+#app.register_blueprint(trade_blueprint)
 
 # strategie
 #app.register_blueprint(recuperationStrategie)
@@ -169,7 +169,7 @@ app.register_blueprint(trade_blueprint)
 #app.register_blueprint(suppressionStrategie)
 
 # porteFeuille
-"app.register_blueprint(recuperationPorteFeuille)
+#app.register_blueprint(recuperationPorteFeuille)
 #app.register_blueprint(createPorteFeuille)
 #app.register_blueprint(suppressionPorteFeuille)
 
