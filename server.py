@@ -111,7 +111,7 @@ from routes.journal.recuperationTrade import setup_things_routes
 
 
 app.register_blueprint(tpr)
-app.register_blueprint(assign_order)
+#app.register_blueprint(assign_order)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
 app.register_blueprint(RRT)
