@@ -37,7 +37,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 #from connexion.strategie.suppressionStrategie import suppressionStrategie
 
 # recuperation trade de mt5
-#from connexion.tradReq.tradReq import trade_blueprint
+from connexion.tradReq.tradReq import trade_blueprint
 
 # user
 #from connexion.user.getUser import setup_user_routes
