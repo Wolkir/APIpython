@@ -166,8 +166,8 @@ def save_trade_request():
             resultBE = find_BE(data)  
             data['BE'] = resultBE
 
-            condi = find_limit(data)
-            data['Limit'] = condi
+            #condi = find_limit(data)
+            #data['Limit'] = condi
 
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
@@ -260,10 +260,10 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanu'),
+            #"sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
-            "totaltrade": data.get('total_trade'),
+            #"totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value')
         }
         #combined_data = [trade_request, data]
