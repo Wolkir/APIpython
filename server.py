@@ -22,19 +22,19 @@ app.debug = False
 CORS(app, resources={r"*": {"origins": "*"}})
 
 # indicateur
-#from connexion.indicateur.createIndicateur import createIndicateur
-#from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
-#from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
+from connexion.indicateur.createIndicateur import createIndicateur
+from connexion.indicateur.recuperationIndicateur import recuperationIndicateur
+from connexion.indicateur.suppressionIndicateur import suppressionIndicateur
 
 # porteFeuille
-#from connexion.portefeuille.createPortefeuille import createPorteFeuille
-#from connexion.portefeuille.suppressionPortefeuille import suppressionPorteFeuille
-#from connexion.portefeuille.recuperationPortefeuille import recuperationPorteFeuille
+from connexion.portefeuille.createPortefeuille import createPorteFeuille
+from connexion.portefeuille.suppressionPortefeuille import suppressionPorteFeuille
+from connexion.portefeuille.recuperationPortefeuille import recuperationPorteFeuille
 
 # strategie
-#from connexion.strategie.createStrategie import createStrategie
-#from connexion.strategie.recuperationStrategie import recuperationStrategie
-#from connexion.strategie.suppressionStrategie import suppressionStrategie
+from connexion.strategie.createStrategie import createStrategie
+from connexion.strategie.recuperationStrategie import recuperationStrategie
+from connexion.strategie.suppressionStrategie import suppressionStrategie
 
 # recuperation trade de mt5
 from connexion.tradReq.tradReq import trade_blueprint
@@ -164,30 +164,30 @@ app.register_blueprint(setup_user_routes(app))
 app.register_blueprint(trade_blueprint)
 
 # strategie
-#app.register_blueprint(recuperationStrategie)
-#app.register_blueprint(createStrategie)
-#app.register_blueprint(suppressionStrategie)
+app.register_blueprint(recuperationStrategie)
+app.register_blueprint(createStrategie)
+app.register_blueprint(suppressionStrategie)
 
 # porteFeuille
-#app.register_blueprint(recuperationPorteFeuille)
-#app.register_blueprint(createPorteFeuille)
-#app.register_blueprint(suppressionPorteFeuille)
+app.register_blueprint(recuperationPorteFeuille)
+app.register_blueprint(createPorteFeuille)
+app.register_blueprint(suppressionPorteFeuille)
 
 # indicateur
-#app.register_blueprint(recuperationIndicateur)
-#app.register_blueprint(createIndicateur)
-#app.register_blueprint(suppressionIndicateur)
+app.register_blueprint(recuperationIndicateur)
+app.register_blueprint(createIndicateur)
+app.register_blueprint(suppressionIndicateur)
 
 # envoie
-#app.register_blueprint(envoie)
+app.register_blueprint(envoie)
 
 # journal
-#app.register_blueprint(setup_things_routes(app))
-#app.register_blueprint(setup_modificationTrade_routes(app))
+app.register_blueprint(setup_things_routes(app))
+app.register_blueprint(setup_modificationTrade_routes(app))
 
 # image
-#app.register_blueprint(enregistrerImage)
-#app.register_blueprint(recuperationImage)
+app.register_blueprint(enregistrerImage)
+app.register_blueprint(recuperationImage)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
