@@ -169,8 +169,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            position = calculate_totaltrade(data)
-            data['totaltrade'] = position
+            #position = calculate_totaltrade(data)
+            #data['totaltrade'] = position
 
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
@@ -268,6 +268,8 @@ def save_trade_request():
             "TJS": None,
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
+            "position": None,
+            "typeOrdre": None
             
         }
         #combined_data = [trade_request, data]
