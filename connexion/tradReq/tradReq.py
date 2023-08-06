@@ -23,7 +23,7 @@ from routes.calcul.profit.profitfactorgroup import calculate_profit_factor_group
 from routes.calcul.winrategroup import calculate_winrate_group
 from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
-#from routes.calcul.totaltrade import calculate_totaltrade
+from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
 #from routes.calcul.daytrade import calculate_daytrade
 #from routes.calcul.sortiemanu import calculate_sortiemanu
@@ -154,20 +154,20 @@ def save_trade_request():
             #rr = calculate_rr(data)
             #data['RR'] = rr
             
-            #rrt = calculate_rrt(data)
-            #data['RRT'] = rrt
+            rrt = calculate_rrt(data)
+            data['RRT'] = rrt
             
-            #equity = calculate_equity(data)
-            #data['Equity'] = equity
+            equity = calculate_equity(data)
+            data['Equity'] = equity
             
-            #weekday_str = add_weekday(data)
-            #data['Day'] = weekday_str
+            weekday_str = add_weekday(data)
+            data['Day'] = weekday_str
             
-            #resultBE = find_BE(data)  
-            #data['BE'] = resultBE
+            resultBE = find_BE(data)  
+            data['BE'] = resultBE
 
-            #condi = find_limit(data)
-            #data['Limit'] = condi
+            condi = find_limit(data)
+            data['Limit'] = condi
 
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
@@ -277,7 +277,7 @@ def save_trade_request():
         calculate_winrate_group(data)
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
-        #calculate_totaltrade(data)
+        calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
         
