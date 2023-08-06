@@ -45,7 +45,7 @@ from connexion.user.login import setup_login_routes
 from connexion.user.signup import setup_signup_route
 
 # calcul
-#from routes.calcul.assign_order import assign_order
+from routes.calcul.assign_order import assign_order
 
 #from routes.calcul.BE_RR.RR import RR
 #from routes.calcul.BE_RR.BE import BE
@@ -71,15 +71,12 @@ from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
 from routes.calcul.winrrtflat import winrrtflat
-#from routes.calcul.tradecount import tradecount
+from routes.calcul.tradercount import tradercount
 from routes.calcul.BE import BE
 from routes.calcul.limit import limit
 from routes.calcul.bestrr import bestrr
-#from routes.calcul.average.averagetrade import averagetrade
-#from routes.calcul.daytrade import daytrade
-from routes.calcul.totaltrade import totaltrade
 
-#code 5 aout 23h52
+
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
@@ -111,7 +108,7 @@ from routes.journal.recuperationTrade import setup_things_routes
 
 
 app.register_blueprint(tpr)
-#app.register_blueprint(assign_order)
+app.register_blueprint(assign_order)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
 app.register_blueprint(RRT)
@@ -124,7 +121,7 @@ app.register_blueprint(session)
 app.register_blueprint(slr)
 app.register_blueprint(Tilts)
 app.register_blueprint(tpr)
-
+#app.register_blueprint(tradecount)
 app.register_blueprint(weekday)
 app.register_blueprint(envoie)
 app.register_blueprint(max_successive_counts)
@@ -133,13 +130,9 @@ app.register_blueprint(profitfactorgroup)
 app.register_blueprint(winrategroup)
 app.register_blueprint(averagegainloss)
 app.register_blueprint(winrrtflat)
-#app.register_blueprint(tradercount)
+app.register_blueprint(tradercount)
 app.register_blueprint(limit)
 app.register_blueprint(bestrr)
-#app.register_blueprint(averagetrade)
-#app.register_blueprint(daytrade)
-app.register_blueprint(totaltrade)
-
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
 #app.register_blueprint(minloss) // remplacé par le code groupé maxprofit_minloss
