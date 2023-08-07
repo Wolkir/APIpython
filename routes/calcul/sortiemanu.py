@@ -1,4 +1,4 @@
-efrom flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -29,11 +29,6 @@ def calculate_sortiemanu(data):
         Sortiemanuelle = 'False'
     
     # Return the result
-    return jsonify({"Sortiemanu": Sortiemanu})
-
-app.register_blueprint(sortiemanu)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return Sortiemanuelle
 
        
