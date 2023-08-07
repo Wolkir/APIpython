@@ -12,7 +12,7 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @sortiemanu.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(entry):
-    data = request.json
+
 
     username = entry.get('username')
     collection_name = f"{username}_close"
@@ -20,9 +20,9 @@ def calculate_sortiemanu(entry):
     
     closurePosition = entry.get('closurePosition')
     TPR = entry.get('TPR')
-    SLR = entry.get('TPR')
+    SLR = entry.get('SLR')
 
-    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False:
+    if closurePosition == 'Close' and TPR == False and SLR == False:
         Smanu = True
     else:
         Smanu = False
