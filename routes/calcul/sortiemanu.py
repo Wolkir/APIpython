@@ -13,7 +13,7 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @sortiemanu.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
-    data = request.get_json()
+
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
