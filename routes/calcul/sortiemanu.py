@@ -24,11 +24,11 @@ def calculate_sortiemanu(data):
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
     if closurePosition == 'Close' and TPR == 'False' and SLR == 'False':
-        Sortiemanuelle = 'True'
+        Smanu = 'True'
     else:
-        Sortiemanuelle = 'False'
+        Smanu = 'False'
     
     # Return the result
-    return Sortiemanuelle
+    return Smanu
 
        
