@@ -169,8 +169,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            Sortiemanuelle = calculate_sortiemanu(data)
-            data['Sortiemanu'] = Sortiemanuelle
+            Smanu_value = calculate_sortiemanu(data)
+            data['Sortiemanu'] = Smanu_value
 
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
@@ -265,7 +265,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanuelle'),
+            "sortieManuelle":data.get('Smanu_value'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
