@@ -23,7 +23,6 @@ def calculate_tradercount(data):
         print("Current Date:", current_date)
 
         last_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', -1)])
-        print("Last Trade:", last_trade)
 
         # Si aucun trade n'a été fermé aujourd'hui, alors le tradecount sera 1 pour la position ouverte
         if not last_trade:
@@ -33,15 +32,15 @@ def calculate_tradercount(data):
 
         # Mettre à jour le tradercount de la journée en cours dans la variable globale
         daily_trade_counts[current_date] = tradecount
-
-        # Renvoyer la valeur du tradecount
         print("TradeCount:", tradecount)
-        first_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', 1)])
+        
+        # Mise à jour du tradecount du tout premier trade de la collection à 1
+        first_trade = db[collection_close].find_one(sort=[('tradecount', 1)])
         if first_trade:
             db[collection_close].update_one({'_id': first_trade['_id']}, {'$set': {'tradecount': 1}})
-            print("First trade's TradeCount has been reset to 1.")
+            print("Collection's first trade's TradeCount has been reset to 1.")
 
-        return str(tradecount)  # Renvoyer le tradecount en tant que chaîne de caractères
+        return str(tradecount)
 
     except Exception as e:
         print("Error:", e)
