@@ -36,6 +36,11 @@ def calculate_tradercount(data):
 
         # Renvoyer la valeur du tradecount
         print("TradeCount:", tradecount)
+        first_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', 1)])
+        if first_trade:
+            db[collection_close].update_one({'_id': first_trade['_id']}, {'$set': {'tradecount': 1}})
+            print("First trade's TradeCount has been reset to 1.")
+
         return str(tradecount)  # Renvoyer le tradecount en tant que chaîne de caractères
 
     except Exception as e:
