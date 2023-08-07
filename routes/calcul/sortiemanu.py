@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+efrom flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -24,9 +24,9 @@ def calculate_sortiemanu(data):
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
     if closurePosition == 'Close' and TPR == 'False' and SLR == 'False':
-        Sortiemanu = 'True'
+        Sortiemanuelle = 'True'
     else:
-        Sortiemanu = 'False'
+        Sortiemanuelle = 'False'
     
     # Return the result
     return jsonify({"Sortiemanu": Sortiemanu})
