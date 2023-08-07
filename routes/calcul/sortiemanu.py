@@ -19,5 +19,6 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
     
     closurePosition = data.get('closurePosition')
+    orderType = data.get('orderType')
 
 
