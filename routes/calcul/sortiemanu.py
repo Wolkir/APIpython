@@ -22,12 +22,14 @@ def calculate_sortiemanu(data):
     TPR = data.get('TPR')
     SLR = data.get('SLR')
 
-    if closurePosition == 'Close' and TPR == False and SLR == False:
-        Smanu = True
+    if closurePosition == 'Close' and TPR == false and SLR == false:
+        Smanu = true
     else:
-        Smanu = False
+        Smanu = false
 
     return jsonify({'Smanu': Smanu})
+
+
 
 
 
