@@ -19,17 +19,17 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
   
     closurePosition = data.get('closurePosition')
-    TPRmanu = data.get('TPR')
-    SLRmanu = data.get('SLR')
+    TPR_value = data.get('TPR')
+    SLR_value = data.get('SLR')
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
-    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False:
-        Smanu = True
+    if closurePosition == 'Close' and TPR_value == False and SLR_value == False:
+        Smanu_value = True
     else:
-        Smanu = False
+        Smanu_value = False
     
     # Return the result in JSON format
-    return jsonify({'Smanu': Smanu})
+    return jsonify({'Smanu': Smanu_value})
 
 # Enregistrement du blueprint
 app.register_blueprint(sortiemanu)
