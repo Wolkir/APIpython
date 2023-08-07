@@ -21,7 +21,7 @@ def calculate_sortiemanu(data):
     closurePosition = data.get('closurePosition')
     TPR_value = data[TPR]
     SLR_value = data.get(SLR)
-    Smanu_value=None
+    Smanu_value = None
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
     if closurePosition == 'Close' and TPR_value == False and SLR_value == False:
         Smanu_value = True
