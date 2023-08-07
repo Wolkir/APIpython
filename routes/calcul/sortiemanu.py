@@ -11,16 +11,16 @@ db = client['test']
 sortiemanu = Blueprint('sortiemanu', __name__)
 
 @sortiemanu.route('/sortiemanu', methods=['GET'])
-def calculate_sortiemanu(entry):
+def calculate_sortiemanu(data):
 
 
-    username = entry.get('username')
+    username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
     
-    closurePosition = entry.get('closurePosition')
-    TPR = entry.get('TPR')
-    SLR = entry.get('SLR')
+    closurePosition = data.get('closurePosition')
+    TPR = data.get('TPR')
+    SLR = data.get('SLR')
 
     if closurePosition == 'Close' and TPR == False and SLR == False:
         Smanu = True
