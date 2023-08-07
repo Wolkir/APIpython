@@ -11,6 +11,7 @@ db = client['test']
 sortiemanu = Blueprint('sortiemanu', __name__)
 
 @sortiemanu.route('/sortiemanu', methods=['GET'])
+
 def calculate_sortiemanu(data):
 
 
@@ -22,10 +23,10 @@ def calculate_sortiemanu(data):
     TPR = data.get('TPR')
     SLR = data.get('SLR')
 
-    if closurePosition == 'Close' and TPR == false and SLR == false:
-        Smanu = true
+    if closurePosition == 'Close' and TPR == False and SLR == True:
+        Smanu = True
     else:
-        Smanu = false
+        Smanu = False
 
     return jsonify({'Smanu': Smanu})
 
