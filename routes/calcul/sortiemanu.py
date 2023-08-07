@@ -3,7 +3,6 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
@@ -13,6 +12,7 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @sortiemanu.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
+    data = request.json
 
     username = data.get('username')
     collection_name = f"{username}_close"
@@ -23,12 +23,16 @@ def calculate_sortiemanu(data):
     SLRmanu = data.get('SLR')
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
-    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False :
-        Smanu = 'True'
+    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False:
+        Smanu = True
     else:
-        Smanu = 'False'
+        Smanu = False
     
-    # Return the result
-    return Smanu
+    # Return the result in JSON format
+    return jsonify({'Smanu': Smanu})
 
-       
+# Enregistrement du blueprint
+app.register_blueprint(sortiemanu)
+
+if __name__ == '__main__':
+    app.run(debug=True)
