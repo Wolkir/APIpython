@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+efrom flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
 from datetime import time
@@ -26,7 +26,7 @@ from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
 #from routes.calcul.daytrade import calculate_daytrade
-#from routes.calcul.sortiemanu import calculate_sortiemanu
+from routes.calcul.sortiemanu import calculate_sortiemanu
 
 
 
@@ -169,14 +169,16 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
+            Sortiemanuelle = calculate_sortiemanu(data)
+            data['Sortiemanu'] = Sortiemanuelle
+
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
 
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
 
-            #Sortiemanu = calculate_sortiemanu(data)
-            #data['Sortiemanu'] = Sortiemanu
+            
 
 
            
@@ -263,7 +265,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanu'),
+            "sortieManuelle":data.get('Sortiemanuelle'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
