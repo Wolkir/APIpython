@@ -55,14 +55,14 @@ db = client["test"]
 app = Flask(__name__)
 
 # Trade Blueprint
-trade_blueprint = Blueprint('trade', __name__)
+trade_blueprint_manuel = Blueprint('trade', __name__)
 SLOpen = {}
 RROpen = {}
 TPOpen = {}
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
-@trade_blueprint.route('/savetraderequestManuel', methods=['POST'])
+@trade_blueprint_manuel.route('/savetraderequestManuel', methods=['POST'])
 def save_trade_request():
     data = request.json
     #username = data.get('username')
@@ -315,7 +315,7 @@ def save_trade_request():
         return jsonify({"error": str(e)}), 400
 
 # Enregistrement du blueprint "trade" dans l'application Flask
-app.register_blueprint(trade_blueprint, url_prefix='/api')
+app.register_blueprint(trade_blueprint_manuel, url_prefix='/api')
 
 
 if __name__ == '__main__':
