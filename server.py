@@ -163,6 +163,7 @@ app.register_blueprint(setup_user_routes(app))
 
 # recuperation trade de mt5
 app.register_blueprint(trade_blueprint)
+app.register_blueprint(trade_blueprint_manuel)
 
 # strategie
 app.register_blueprint(recuperationStrategie)
