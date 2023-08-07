@@ -19,6 +19,6 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
     
     closurePosition = data.get('closurePosition')
-    TPR_value = data.get('TPR')
+    Takeprofit = data.get('TPR')
 
 
