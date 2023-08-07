@@ -23,7 +23,7 @@ def calculate_sortiemanu(data):
     SLRmanu = data.get('SLR')
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
-    if closurePosition == 'Close' and TPRmanu == 'False' and SLRmanu == 'False':
+    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False :
         Smanu = 'True'
     else:
         Smanu = 'False'
