@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request, current_app
 from pymongo import MongoClient
 import bcrypt
 from datetime import time
@@ -313,6 +313,7 @@ def save_trade_request():
         
         return jsonify({"message": "Trade ajouté avec succes"}), 201
     except Exception as e:
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 400
 
 # Enregistrement du blueprint "trade" dans l'application Flask
