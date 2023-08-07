@@ -55,7 +55,7 @@ db = client["test"]
 app = Flask(__name__)
 
 # Trade Blueprint
-trade_blueprint_manuel = Blueprint('trade', __name__)
+trade_blueprint_manuel = Blueprint('trade_blueprint_manuel', __name__)
 SLOpen = {}
 RROpen = {}
 TPOpen = {}
