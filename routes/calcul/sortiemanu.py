@@ -19,11 +19,11 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
   
     closurePosition = data.get('closurePosition')
-    TPR = data.get('TPR')
-    SLR = data.get('SLR')
+    TPRmanu = data.get('TPR')
+    SLRmanu = data.get('SLR')
 
     # Check if closurePosition is "Close", TPR is "False", and SLR is "False"
-    if closurePosition == 'Close' and TPR == 'False' and SLR == 'False':
+    if closurePosition == 'Close' and TPRmanu == 'False' and SLRmanu == 'False':
         Smanu = 'True'
     else:
         Smanu = 'False'
