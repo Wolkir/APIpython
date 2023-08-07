@@ -19,6 +19,15 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
     
     closurePosition = data.get('closurePosition')
-    Takeprofit = data.get('TPR')
+    TPR = data.get('TPR')
+    SLR = data.get('TPR')
+
+    if closurePosition == 'Close' and TPRmanu == False and SLRmanu == False:
+        Smanu = True
+    else:
+        Smanu = False
+
+    return Smanu
+
 
 
