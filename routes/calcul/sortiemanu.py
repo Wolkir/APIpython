@@ -29,10 +29,6 @@ def calculate_sortiemanu(data):
         Smanu_value = False
     
     # Return the result in JSON format
-    return jsonify({'Smanu': Smanu_value})
+    return Smanu_value
 
-# Enregistrement du blueprint
-app.register_blueprint(sortiemanu)
 
-if __name__ == '__main__':
-    app.run(debug=True)
