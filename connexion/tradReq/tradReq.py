@@ -26,7 +26,7 @@ from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
 #from routes.calcul.daytrade import calculate_daytrade
-#from routes.calcul.sortiemanu import calculate_sortiemanu
+from routes.calcul.sortiemanu import calculate_sortiemanu
 
 
 
@@ -169,8 +169,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            #Smanu = calculate_sortiemanu(data)
-            #data['Sortiemanu'] = Smanu
+            Smanu = calculate_sortiemanu(data)
+            data['Sortiemanu'] = Smanu
 
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
@@ -265,7 +265,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            #"sortieManuelle":data.get('Sortiemanu'),
+            "sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
