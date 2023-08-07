@@ -265,7 +265,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Smanu'),
+            "sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
