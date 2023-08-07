@@ -220,7 +220,7 @@ def save_trade_request():
         #user_collection.insert_one(data)
 
         trade_request = {
-            "ticketNumber": data.get('ticketNumber')
+            "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
