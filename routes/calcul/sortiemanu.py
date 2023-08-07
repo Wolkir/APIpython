@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
+from bson import ObjectId
 app = Flask(__name__)
 
 # Connexion à la base de données MongoDB
