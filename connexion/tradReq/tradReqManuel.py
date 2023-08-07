@@ -65,7 +65,7 @@ def compare_passwords(password, hashed_password):
 @trade_blueprint_manuel.route('/savetraderequestManuel', methods=['POST'])
 def save_trade_request():
     data = request.json
-    #username = data.get('username')
+    username = data.get('username')
     #password = data.get('password')
     closure_position = data.get('closurePosition')
 
@@ -220,6 +220,7 @@ def save_trade_request():
         #user_collection.insert_one(data)
 
         trade_request = {
+            "username": data.get('username'),
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
@@ -310,7 +311,7 @@ def save_trade_request():
         #calculate_ddmax(data)  // remplacé par le code maxprofit_minloss
         #calculate_sharp_ratio(data) // groupé avec maxgain_minloss
         
-        return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
+        return jsonify({"message": "Trade ajouté avec succes"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
