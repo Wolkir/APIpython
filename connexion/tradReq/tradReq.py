@@ -276,11 +276,6 @@ def save_trade_request():
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
-
-        collectionDynamique = data.get('collectionValues', None)
-
-        if collectionDynamique is not None and collectionDynamique != "":
-            user_collection == collectionDynamique
             
         user_collection.insert_one(trade_request)
       
