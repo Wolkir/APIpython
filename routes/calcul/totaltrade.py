@@ -46,8 +46,11 @@ def calculate_totaltrade(data):
     last_trade['totaltrade'] = total_trades
     collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
 
+    first_trade = collection.find_one(sort=[('timestamp', 1)])
+    if first_trade:
+        collection.update_one({'_id': first_trade['_id']}, {'$set': {'totaltrade': 1}})
+
     return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
 
 if __name__ == "__main__":
     app.run(debug=True)
-
