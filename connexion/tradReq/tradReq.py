@@ -68,6 +68,7 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
+    typeOfTransaction =data.get('typeOfTransaction')
 
     try:
         user = db.users.find_one({"username": username})
@@ -100,7 +101,7 @@ def save_trade_request():
       
             
         
-        if closure_position == "Open":
+        if typeOfTransaction == "Open":
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -111,7 +112,7 @@ def save_trade_request():
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
-        elif closure_position == "Close":
+        elif closure_position != "ModifySl" and "ModifyTp" :
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
