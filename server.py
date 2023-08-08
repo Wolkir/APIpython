@@ -109,7 +109,7 @@ from routes.journal.suppressionTrade import suppressionTrade
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
 
-app.register_blueprint(tpr)
+app.register_blueprint(tprbp)
 #app.register_blueprint(assign_order)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
