@@ -103,7 +103,7 @@ from routes.journal.recuperationImage import recuperationImage
 #journal
 from routes.journal.modificationTrade import setup_modificationTrade_routes
 from routes.journal.recuperationTrade import setup_things_routes
-from routes.journal.supprimerTrade import suppressionTrade  
+from routes.journal.suppressionTrade import suppressionTrade  
 
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
