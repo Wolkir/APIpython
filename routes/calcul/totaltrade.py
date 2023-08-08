@@ -55,7 +55,8 @@ def calculate_totaltrade(data):
 
     last_trade['_id'] = ObjectId()  # Générer un nouvel ID pour éviter des doublons
     last_trade['total_trade'] = total_trades
-    collection_unitaire.update_one({'_id': last_trade['_id']}, {'$set': {'total_trade': total_trades}}, upsert=True)
+    collection_unitaire.update_one({'_id': last_trade['_id']}, {'$set': {'total_trade': total_trades}}
+  
 
     
     return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
