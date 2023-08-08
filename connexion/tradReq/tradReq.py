@@ -181,8 +181,8 @@ def save_trade_request():
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
 
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+        #data['volume'] = round(data.get('volume'), 2)
+        #volume_remain = round(volume_remain, 2)
 
           
 
