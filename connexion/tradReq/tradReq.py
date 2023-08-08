@@ -172,11 +172,17 @@ def save_trade_request():
             total_trade = calculate_totaltrade(data)
             data['totaltrade'] = total_trade
 
+            data['volume'] = round(data.get('volume'), 2)
+            volume_remain = round(volume_remain, 2)
+
             #Smanu = calculate_sortiemanu(data)
             #data['Sortiemanu'] = Smanu
 
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
+
+            data['volume'] = round(data.get('volume'), 2)
+            volume_remain = round(volume_remain, 2)
 
           
 
@@ -231,7 +237,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            #"volume_remain": volume_remain,
+            "volume_remain": data.get('volume_remain'),
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
