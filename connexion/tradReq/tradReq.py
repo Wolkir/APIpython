@@ -68,7 +68,7 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-    volume_remain=0
+    volume_remain=0.000
     try:
         user = db.users.find_one({"username": username})
         if not user or not compare_passwords(password, user['password']):
@@ -130,7 +130,7 @@ def save_trade_request():
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
-            data.pop("volume_remain", None)
+            #data.pop("volume_remain", None)
 
             # Calculate SLR only for 'Close' orders
             slr_value = calculate_slr(data)
