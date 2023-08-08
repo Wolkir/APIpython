@@ -169,14 +169,16 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
+            total_trade = calculate_totaltrade(data)
+            data['totaltrade'] = total_trade
+
             #Smanu = calculate_sortiemanu(data)
             #data['Sortiemanu'] = Smanu
 
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
 
-            #total_trade = calculate_totaltrade(data)
-            #data['totaltrade'] = total_trade
+          
 
             
 
