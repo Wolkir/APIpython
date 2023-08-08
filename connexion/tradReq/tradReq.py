@@ -68,8 +68,7 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-    volume= data.get('volume')
-    
+
     try:
         user = db.users.find_one({"username": username})
         if not user or not compare_passwords(password, user['password']):
@@ -84,8 +83,8 @@ def save_trade_request():
         if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
-            #open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
-            volume_remain = data.get('volume')
+            open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
+   
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
@@ -112,7 +111,7 @@ def save_trade_request():
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
-        elif closure_position == "Close" :
+        elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
@@ -170,8 +169,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            #total_trade = calculate_totaltrade(data)
-            #data['totaltrade'] = total_trade
+            total_trade = calculate_totaltrade(data)
+            data['totaltrade'] = total_trade
 
             #Smanu = calculate_sortiemanu(data)
             #data['Sortiemanu'] = Smanu
@@ -192,8 +191,8 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        #data['volume'] = round(data.get('volume'), 2)
-        #volume_remain = round(volume_remain, 2)
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
@@ -232,7 +231,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            #"volume_remain": volume_remain,
+            "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
