@@ -226,8 +226,8 @@ def save_trade_request():
 
             
             
-        # Insert the data into the collection
-        #user_collection.insert_one(data)
+        #Insert the data into the collection
+        user_collection.insert_one(data)
 
         trade_request = {
             "username": username,
