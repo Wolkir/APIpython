@@ -58,8 +58,5 @@ def calculate_totaltrade(data):
     collection_unitaire.update_one({'_id': last_trade['_id']}, {'$set': {'total_trade': total_trades}}
   
 
-    
-    return jsonify({'message': 'Numéro de position ajouté à chaque trade avec succès.'})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
