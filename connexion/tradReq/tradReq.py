@@ -273,9 +273,8 @@ def save_trade_request():
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
             "position": None,
-            "typeOrdre": None,
-            "tag": None,
-            "note": None,
+            "typeOrdre": None
+            
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
