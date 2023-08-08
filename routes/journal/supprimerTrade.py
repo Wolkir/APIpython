@@ -5,7 +5,7 @@ from bson import ObjectId
 suppressionTrade = Blueprint('suppressionTrade', __name__)
 
 @suppressionTrade.route('/suppressionTrade', methods=['DELETE'])
-def delete_suppressionTrade(app):
+def delete_suppressionTrade():
     try:
         data = request.json
         collection = data.get('collection')
