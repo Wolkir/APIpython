@@ -66,20 +66,13 @@ def compare_passwords(password, hashed_password):
 def save_trade_request():
     data = request.json
     username = data.get('username')
-    #password = data.get('password')
+    collection_name = data.get('collectionValues')
     closure_position = data.get('closurePosition')
 
     try:
-        """user = db.users.find_one({"username": username})
-        if not user or not compare_passwords(password, user['password']):
-            return jsonify({"message": "Access denied"}), 401
-
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
         collection_name = f"{username}_open" if closure_position == "Open" else f"{username}_close"
 
-        user_collection = db[collection_name]"""
-
+        user_collection = db[collection_name]
         if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
@@ -178,16 +171,6 @@ def save_trade_request():
             #total_trade = calculate_totaltrade(data)
             #data['totaltrade'] = total_trade
 
-            
-
-
-           
-
-       
-                       
-
-          
-
         # Round 'volume' and 'volume_remain' to two decimal places
         data['volume'] = round(data.get('volume'), 2)
         volume_remain = round(volume_remain, 2)
@@ -276,13 +259,12 @@ def save_trade_request():
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
 
-        collectionDynamique = data.get('collectionValues', None)
-
-        if collectionDynamique is not None and collectionDynamique != "":
-            user_collection == collectionDynamique
+        collection_name = data.get('collectionValues', None)
+        collectionDynamique = db[collection_name]
             
-        user_collection.insert_one(trade_request)
-      
+        resultat = collectionDynamique.insert_one(trade_request)
+
+        print("ID du document inséré:", resultat.inserted_id)
      
         find_max_successive_counts(data)
         find_max_profit_and_min_loss(data)
