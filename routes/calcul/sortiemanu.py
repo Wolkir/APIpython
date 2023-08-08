@@ -12,9 +12,10 @@ db = client['test']
 
 sortiemanu = Blueprint('sortiemanu', __name__)
 
+
 @app.route('/sortiemanu', methods=['GET'])
-def calculate_sortiemanu(data):
- 
+def calculate_sortiemanu():
+    data = dict(request.args) # Convert ImmutableMultiDict to a regular dictionary
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
@@ -31,9 +32,3 @@ def calculate_sortiemanu(data):
         Smanu = False
 
     return jsonify({'Smanu': Smanu})
-
-# Register the blueprint
-app.register_blueprint(sortiemanu)
-
-if __name__ == '__main__':
-    app.run()
