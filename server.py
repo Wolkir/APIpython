@@ -122,7 +122,7 @@ app.register_blueprint(session)
 
 app.register_blueprint(slr)
 app.register_blueprint(Tilts)
-app.register_blueprint(tpr)
+app.register_blueprint(tprbp)
 
 app.register_blueprint(weekday)
 app.register_blueprint(envoie)
