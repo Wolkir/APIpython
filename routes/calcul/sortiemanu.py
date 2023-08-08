@@ -14,7 +14,7 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 
 @app.route('/sortiemanu', methods=['GET'])
-def calculate_sortiemanu():
+def calculate_sortiemanu(data):
     data = dict(request.args) # Convert ImmutableMultiDict to a regular dictionary
     username = data.get('username')
     collection_name = f"{username}_close"
