@@ -48,7 +48,7 @@ def calculate_totaltrade(data):
     last_trade = collection.find_one(sort=[('timestamp', -1)])
     last_trade['totaltrade'] = total_trades
     collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
-    unitaire_collection.update_one({}, {'$set': {'totaltrade': last_trade['totaltrade']}}, upsert=True)
+    collection_unitaire.update_one({}, {'$set': {'totaltrade': last_trade['totaltrade']}}, upsert=True)
 
 
 
