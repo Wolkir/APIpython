@@ -80,7 +80,7 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
-        #if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
+        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
@@ -89,7 +89,7 @@ def save_trade_request():
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
 
-        #if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
+        if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
@@ -111,7 +111,7 @@ def save_trade_request():
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
-        elif closure_position != "":
+        elif closure_position == "Close":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
