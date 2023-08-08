@@ -4,7 +4,7 @@ from pymongo import MongoClient
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 
-tprbp = Blueprint('tpr', __name__)
+tprbp = Blueprint('tprbp', __name__)
 
 def calculate_tpr(data):
     # Your TPR calculation logic here based on the 'entry' data
