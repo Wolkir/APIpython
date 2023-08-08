@@ -27,7 +27,7 @@ def delete_suppressionTrade():
         if result.deleted_count > 0:
             return jsonify({"message": "Trade supprimé avec succès"}), 200
         else:
-            return jsonify({"error": "Le trade n'a pas été trouvé"}), 404
+            return jsonify({"error": "Le trade n'a pas été trouvé"}), 500
 
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
