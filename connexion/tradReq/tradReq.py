@@ -68,7 +68,7 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-
+    volume_remain=0
     try:
         user = db.users.find_one({"username": username})
         if not user or not compare_passwords(password, user['password']):
