@@ -40,9 +40,27 @@ def setup_modificationTrade_routes(app):
             timeSetup_data = data.get('timeSetup', [])
             porteFeuille_data = data.get('porteFeuille', [])
             collection_data = data.get('collection', [])
+            tag_data = data.get('tag', [])
+            note_data = data.get('note', [])
             things_collection = mongo.db[collection_data]
 
             reinsertion = []
+
+            # Mise à jour ou création des champs tag
+            for tag_item in tag_data:
+                trade_id = tag_item.get('id')
+                value_tag = tag_item.get('valueTag')
+
+                if trade_id and value_tag:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'tag': value_tag}}, upsert=True)
+
+            # Mise à jour ou création des champs note
+            for note_item in note_data:
+                trade_id = note_item.get('id')
+                value_note = note_item.get('valueNote')
+
+                if trade_id and value_tag:
+                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'note': value_note}}, upsert=True)
 
             # Mise à jour ou création des champs psychologie
             for psychologie_item in psychologie_data:
