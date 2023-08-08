@@ -54,7 +54,7 @@ from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
 
-from routes.calcul.SLR import slr
+from routes.calcul.SLR import slrbp
 from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import tprbp
 #from routes.calcul.tradecount import tradecount
@@ -120,7 +120,7 @@ app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 app.register_blueprint(session)
 
-app.register_blueprint(slr)
+app.register_blueprint(slrbp)
 app.register_blueprint(Tilts)
 app.register_blueprint(tprbp)
 
