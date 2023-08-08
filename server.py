@@ -185,7 +185,7 @@ app.register_blueprint(envoie)
 # journal
 app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
-app.register_blueprint(delete_suppressionTrade)
+app.register_blueprint(delete_suppressionTrade())
 
 # image
 app.register_blueprint(enregistrerImage)
