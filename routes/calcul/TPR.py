@@ -14,10 +14,10 @@ def calculate_tpr(data):
     take_profit = data.get('takeProfit')
     
     if orderType == "BUY" and price_closure >= take_profit and take_profit>0:
-        entry['TPR'] = True
+        data['TPR'] = True
     elif orderType == "SELL" and price_closure <= take_profit and take_profit>0 :
-        entry['TPR'] = True
+        data['TPR'] = True
     else:
-        entry['TPR'] = False
+        data['TPR'] = False
 
-    return entry
+    return data
