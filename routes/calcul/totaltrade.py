@@ -49,11 +49,7 @@ def calculate_totaltrade(data):
     last_trade['totaltrade'] = total_trades
     collection.update_one({'_id': last_trade['_id']}, {'$set': last_trade})
 
-    del last_trade['_id']
 
-    # Utilisation de votre syntaxe pour mettre à jour collection_unitaire
-    unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {'$set': last_trade}, upsert=True)
 
     first_trade = collection.find_one(sort=[('timestamp', 1)])
     if first_trade:
