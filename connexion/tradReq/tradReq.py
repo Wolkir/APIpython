@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 import bcrypt
+import sys
 from datetime import time
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
@@ -88,7 +89,7 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-
+            sys.exit()
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
