@@ -25,7 +25,7 @@ def calculate_sortiemanu(data):
 
     closurePosition = data.get('closurePosition')
 
-    if closurePosition == 'Close' and not tprman and not slrman:
+    if closurePosition == 'Close' and tprman == False and  slrman == False:
         smanu = True
     else:
         smanu = False
