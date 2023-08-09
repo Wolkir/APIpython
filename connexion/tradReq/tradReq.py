@@ -54,9 +54,6 @@ db = client["test"]
 
 app = Flask(__name__)
 
-class StopExecution(Exception):
-    pass
-    
 # Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
@@ -83,7 +80,7 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
-        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
+        if data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
@@ -91,10 +88,6 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-            raise StopExecution
-            
-    except StopExecution:
-        return jsonify({"message": "Stopped execution"}), 200
 
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
@@ -107,7 +100,7 @@ def save_trade_request():
       
             
         
-        if closure_position == "Open":
+        if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -131,7 +124,8 @@ def save_trade_request():
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
-
+        
+        
         
 
         # Remove 'volume_remain' field for 'Close' orders
@@ -284,7 +278,7 @@ def save_trade_request():
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
-
+    
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
             
