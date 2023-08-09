@@ -11,7 +11,10 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 sortiemanu = Blueprint('sortiemanu', __name__)
-
+    
+# Use functions to get TPR and SLR
+TPRMan = calculate_tpr(data)
+SLRMan = calculate_slr(data)
 
 @app.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
@@ -21,10 +24,7 @@ def calculate_sortiemanu(data):
     collection = db[collection_name]
     
     closurePosition = data.get('closurePosition')
-    
-    # Use functions to get TPR and SLR
-    TPRMan = calculate_tpr(data)
-    SLRMan = calculate_slr(data)
+
 
     if closurePosition == 'Close' and not TPRMan and not SLRMan:
         Smanu = True
