@@ -17,7 +17,7 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @app.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
-    TPRMan = calculate_limit(data)
+    E12 = calculate_limit(data)
     SLRMan = calculate_slr(data)
     username = data.get('username')
     collection_name = f"{username}_close"
