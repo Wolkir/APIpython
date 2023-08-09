@@ -51,4 +51,4 @@ def calculate_sortiemanu(data):
         smanu = True
     else:
         smanu = False
-
+    return smanu
