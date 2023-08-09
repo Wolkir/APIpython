@@ -106,11 +106,11 @@ def save_trade_request():
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
             identifier = data.get('identifier')
+            return
             SLOpen[identifier] = data.get('stopLoss')
             TPOpen[identifier] = data.get('takeProfit')
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
-                return
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
