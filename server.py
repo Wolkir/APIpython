@@ -36,6 +36,7 @@ from connexion.strategie.suppressionStrategie import suppressionStrategie
 # recuperation trade de mt5
 from connexion.tradReq.tradReq import trade_blueprint
 from connexion.tradReq.tradReqManuel import trade_blueprint_manuel
+from connexion.tradReq.tradReqCSV import trade_blueprint_csv
 
 # user
 from connexion.user.getUser import setup_user_routes
@@ -163,6 +164,7 @@ app.register_blueprint(setup_user_routes(app))
 # recuperation trade de mt5
 app.register_blueprint(trade_blueprint)
 app.register_blueprint(trade_blueprint_manuel)
+app.register_blueprint(trade_blueprint_csv)
 
 # strategie
 app.register_blueprint(recuperationStrategie)
