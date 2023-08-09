@@ -59,6 +59,7 @@ trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
 RROpen = {}
 TPOpen = {}
+volume_remain=0
 def compare_passwords(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
