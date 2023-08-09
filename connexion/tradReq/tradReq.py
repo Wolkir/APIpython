@@ -101,6 +101,7 @@ def save_trade_request():
             
         volume_remain = data.get('volume')
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
+            return
             
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -110,7 +111,6 @@ def save_trade_request():
             TPOpen[identifier] = data.get('takeProfit')
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
-                return
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
