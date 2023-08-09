@@ -172,6 +172,9 @@ def save_trade_request():
             total_trade = calculate_totaltrade(data)
             data['totaltrade'] = total_trade
 
+            data['volume'] = round(data.get('volume'), 2)
+            volume_remain = round(volume_remain, 2)
+
             #Smanu = calculate_sortiemanu(data)
             #data['Sortiemanu'] = Smanu
 
@@ -191,8 +194,7 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+      
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
