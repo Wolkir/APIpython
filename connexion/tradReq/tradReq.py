@@ -85,8 +85,7 @@ def save_trade_request():
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
-            volume=data.get('volume')
-            volume_remain = volume
+           
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
@@ -193,8 +192,8 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+        #data['volume'] = round(data.get('volume'), 2)
+        #volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
@@ -232,7 +231,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            "volume_remain": volume_remain,
+            #"volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
