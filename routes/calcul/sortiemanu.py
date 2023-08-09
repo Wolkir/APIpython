@@ -13,12 +13,12 @@ db = client['test']
 sortiemanu = Blueprint('sortiemanu', __name__)
     
 # Use functions to get TPR and SLR
-TPRMan = calculate_tpr(data)
-SLRMan = calculate_slr(data)
+
 
 @app.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
-    
+    TPRMan = calculate_tpr(data)
+    SLRMan = calculate_slr(data)
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
