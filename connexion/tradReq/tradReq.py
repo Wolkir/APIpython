@@ -224,8 +224,7 @@ def save_trade_request():
         #user_collection.insert_one(data)
 
         trade_request = {
-            "username": username,
-            "password": hashed_password,
+            "username": data.get('username'),
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
@@ -269,14 +268,18 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanu'),
+            "sortieManuelle":data.get('Sortiemanuelle'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
             "position": None,
-            "typeOrdre": None
-            
+            "typeOrdre": None,
+            "tag": None,
+            "note": None,
+            "indicateur1": None,
+            "indicateur2": None,
+            "indicateur3": None,
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
