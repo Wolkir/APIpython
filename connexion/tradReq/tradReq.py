@@ -99,7 +99,7 @@ def save_trade_request():
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
       
             
-        volume_remain = data.get('volume')
+ 
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
             
             if volume_remain < 0.01:
@@ -126,6 +126,9 @@ def save_trade_request():
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
         
         
+        # Round 'volume' and 'volume_remain' to two decimal places
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
         
 
         # Remove 'volume_remain' field for 'Close' orders
@@ -190,9 +193,6 @@ def save_trade_request():
 
           
 
-        # Round 'volume' and 'volume_remain' to two decimal places
-        #data['volume'] = round(data.get('volume'), 2)
-        #volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
