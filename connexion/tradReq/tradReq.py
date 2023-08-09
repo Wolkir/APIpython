@@ -92,6 +92,9 @@ def save_trade_request():
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
             raise StopExecution
+            
+    except StopExecution:
+        return jsonify({"message": "Stopped execution"}), 200
 
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
@@ -128,9 +131,7 @@ def save_trade_request():
                     open_orders.delete_one({"identifier": data.get('identifier')})
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
-        
-    except StopExecution:
-        return jsonify({"message": "Stopped execution"}), 200
+
         
 
         # Remove 'volume_remain' field for 'Close' orders
