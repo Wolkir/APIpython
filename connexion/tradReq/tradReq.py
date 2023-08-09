@@ -96,7 +96,7 @@ def save_trade_request():
                 data['RRT'] = rrt
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
         
-
+            volume_remain = data.get('volume') 
             if data.get('typeOfTransaction') != "ModifySl":
                 if volume_remain < 0.01:
                     volume_remain = 0
