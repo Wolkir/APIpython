@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import bcrypt
 import sys
 from datetime import time
-from routes.calcul.tpr import calculate_tpr
+from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import calculate_killzone
 from routes.calcul.session import determine_session
