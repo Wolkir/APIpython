@@ -26,6 +26,8 @@ def calculate_sortiemanu(data):
     orderType = data.get('orderType')
     price_closure = data.get('priceClosure')
     take_profit = data.get('takeProfit')
+    stop_loss = data.get('stopLoss')
+    profit = data.get('profit')
     
     if orderType == "BUY" and price_closure >= take_profit and take_profit>0:
         tprman = True
@@ -34,12 +36,17 @@ def calculate_sortiemanu(data):
     else:
         tprman = False
 
-    
 
-    
+  
 
-   
+    if orderType == "BUY" and price_closure <= stop_loss and profit < 0:
+        slrman = True
+    elif orderType == "SELL" and price_closure >= stop_loss and profit < 0:
+        slrman = True
+    else:
+        slrman = False
 
+  
     if closurePosition == 'Close' and tprman == False and  slrman == False:
         smanu = True
     else:
