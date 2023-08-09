@@ -231,7 +231,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            "volume_remain": volume_remain,
+            #"volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
@@ -276,6 +276,9 @@ def save_trade_request():
             "typeOrdre": None
             
         }
+        if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
+        data["volume_remain"] = volume_remain
+    
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
             
