@@ -191,8 +191,8 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        data['volume'] = round(data.get('volume'), 2)
-        volume_remain = round(volume_remain, 2)
+        #data['volume'] = round(data.get('volume'), 2)
+        #volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
