@@ -101,7 +101,6 @@ def save_trade_request():
             
         volume_remain = data.get('volume')
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
-            return
             
             if volume_remain < 0.01:
                 volume_remain = 0
