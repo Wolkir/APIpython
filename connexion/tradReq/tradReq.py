@@ -111,7 +111,7 @@ def save_trade_request():
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
-        elif closure_position != "":
+        elif closure_position == "Close":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
