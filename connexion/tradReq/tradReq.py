@@ -178,8 +178,8 @@ def save_trade_request():
             total_trade = calculate_totaltrade(data)
             data['totaltrade'] = total_trade
 
-            Smanu = calculate_sortiemanu(data)
-            data['Sortiemanu'] = Smanu
+            smanu = calculate_sortiemanu(data)
+            data['sortiemanu'] = smanu
 
             #position = calculate_totaltrade(data)
             #data['totaltrade'] = position
@@ -273,7 +273,7 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanu'),
+            "sortieManuelle":data.get('sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
