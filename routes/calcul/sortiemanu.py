@@ -52,4 +52,3 @@ def calculate_sortiemanu(data):
     else:
         smanu = False
 
-    return jsonify({'smanu': smanu})
