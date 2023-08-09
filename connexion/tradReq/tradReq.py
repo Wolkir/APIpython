@@ -80,7 +80,7 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
-        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
+        if data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
