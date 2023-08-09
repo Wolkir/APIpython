@@ -23,10 +23,10 @@ def calculate_sortiemanu(data):
     closurePosition = data.get('closurePosition')
     
     # Use functions to get TPR and SLR
-    TPR = calculate_tpr(data)
-    SLR = calculate_slr(data)
+    TPRMan = calculate_tpr(data)
+    SLRMan = calculate_slr(data)
 
-    if closurePosition == 'Close' and not TPR and not SLR:
+    if closurePosition == 'Close' and not TPRMan and not SLRMan:
         Smanu = True
     else:
         Smanu = False
