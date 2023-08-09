@@ -91,8 +91,9 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-            #raise ModifySlException("La transaction ModifySl a été traitée.")
-     except Exception as e:
+          
+    
+    except Exception as e:
         # Gérez l'exception ici si nécessaire
         continue_execution = False
         return jsonify({"message": f"Error: {str(e)}"}), 500
