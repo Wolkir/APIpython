@@ -54,6 +54,9 @@ db = client["test"]
 
 app = Flask(__name__)
 
+class StopExecution(Exception):
+    pass
+    
 # Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
 SLOpen = {}
@@ -88,6 +91,7 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
+            raise StopExecution
 
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
@@ -125,7 +129,8 @@ def save_trade_request():
             else:
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
         
-        
+    except StopExecution:
+        return jsonify({"message": "Stopped execution"}), 200
         
 
         # Remove 'volume_remain' field for 'Close' orders
