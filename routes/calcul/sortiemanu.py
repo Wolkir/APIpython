@@ -22,11 +22,10 @@ def calculate_sortiemanu(data):
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
-    
+
     closurePosition = data.get('closurePosition')
 
-
-    if closurePosition == 'Close' and not tprman not slrman:
+    if closurePosition == 'Close' and not tprman and not slrman:
         smanu = True
     else:
         smanu = False
