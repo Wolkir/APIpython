@@ -99,9 +99,9 @@ def save_trade_request():
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
       
             
-        
+        volume_remain = data.get('volume')
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
-            volume_remain = data.get('volume')
+            
             if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
