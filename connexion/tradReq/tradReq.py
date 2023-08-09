@@ -80,7 +80,7 @@ def save_trade_request():
 
         user_collection = db[collection_name]
 
-        if data.get('typeOfTransaction') == "ModifySl":
+        if closure_position == "" and data.get('typeOfTransaction') == "ModifySl":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
@@ -100,7 +100,7 @@ def save_trade_request():
       
             
         
-        if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
+        if closure_position == "Open":
             volume_remain = data.get('volume')
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -111,7 +111,7 @@ def save_trade_request():
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
             
-        elif closure_position == "Close":
+        elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
@@ -130,7 +130,7 @@ def save_trade_request():
 
         # Remove 'volume_remain' field for 'Close' orders
         if closure_position == "Close":
-            #data.pop("volume_remain", None)
+            data.pop("volume_remain", None)
 
             # Calculate SLR only for 'Close' orders
             slr_value = calculate_slr(data)
@@ -191,8 +191,8 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        #data['volume'] = round(data.get('volume'), 2)
-        #volume_remain = round(volume_remain, 2)
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
@@ -231,7 +231,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            #"volume_remain": volume_remain,
+            "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
@@ -276,9 +276,6 @@ def save_trade_request():
             "typeOrdre": None
             
         }
-        #if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
-            #data["volume_remain"] = volume_remain
-    
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
             
