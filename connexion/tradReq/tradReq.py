@@ -68,7 +68,6 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-    volume=data.get('volume')
 
     try:
         user = db.users.find_one({"username": username})
@@ -85,7 +84,7 @@ def save_trade_request():
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"stopLoss": data.get('stopLoss')}})
-            volume_remains= data.get('volume')
+   
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
@@ -192,8 +191,8 @@ def save_trade_request():
           
 
         # Round 'volume' and 'volume_remain' to two decimal places
-        #data['volume'] = round(data.get('volume'), 2)
-        #volume_remain = round(volume_remain, 2)
+        data['volume'] = round(data.get('volume'), 2)
+        volume_remain = round(volume_remain, 2)
 
         # Calculate killzone only for 'Open' orders
         if closure_position == "Open":
@@ -223,7 +222,8 @@ def save_trade_request():
         #user_collection.insert_one(data)
 
         trade_request = {
-            "username": data.get('username'),
+            "username": username,
+            "password": hashed_password,
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
@@ -267,18 +267,14 @@ def save_trade_request():
             "strategie": None,
             "timeEntree": None,
             "timeSetup": None,
-            "sortieManuelle":data.get('Sortiemanuelle'),
+            "sortieManuelle":data.get('Sortiemanu'),
             "journeeDeTilt": None,
             "TJS": None,
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
             "position": None,
-            "typeOrdre": None,
-            "tag": None,
-            "note": None,
-            "indicateur1": None,
-            "indicateur2": None,
-            "indicateur3": None,
+            "typeOrdre": None
+            
         }
         #combined_data = [trade_request, data]
         # Insertion des données dans la collection
@@ -286,13 +282,13 @@ def save_trade_request():
         user_collection.insert_one(trade_request)
       
      
-        #find_max_successive_counts(data)
-        #find_max_profit_and_min_loss(data)
-        #calculate_profit_factor_group(data)
-        #calculate_winrate_group(data)
-        #calculate_average_gain_loss_rr(data) 
-        #calculate_winrrtflat(data)
-        #calculate_totaltrade(data)
+        find_max_successive_counts(data)
+        find_max_profit_and_min_loss(data)
+        calculate_profit_factor_group(data)
+        calculate_winrate_group(data)
+        calculate_average_gain_loss_rr(data) 
+        calculate_winrrtflat(data)
+        calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
         
