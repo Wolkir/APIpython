@@ -17,8 +17,8 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @app.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
-    E12 = calculate_limit(data)
-    SLRMan = calculate_slr(data)
+    tprman = calculate_limit(data)
+    slrman = calculate_slr(data)
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
@@ -26,9 +26,9 @@ def calculate_sortiemanu(data):
     closurePosition = data.get('closurePosition')
 
 
-    if closurePosition == 'Close' and not TPRMan and not SLRMan:
-        Smanu = True
+    if closurePosition == 'Close' and not tprman not slrman:
+        smanu = True
     else:
-        Smanu = False
+        smanu = False
 
-    return jsonify({'Smanu': Smanu})
+    return jsonify({'smanu': smanu})
