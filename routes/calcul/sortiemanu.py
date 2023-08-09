@@ -17,13 +17,28 @@ sortiemanu = Blueprint('sortiemanu', __name__)
 
 @app.route('/sortiemanu', methods=['GET'])
 def calculate_sortiemanu(data):
-    tprman = calculate_tpr(data)
-    slrman = calculate_slr(data)
+  
     username = data.get('username')
     collection_name = f"{username}_close"
     collection = db[collection_name]
 
     closurePosition = data.get('closurePosition')
+    orderType = data.get('orderType')
+    price_closure = data.get('priceClosure')
+    take_profit = data.get('takeProfit')
+    
+    if orderType == "BUY" and price_closure >= take_profit and take_profit>0:
+        tprman = True
+    elif orderType == "SELL" and price_closure <= take_profit and take_profit>0 :
+        tprman = True
+    else:
+        tprman = False
+
+    
+
+    
+
+   
 
     if closurePosition == 'Close' and tprman == False and  slrman == False:
         smanu = True
