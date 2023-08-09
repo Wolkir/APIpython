@@ -110,6 +110,7 @@ def save_trade_request():
             TPOpen[identifier] = data.get('takeProfit')
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
+                return
             
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
