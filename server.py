@@ -54,9 +54,9 @@ from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
 
-from routes.calcul.SLR import slr
+from routes.calcul.SLR import slrbp
 from routes.calcul.Tilts import Tilts
-from routes.calcul.TPR import tpr
+from routes.calcul.TPR import tprbp
 #from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
@@ -109,7 +109,7 @@ from routes.journal.recuperationTrade import setup_things_routes
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
 
-app.register_blueprint(tpr)
+app.register_blueprint(tprbp)
 #app.register_blueprint(assign_order)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
@@ -120,9 +120,9 @@ app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 app.register_blueprint(session)
 
-app.register_blueprint(slr)
+app.register_blueprint(slrbp)
 app.register_blueprint(Tilts)
-app.register_blueprint(tpr)
+app.register_blueprint(tprbp)
 
 app.register_blueprint(weekday)
 app.register_blueprint(envoie)
