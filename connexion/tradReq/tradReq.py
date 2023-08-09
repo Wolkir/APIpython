@@ -54,6 +54,8 @@ client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client["test"]
 
 app = Flask(__name__)
+class ModifySlException(Exception):
+    pass
 
 # Trade Blueprint
 trade_blueprint = Blueprint('trade', __name__)
@@ -89,7 +91,9 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-            exit()
+            raise ModifySlException("La transaction ModifySl a été traitée.")
+    except ModifySlException as e:
+        return jsonify({"message": str(e)})
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
