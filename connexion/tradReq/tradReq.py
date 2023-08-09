@@ -231,7 +231,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "volume": data.get('volume'),
-            #"volume_remain": volume_remain,
+            "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
             "priceOpening": data.get('priceOpening'),
             "stopLoss": data.get('stopLoss'),
@@ -291,7 +291,7 @@ def save_trade_request():
         #calculate_profit_factor_group(data)
         #calculate_winrate_group(data)
         #calculate_average_gain_loss_rr(data) 
-        calculate_winrrtflat(data)
+        #calculate_winrrtflat(data)
         #calculate_totaltrade(data)
         #calculate_averagetrade(data)
    
