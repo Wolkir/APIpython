@@ -27,7 +27,7 @@ from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
 #from routes.calcul.daytrade import calculate_daytrade
-from routes.calcul.sortiemanu import calculate_sortiemanu
+from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier pour appeler calculate_tpr et slr
 
 
 
