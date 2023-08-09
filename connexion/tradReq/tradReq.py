@@ -71,7 +71,7 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
-
+    continue_execution = True
     try:
         user = db.users.find_one({"username": username})
         if not user or not compare_passwords(password, user['password']):
@@ -92,8 +92,11 @@ def save_trade_request():
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
             #raise ModifySlException("La transaction ModifySl a été traitée.")
-    #except ModifySlException as e:
-        #return jsonify({"message": str(e)})
+     except Exception as e:
+        # Gérez l'exception ici si nécessaire
+        continue_execution = False
+        return jsonify({"message": f"Error: {str(e)}"}), 500
+
         if closure_position == "" and data.get('typeOfTransaction') == "ModifyTp":
             # Mettre à jour UNIQUEMENT la variable stopLoss dans la collection des ordres "Open"
             open_orders = db[f"{username}_open"]
