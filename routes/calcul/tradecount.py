@@ -10,8 +10,7 @@ db = client['test']
 
 
 @tradecount.route('/tradecount', methods=['GET'])
-def calculate_tradecount(data):
-    
+def calculate_tradecount():
     data = request.json
     username = data.get('username')
     raw_date = data.get('dateAndTimeOpening')
@@ -39,7 +38,7 @@ def calculate_tradecount(data):
             new_trade_number = last_closed_trade["trade_number"] + 1
         else:
             new_trade_number = 1
+    else:
+        return jsonify({"error": f"Invalid status value: {status}"}), 400
 
-
-   return new_trade_number
-    
+    return new_trade_number
