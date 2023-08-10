@@ -184,6 +184,9 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
+            multiple = calculate_tradercount(data)
+            data['simultane'] = multiple
+
           
 
             
@@ -222,6 +225,9 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
+            multiple = calculate_tradercount(data)
+            data['simultane'] = multiple
+
             
             
         # Insert the data into the collection
@@ -251,6 +257,7 @@ def save_trade_request():
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
             "tradecount" : data.get('tradecount'),
+            "simultane" :data.get('multiple')
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
