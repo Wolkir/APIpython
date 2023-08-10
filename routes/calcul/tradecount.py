@@ -40,6 +40,6 @@ def calculate_tradecount(data):
         else:
             new_trade_number = 1
 
-    else:
-        return new_trade_number
+
+   return new_trade_number
     
