@@ -15,7 +15,7 @@ def calculate_tradecount(data):
     username = data.get('username')
     raw_date = data.get('dateAndTimeOpening')
     status = data.get('closurePosition')  # "open" ou "close"
-    trade_number = data.get('tradecount')
+ 
 
     if not raw_date:
         return "Date not provided", 400
@@ -33,9 +33,9 @@ def calculate_tradecount(data):
         count_open = collection_open.count_documents({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
         new_trade_number = count_close + count_open + 1
     elif status == "Close":
-        last_closed_trade = collection_close.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}}, sort=[("trade_number", -1)])
+        last_closed_trade = collection_close.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}}, sort=[("tradecount", -1)])
         if last_closed_trade:
-            new_trade_number = last_closed_trade["trade_number"] + 1
+            new_trade_number = last_closed_trade["tradecount"] + 1
         else:
             new_trade_number = 1
     else:
