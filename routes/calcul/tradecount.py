@@ -27,9 +27,4 @@ def calculate_tradecount(data):
 
     # À ce stade, vous pouvez soit ajouter ce nouveau trade à la collection appropriée, soit renvoyer ce numéro.
 
-    return jsonify({"new_trade_number": new_trade_number})
-
-if __name__ == "__main__":
-    app = Flask(__name__)
-    app.register_blueprint(tradecount)
-    app.run(debug=True)
+    return new_trade_number
