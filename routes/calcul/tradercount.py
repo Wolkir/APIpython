@@ -2,46 +2,34 @@ from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 from datetime import datetime
 
-tradercount = Blueprint('tradercount', __name__)
+tradecount = Blueprint('tradecount', __name__)
 
+# Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
-# Variable globale pour stocker le tradercount de la journée en cours
-daily_trade_counts = {}
 
-@tradercount.route('/tradercount', methods=['GET'])
-def calculate_tradercount(data):
-    try:
-        username = data.get('username')
+@tradecount.route('/tradecount', methods=['POST'])  # J'ai changé GET en POST car il semble que vous souhaitez soumettre des données
+def calculate_tradecount(data):
+    
+    data = request.json
+    username = data.get('username')
+    date_of_trade = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+    
+    collection_close = db[f"{username}_close"]
+    collection_open = db[f"{username}_open"]
 
-        collection_close = f"{username}_close"
-        # Collection pour stocker les trades ouverts
-        collection_open = f"{username}_open"
+    # Comptez les trades fermés et ouverts pour la date donnée
+    count_close = collection_close.count_documents({"date": date_of_trade})
+    count_open = collection_open.count_documents({"date": date_of_trade})
 
-        # Recherche de la dernière position fermée pour la date actuelle
-        current_date = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')
-        print("Current Date:", current_date)
+    # Calculer le numéro de trade pour le nouveau trade
+    new_trade_number = count_close + count_open + 1
 
-        last_trade = db[collection_close].find_one({'date': current_date}, sort=[('tradecount', -1)])
+    # À ce stade, vous pouvez soit ajouter ce nouveau trade à la collection appropriée, soit renvoyer ce numéro.
 
-        # Si aucun trade n'a été fermé aujourd'hui, alors le tradecount sera 1 pour la position ouverte
-        if not last_trade:
-            tradecount = 1
-        else:
-            tradecount = last_trade['tradecount'] + 1
+    return jsonify({"new_trade_number": new_trade_number})
 
-        # Mettre à jour le tradercount de la journée en cours dans la variable globale
-        daily_trade_counts[current_date] = tradecount
-        print("TradeCount:", tradecount)
-        
-        # Mise à jour du tradecount du tout premier trade de la collection à 1
-        first_trade = db[collection_close].find_one(sort=[('tradecount', 1)])
-        if first_trade:
-            db[collection_close].update_one({'_id': first_trade['_id']}, {'$set': {'tradecount': 1}})
-            print("Collection's first trade's TradeCount has been reset to 1.")
-
-        return str(tradecount)
-
-    except Exception as e:
-        print("Error:", e)
-        return jsonify({'error': str(e)}), 500
+if __name__ == "__main__":
+    app = Flask(__name__)
+    app.register_blueprint(tradecount)
+    app.run(debug=True)
