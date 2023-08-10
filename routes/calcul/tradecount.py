@@ -8,13 +8,13 @@ tradecount = Blueprint('tradecount', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@tradecount.route('/tradecount', methods=['POST'])
+@tradecount.route('/tradecount', methods=['GET'])
 def calculate_tradecount(data):
     
-    data = request.json
+
     username = data.get('username')
     # Récupérer la date sans l'heure, les minutes et les secondes
-    date_of_trade = datetime.strptime(data.get('date'), '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
+    date_of_trade = datetime.strptime(data.get('dateAndTimeOpening'), '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
     
     collection_close = db[f"{username}_close"]
     collection_open = db[f"{username}_open"]
