@@ -219,8 +219,8 @@ def save_trade_request():
             condi = find_limit(data)
             data['Limit'] = condi
 
-            #daytrade_value = calculate_daytrade(data)
-            #data['daytrade'] = daytrade_value
+            new_trade_number = calculate_tradecount(data)
+            data['tradecount'] = new_trade_number
 
             
             
