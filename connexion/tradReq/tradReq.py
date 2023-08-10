@@ -26,7 +26,7 @@ from routes.calcul.average.averagegainloss import calculate_average_gain_loss_rr
 from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
-#from routes.calcul.daytrade import calculate_daytrade
+from routes.calcul.tradecount import calculate_tradecount
 from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier pour appeler calculate_tpr et slr
 
 
@@ -181,8 +181,8 @@ def save_trade_request():
             smanu = calculate_sortiemanu(data)
             data['sortiemanu'] = smanu
 
-            #position = calculate_totaltrade(data)
-            #data['totaltrade'] = position
+            new_trade_number = calculate_tradecount(data)
+            data['ttradecount'] = new_trade_number
 
           
 
@@ -250,7 +250,7 @@ def save_trade_request():
             "profit": data.get('profit'),
             "commission": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
-            #"tradercount" : data.get(tradercount),
+            "tradercount" : data.get(tradercount),
             "balance": data.get('balance'),
             "broker": data.get('broker'),
             "annonceEconomique": None,
