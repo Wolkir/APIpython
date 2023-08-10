@@ -15,6 +15,7 @@ def calculate_tradecount(data):
     username = data.get('username')
     raw_date = data.get('dateAndTimeOpening')
     status = data.get('closurePosition')  # "open" ou "close"
+    trade_number = data.get('tradecount')
 
     if not raw_date:
         return "Date not provided", 400
