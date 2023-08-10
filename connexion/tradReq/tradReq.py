@@ -182,7 +182,7 @@ def save_trade_request():
             data['sortiemanu'] = smanu
 
             new_trade_number = calculate_tradecount(data)
-            data['ttradecount'] = new_trade_number
+            data['tradecount'] = new_trade_number
 
           
 
