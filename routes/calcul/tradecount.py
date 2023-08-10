@@ -39,7 +39,7 @@ def calculate_tradecount(data):
             multiple = True
         
         new_trade_number = count_close + count_open + 1
-    return  multiple
+
     elif status == "Close":
         last_closed_trade = collection_close.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}}, sort=[("trade_number", -1)])
         if last_closed_trade:
