@@ -184,7 +184,7 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
-            multiple = calculate_tradercount(data)
+            multiple = calculate_tradecount(data)
             data['simultane'] = multiple
 
           
@@ -225,7 +225,7 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
-            multiple = calculate_tradercount(data)
+            multiple = calculate_tradecount(data)
             data['simultane'] = multiple
 
             
