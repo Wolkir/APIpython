@@ -8,8 +8,8 @@ tradecount = Blueprint('tradecount', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@tradecount.route('/tradecount', methods=['POST'])
-def calculate_tradecount():
+@tradecount.route('/tradecount', methods=['GET'])
+def calculate_tradecount(data):
     
     data = request.json
     username = data.get('username')
