@@ -22,7 +22,7 @@ def calculate_tradecount(data):
     try:
         date_of_trade = datetime.strptime(raw_date, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        
 
     collection_close = db[f"{username}_close"]
     collection_open = db[f"{username}_open"]
@@ -30,9 +30,7 @@ def calculate_tradecount(data):
     # Suppression du trade de la collection 'open'
     trade_to_close = collection_open.find_one_and_delete({"_id": identifier})
 
-    if not trade_to_close:
-        return jsonify({"error": "Trade not found in open trades."}), 400
-
+   
     # Récupération du dernier trade_number dans la collection 'close'
     last_closed_trade = collection_close.find_one(sort=[("trade_number", -1)])
     if last_closed_trade:
