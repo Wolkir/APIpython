@@ -12,17 +12,18 @@ db = client['test']
 @tradecount.route('/tradecount', methods=['GET'])
 def calculate_tradecount(data):
     
+    data = request.json
     username = data.get('username')
     raw_date = data.get('dateAndTimeOpening')
     status = data.get('closurePosition')  # "open" ou "close"
 
     if not raw_date:
-        return "Date not provided", 400
+        return jsonify({"error": "Date not provided"}), 400
 
     try:
         date_of_trade = datetime.strptime(raw_date, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
     except ValueError as e:
-        return str(e), 400
+        return jsonify({"error": str(e)}), 400
 
     collection_close = db[f"{username}_close"]
     collection_open = db[f"{username}_open"]
@@ -40,6 +41,6 @@ def calculate_tradecount(data):
             new_trade_number = 1
 
     else:
-        return "Invalid status", 400
+        return jsonify({"error": "Invalid status"}), 400
 
     return new_trade_number
