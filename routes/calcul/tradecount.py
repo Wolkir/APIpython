@@ -28,12 +28,12 @@ def calculate_tradecount(data):
     collection_close = db[f"{username}_close"]
     collection_open = db[f"{username}_open"]
 
-    if status == "open":
+    if status == "Open":
         count_close = collection_close.count_documents({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
         count_open = collection_open.count_documents({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
         new_trade_number = count_close + count_open + 1
 
-    elif status == "close":
+    elif status == "Close":
         last_closed_trade = collection_close.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}}, sort=[("trade_number", -1)])
         if last_closed_trade:
             new_trade_number = last_closed_trade["trade_number"] + 1
