@@ -88,6 +88,9 @@ def check_multiple_trades(data):
         order_data = collection.find_one({"username": username, "dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
         multiple = order_data["multiple"] if order_data else False
 
+        # Supprimer l'entrée correspondante dans la collection 'username_unitaire'
+        collection.delete_one({"username": username, "dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
+
     else:
         return jsonify({"error": f"Invalid status value: {status}"}), 400
 
