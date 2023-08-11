@@ -38,7 +38,7 @@ def calculate_daycount():
     else:
         return 0
 
-app.register_blueprint(daycount)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
