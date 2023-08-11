@@ -49,9 +49,6 @@ def calculate_tradecount(data):
     else:
         return jsonify({"error": f"Invalid status value: {status}"}), 400
 
-    return {
-    "new_trade_number": new_trade_number,
-    "multiple": multiple
-}
+    return new_trade_number
     
 
