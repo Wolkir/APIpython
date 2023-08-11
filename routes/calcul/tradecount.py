@@ -79,6 +79,6 @@ def check_multiple_trades(data):
     elif status != "Close":
         return jsonify({"error": f"Invalid status value: {status}"}), 400
 
-    return multiple": multiple
+    return  multiple
     
 
