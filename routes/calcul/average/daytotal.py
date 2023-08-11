@@ -9,7 +9,7 @@ daytotal = Blueprint('daytotal', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
 
-@daycount.route('/daycount', methods=['POST'])  # I changed it to POST for passing username data safely
+@daytotal.route('/daytotal', methods=['POST'])  # I changed it to POST for passing username data safely
 def calculate_daycount():
     data = request.json
     username = data.get('username')
