@@ -27,6 +27,7 @@ from routes.calcul.winrrtflat import calculate_winrrtflat
 from routes.calcul.totaltrade import calculate_totaltrade
 #from routes.calcul.average.averagetrade import calculate_averagetrade
 from routes.calcul.tradecount import calculate_tradecount
+from routes.calcul.tradecount import check_multiple_trades
 from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier pour appeler calculate_tpr et slr
 
 
@@ -184,7 +185,7 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
-            multiple = calculate_tradecount(data)
+            multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
           
@@ -225,7 +226,7 @@ def save_trade_request():
             new_trade_number = calculate_tradecount(data)
             data['tradecount'] = new_trade_number
 
-            multiple = calculate_tradecount(data)
+            multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
             
