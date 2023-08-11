@@ -190,7 +190,7 @@ app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
 app.register_blueprint(recuperation_un_seul_trade(app))
 app.register_blueprint(set_correctionTrade(app))
-app.register_blueprint(delete_suppressionTrade(app))
+app.register_blueprint(delete_suppressionTrade())
 
 # image
 app.register_blueprint(enregistrerImage)
