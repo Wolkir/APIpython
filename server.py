@@ -106,6 +106,7 @@ from routes.journal.modificationTrade import setup_modificationTrade_routes
 from routes.journal.recuperationTrade import setup_things_routes
 #from routes.journal.supprimerTrade import suppressionTrade
 from routes.journal.recuperationUnTrade import recuperation_un_seul_trade
+from routes.journal.correctionTrade import set_correctionTrade
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
@@ -187,8 +188,9 @@ app.register_blueprint(envoie)
 # journal
 app.register_blueprint(setup_things_routes(app))
 app.register_blueprint(setup_modificationTrade_routes(app))
-#app.register_blueprint(suppressionTrade)
 app.register_blueprint(recuperation_un_seul_trade(app))
+app.register_blueprint(set_correctionTrade(app))
+#app.register_blueprint(suppressionTrade)
 
 # image
 app.register_blueprint(enregistrerImage)
