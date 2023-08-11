@@ -35,9 +35,10 @@ def calculate_daycount(data):
     result = list(distinct_dates)
     if result:
         return result[0]['distinctDateCount']
+    unitaire_collection = db['collection_unitaire']  # Use the collection name as a string
+    unitaire_collection.update_one({}, {"$set": {"daytotal": distinct_count}}, upsert=True)
     else:
         return 0
-    unitaire_collection = db[collection_unitaire]
-    unitaire_collection.update_one({}, {"$set": {"daytotal": result}}, upsert=True)
+    
 
 
