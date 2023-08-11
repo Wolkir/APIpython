@@ -16,6 +16,13 @@ def calculate_winrate(data):
     collection_name = f"{username}_close"
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
+
+    # collection = request.args.get('collection', None)
+    # username = request.args.get('username', None)
+    # meilleur = request.args.get('meilleur', None)
+    
+    # ces 3 lignes recuperent les données fournis par le front
+    # meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
   
     # Récupérer tous les documents
     documents = list(collection.find())
