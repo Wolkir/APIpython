@@ -49,5 +49,36 @@ def calculate_tradecount(data):
         return jsonify({"error": f"Invalid status value: {status}"}), 400
 
     return new_trade_number
+
+
+@tradecount.route('/checkmultiple', methods=['GET'])
+def check_multiple_trades(data):
+
+    username = data.get('username')
+    raw_date = data.get('dateAndTimeOpening')
+    status = data.get('closurePosition') 
+
+    if not raw_date:
+        return jsonify({"error": "Date not provided"}), 400
+
+    try:
+        date_of_trade = datetime.strptime(raw_date, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    collection_open = db[f"{username}_open"]
+
+    multiple = False  # Initializing the multiple variable
+
+    if status == "Open":
+        count_open = collection_open.count_documents({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
+        
+        # Check if another order is already open
+        if count_open > 0:
+            multiple = True
+    elif status != "Close":
+        return jsonify({"error": f"Invalid status value: {status}"}), 400
+
+    return multiple": multiple
     
 
