@@ -78,7 +78,8 @@ from routes.calcul.bestrr import bestrr
 from routes.calcul.tradecount import tradecount
 from routes.calcul.totaltrade import totaltrade
 from routes.calcul.sortiemanu import sortiemanu
-#code 5 aout 23h52
+from routes.calcul.average.daycount import calculate_daycount
+#code 12 aout 
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
 #from routes.calcul.minloss import minloss // remplacé par le code groupé maxprofit_minloss
@@ -141,6 +142,7 @@ app.register_blueprint(bestrr)
 app.register_blueprint(tradecount)
 app.register_blueprint(totaltrade)
 app.register_blueprint(sortiemanu)
+app.register_blueprint(daycount)
 
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
