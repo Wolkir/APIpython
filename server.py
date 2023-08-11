@@ -142,7 +142,7 @@ app.register_blueprint(bestrr)
 app.register_blueprint(tradecount)
 app.register_blueprint(totaltrade)
 app.register_blueprint(sortiemanu)
-app.register_blueprint(daycount)
+app.register_blueprint(daytotal)
 
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
