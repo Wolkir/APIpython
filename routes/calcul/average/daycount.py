@@ -2,14 +2,14 @@ from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
+daytotal = Blueprint('daytotal', __name__)
 
 
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
-daytotal = Blueprint('daytotal', __name__)
 
-@daycount.route('/daycount', methods=['GET'])  # I changed it to POST for passing username data safely
+@daycount.route('/daycount', methods=['POST'])  # I changed it to POST for passing username data safely
 def calculate_daycount():
     data = request.json
     username = data.get('username')
