@@ -66,6 +66,8 @@ def check_multiple_trades(data):
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
+    collection_name = f"{username}_unitaire"
+    collection = db[collection_name]
     collection_open = db[f"{username}_open"]
 
     if status == "Open":
@@ -74,21 +76,16 @@ def check_multiple_trades(data):
         # Check if another order is already open
         multiple = count_open > 0
 
-        # Stocker la valeur de 'multiple' dans la base de données avec les autres informations de l'ordre
-        existing_order = collection_open.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
-        if existing_order:
-            collection_open.update_one({"_id": existing_order["_id"]}, {"$set": {"multiple": multiple}})
-        else:
-            collection_open.insert_one({
-                "username": username,
-                "dateAndTimeOpening": raw_date,
-                "multiple": multiple
-                # ... autres champs nécessaires
-            })
+        # Stocker la valeur de 'multiple' dans la collection 'username_unitaire'
+        collection.insert_one({
+            "username": username,
+            "dateAndTimeOpening": raw_date,
+            "multiple": multiple
+        })
 
     elif status == "Close":
-        # Récupérer la valeur de 'multiple' de la base de données
-        order_data = collection_open.find_one({"username": username, "dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
+        # Récupérer la valeur de 'multiple' de la collection 'username_unitaire'
+        order_data = collection.find_one({"username": username, "dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
         multiple = order_data["multiple"] if order_data else False
 
     else:
