@@ -29,7 +29,7 @@ from routes.calcul.totaltrade import calculate_totaltrade
 from routes.calcul.tradecount import calculate_tradecount
 from routes.calcul.tradecount import check_multiple_trades
 from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier pour appeler calculate_tpr et slr
-
+from routes.calcul.average.calculate_daycount import calculate_daycount
 
 
 
@@ -309,6 +309,7 @@ def save_trade_request():
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
         calculate_totaltrade(data)
+        calculate_daycount(data)
         #calculate_averagetrade(data)
    
         
