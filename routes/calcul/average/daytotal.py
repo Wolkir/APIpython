@@ -10,7 +10,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @daytotal.route('/daytotal', methods=['POST'])  # I changed it to POST for passing username data safely
-def calculate_daycount():
+def calculate_daycount(data):
     data = request.json
     username = data.get('username')
     
