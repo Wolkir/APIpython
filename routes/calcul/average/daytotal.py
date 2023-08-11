@@ -19,6 +19,9 @@ def calculate_daycount(data):
 
     collection_name = f"{username}_close"
     collection = db[collection_name]
+    collection_unit = f"{username}_unitaire"
+    unitaire_collection = db[collection_unit]
+    
 
     # Assuming that there's a 'date' field in each document which contains the date
     distinct_dates = collection.aggregate([
@@ -35,7 +38,7 @@ def calculate_daycount(data):
     result = list(distinct_dates)
     if result:
         return result[0]['distinctDateCount']
-    unitaire_collection = db['collection_unitaire']  # Use the collection name as a string
+   
     unitaire_collection.update_one({}, {"$set": {"daytotal": distinct_count}}, upsert=True)
     return distinct_count
 
