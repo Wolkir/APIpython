@@ -13,6 +13,13 @@ db = client['test']
 def calculate_best_rr():
     collection = db["test2_close"]
 
+    # collection = request.args.get('collection', None)
+    # username = request.args.get('username', None)
+    # meilleur = request.args.get('meilleur', None)
+    
+    # ces 3 lignes recuperent les données fournis par le front
+    # meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
+
     best_rr = 0
     best_day = ""
     best_symbol = ""
