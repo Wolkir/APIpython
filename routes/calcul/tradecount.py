@@ -56,7 +56,7 @@ def check_multiple_trades(data):
 
     username = data.get('username')
     raw_date = data.get('dateAndTimeOpening')
-    status = data.get('closurePosition') 
+    status = data.get('closurePosition')
 
     if not raw_date:
         return jsonify({"error": "Date not provided"}), 400
@@ -68,17 +68,30 @@ def check_multiple_trades(data):
 
     collection_open = db[f"{username}_open"]
 
-    multiple = False  # Initializing the multiple variable
-
     if status == "Open":
         count_open = collection_open.count_documents({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
-        
+
         # Check if another order is already open
-        if count_open > 0:
-            multiple = True
-    elif status != "Close":
+        multiple = count_open > 0
+
+        # Stocker la valeur de 'multiple' dans la base de données avec les autres informations de l'ordre
+        existing_order = collection_open.find_one({"dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
+        if existing_order:
+            collection_open.update_one({"_id": existing_order["_id"]}, {"$set": {"multiple": multiple}})
+        else:
+            collection_open.insert_one({
+                "username": username,
+                "dateAndTimeOpening": raw_date,
+                "multiple": multiple
+                # ... autres champs nécessaires
+            })
+
+    elif status == "Close":
+        # Récupérer la valeur de 'multiple' de la base de données
+        order_data = collection_open.find_one({"username": username, "dateAndTimeOpening": {"$regex": f"^{date_of_trade}"}})
+        multiple = order_data["multiple"] if order_data else False
+
+    else:
         return jsonify({"error": f"Invalid status value: {status}"}), 400
 
-    return  multiple
-    
-
+    return multiple
