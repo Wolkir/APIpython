@@ -222,7 +222,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commision'),
+            "commision": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
             #"tradercount" : data.get(tradercount),
             "balance": data.get('balance'),
