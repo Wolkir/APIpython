@@ -18,9 +18,10 @@ app.after_request(after_request)
 app.debug = False
 CORS(app, resources={r"*": {"origins": "*"}})
 
-# enregistrementRemplissageDefaut
+# RemplissageDefaut
 from routes.journal.enregistrementRemplissageDefaut import enregistrementRemplissageDefaut
 from routes.journal.recuperationRemplissageDefaut import recuperationRemplissageDefaut
+from routes.journal.suppressionRemplissage import suppressionRemplissage
 
 # indicateur
 from connexion.indicateur.createIndicateur import createIndicateur
@@ -163,9 +164,10 @@ app.register_blueprint(daytotal)
 #app.register_blueprint(conversion_map)
 #app.register_blueprint(ddmax)
 
-# enregistrementRemplissageDefaut
+# RemplissageDefaut
 app.register_blueprint(enregistrementRemplissageDefaut)
 app.register_blueprint(recuperationRemplissageDefaut)
+app.register_blueprint(suppressionRemplissage)
 
 # user
 app.register_blueprint(setup_signup_route(app))
