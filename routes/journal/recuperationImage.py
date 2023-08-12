@@ -16,11 +16,20 @@ def recuperation_image():
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        image = fs.find_one({'metadata.id': image_id})
-        if image is None:
-            return jsonify({'message': 'Image non trouvée'}), 404
+        images = fs.find({'metadata.id': image_id})
+        if images.count() == 0:
+            return jsonify({'message': 'Aucune image trouvée'}), 404
 
-        return send_file(io.BytesIO(image.read()), mimetype='image/jpeg')
+        image_data = []
+        for image in images:
+            image_data.append(io.BytesIO(image.read()))
+
+        response = app.response_class(
+            response=image_data[0].getvalue(),
+            content_type='image/jpeg'
+        )
+
+        return response
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
