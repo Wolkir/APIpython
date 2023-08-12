@@ -258,7 +258,7 @@ def save_trade_request():
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
             "profit": data.get('profit'),
-            "commission": data.get('commision'),
+            "commision": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
             "tradecount" : data.get('tradecount'),
             "Multi" :data.get('simultane'),
@@ -290,8 +290,12 @@ def save_trade_request():
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
             "position": None,
-            "typeOrdre": None
-            
+            "typeOrdre": None,
+            "indicateur1": None,
+            "indicateur2": None,
+            "indicateur3": None,
+            "tag": None,
+            "note": None,
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
