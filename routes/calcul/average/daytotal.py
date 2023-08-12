@@ -9,8 +9,8 @@ daytotal = Blueprint('daytotal', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
 
-@daytotal.route('/daytotal', methods=['POST'])  # I changed it to POST for passing username data safely
-def calculate_daycount(data):
+@daytotal.route('/daytotal', methods=['POST'])  # POST pour la sécurité des données de l'utilisateur
+def calculate_daycount():
     data = request.json
     username = data.get('username')
     
@@ -23,7 +23,7 @@ def calculate_daycount(data):
     unitaire_collection = db[collection_unit]
     
 
-    # Assuming that there's a 'date' field in each document which contains the date
+    # Supposition qu'il y a un champ 'date' dans chaque document contenant la date
     distinct_dates = collection.aggregate([
         {
             "$group": {
@@ -37,9 +37,8 @@ def calculate_daycount(data):
 
     result = list(distinct_dates)
     if result:
-        return result[0]['distinctDateCount']
+        distinct_count = result[0]['distinctDateCount']
+        unitaire_collection.update_one({}, {"$set": {"daytotal": distinct_count}}, upsert=True)
+        return jsonify({"distinctDateCount": distinct_count})
    
-    unitaire_collection.update_one({}, {"$set": {"daytotal": distinct_count}}, upsert=True)
-    return distinct_count
-
-
+    return jsonify({"error": "No distinct dates found"}), 400
