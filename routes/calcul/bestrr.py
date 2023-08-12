@@ -13,20 +13,20 @@ db = client['test']
 def calculate_best_rr():
     collection = db["test2_close"]
 
-    # collection = request.args.get('collection', None)
-    # username = request.args.get('username', None)
-    # meilleur = request.args.get('meilleur', None)
+    collection = request.args.get('collection', None)
+    username = request.args.get('username', None)
+    meilleur = request.args.get('meilleur', None)
     
-    # ces 3 lignes recuperent les données fournis par le front
-    # meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
+    ces 3 lignes recuperent les données fournis par le front
+    meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
 
     best_rr = 0
     best_day = ""
     best_symbol = ""
     best_order_type = ""
 
-    rr_by_combination = {}  # Dictionnaire pour stocker la somme des RR pour chaque combinaison (Day, symbol, orderType)
-    rr_count_combination = {}  # Dictionnaire pour stocker le nombre de RR pour chaque combinaison
+    meilleur_by_combination = {}  # Dictionnaire pour stocker la somme des RR pour chaque combinaison (Day, symbol, orderType)
+    meilleur_count_combination = {}  # Dictionnaire pour stocker le nombre de RR pour chaque combinaison
 
     # Parcourir les documents de la collection et calculer la somme des RR pour chaque combinaison
     for doc in collection.find():
@@ -37,11 +37,11 @@ def calculate_best_rr():
         combination = (day, symbol, order_type)
 
         if rr_value is not None:
-            rr_by_combination[combination] = rr_by_combination.get(combination, 0) + rr_value
-            rr_count_combination[combination] = rr_count_combination.get(combination, 0) + 1
+            meilleur_by_combination[combination] =  meilleur_by_combination.get(combination, 0) + rr_value
+            meilleur_count_combination[combination] = meilleur_count_combination.get(combination, 0) + 1
 
     for combination, rr_total in rr_by_combination.items():
-        rr_count = rr_count_combination.get(combination, 0)
+        rr_count = meilleur_by_combination.get(combination, 0)
         average_rr = rr_total / rr_count if rr_count > 0 else 0
 
         if average_rr > best_rr:
