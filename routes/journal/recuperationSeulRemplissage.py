@@ -17,7 +17,7 @@ def get_recuperationSeulRemplissage():
         collection_brut = 'remplissageDefaut'
         collection = mongo.db[collection_brut]
 
-        remplissageDefaut = list(collection.find({"username": username}, {"nomRemplissageDefaut": nomRemplissageDefaut}))
+        remplissageDefaut = list(collection.find({"username": username, "nomRemplissageDefaut": nomRemplissageDefaut}))
         for strategy in remplissageDefaut:
             strategy['_id'] = str(strategy['_id'])
 
@@ -26,3 +26,4 @@ def get_recuperationSeulRemplissage():
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": "Erreur lors de la récupération du remplissage seul", "details": str(e)}), 500
+
