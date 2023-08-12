@@ -17,8 +17,8 @@ def calculate_best_rr():
     username = request.args.get('username', None)
     meilleur = request.args.get('meilleur', None)
     
-    ces 3 lignes recuperent les données fournis par le front
-    meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
+    #ces 3 lignes recuperent les données fournis par le front
+    #meilleur est la valeur selectionné dans le menu déroulant (RR, profit...)
 
     best_rr = 0
     best_day = ""
