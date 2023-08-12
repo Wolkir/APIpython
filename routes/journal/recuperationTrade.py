@@ -25,6 +25,7 @@ def setup_things_routes(app):
             argUsername = request.args.get('username', None)
             argTypeTrade = request.args.get('typeTrade', None)
             argCollection = request.args.get('collection', None)
+            argRechercheDonnee = request.args.get('rechercheDonnee', None)
 
             collection = argCollection
 
@@ -39,6 +40,9 @@ def setup_things_routes(app):
                 query['$and'].append({'$or': [{'annonceEconomique': {'$ne': None}}, {'psychologie': {'$ne': None}}, {'strategie': {'$ne': None}}]})
             if argTypeTrade is not None and argTypeTrade == "nonrenseigne":
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
+
+            if argRechercheDonnee is not None and argRechercheDonnee != "":
+                query['$and'].append({'$and': [{'tag': argRechercheDonnee}]})
 
             things_collection = mongo.db[collection]
             all_things = list(things_collection.find(query))
@@ -84,5 +88,3 @@ def setup_things_routes(app):
             return jsonify({"error": "Erreur lors de la suppression du trade", "details": str(e)}), 500
         
     return things_blueprint
-
-
