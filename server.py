@@ -20,6 +20,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 
 # enregistrementRemplissageDefaut
 from routes.journal.enregistrementRemplissageDefaut import enregistrementRemplissageDefaut
+from routes.journal.recuperationRemplissageDefaut import recuperationRemplissageDefaut
 
 # indicateur
 from connexion.indicateur.createIndicateur import createIndicateur
@@ -164,6 +165,7 @@ app.register_blueprint(daytotal)
 
 # enregistrementRemplissageDefaut
 app.register_blueprint(enregistrementRemplissageDefaut)
+app.register_blueprint(recuperationRemplissageDefaut)
 
 # user
 app.register_blueprint(setup_signup_route(app))
