@@ -16,15 +16,15 @@ def enregistrer_image():
             return jsonify({'message': 'Aucune image trouvée dans la requête'}), 400
 
         image = request.files['image']
-        id_value = request.form.get('id')
-        collection_value = request.form.get('collection')
+        id_value = str(request.form.get('id'))  # Convert the value to string
+        collection_value = str(request.form.get('collection'))  # Convert the value to string
 
         app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority'
         mongo = MongoClient(app.config['MONGO_URI'])
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        metadata = {'id': str(id_value), 'collection': str(collection_value)}
+        metadata = {'id': id_value, 'collection': collection_value}
         metadata_json = json.dumps(metadata)
 
         image_id = fs.put(image.stream, filename=image.filename, metadata=metadata_json)
@@ -33,4 +33,5 @@ def enregistrer_image():
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
+
 
