@@ -42,7 +42,8 @@ def setup_things_routes(app):
                 query['$and'].append({'$and': [{'annonceEconomique': None}, {'Fatigue': None}, {'psychologie': None}]})
 
             if argRechercheDonnee is not None and argRechercheDonnee != "":
-                query['$and'].append({'$and': [{'tag': argRechercheDonnee}]})
+                regex_pattern = f".*{argRechercheDonnee}.*"
+                query['$and'].append({'tag': {'$regex': regex_pattern}})
 
             things_collection = mongo.db[collection]
             all_things = list(things_collection.find(query))
