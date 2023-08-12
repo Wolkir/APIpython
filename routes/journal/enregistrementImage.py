@@ -23,7 +23,7 @@ def enregistrer_image():
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        metadata = {'id': id_value, 'collection': collection_value}
+        metadata = {'id': ObjectId(id_value), 'collection': collection_value}
 
         image_id = fs.put(image.stream, filename=image.filename, metadata=metadata)
 
