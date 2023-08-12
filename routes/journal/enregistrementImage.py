@@ -23,9 +23,10 @@ def enregistrer_image():
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        metadata = {'id': ObjectId(id_value), 'collection': collection_value}
-
-        image_id = fs.put(image.stream, filename=image.filename, metadata=metadata)
+        metadata = {'id': str(id_value), 'collection': collection_value}
+        metadata_json = json.dumps(metadata)
+        
+        image_id = fs.put(image.stream, filename=image.filename, metadata=metadata_json)
 
         return jsonify({'message': 'Image enregistrée avec succès', 'image_id': str(image_id)})
     except Exception as e:
