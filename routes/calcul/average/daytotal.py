@@ -9,6 +9,7 @@ daytotal = Blueprint('daytotal', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
 db = client['test']
 
+
 @daytotal.route('/daytotal', methods=['POST'])  # POST pour la sécurité des données de l'utilisateur
 def calculate_daycount(data):
     data = request.json
@@ -21,13 +22,17 @@ def calculate_daycount(data):
     collection = db[collection_name]
     collection_unit = f"{username}_unitaire"
     unitaire_collection = db[collection_unit]
-    
 
-    # Supposition qu'il y a un champ 'date' dans chaque document contenant la date
+    # Grouper par jour (sans prendre en compte l'heure, les minutes, etc.)
     distinct_dates = collection.aggregate([
         {
             "$group": {
-                "_id": "$date"
+                "_id": {
+                    "$dateToString": {
+                        "format": "%Y-%m-%d",
+                        "date": "$dateAndTimeOpening"
+                    }
+                }
             }
         },
         {
