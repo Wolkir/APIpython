@@ -11,7 +11,7 @@ db = client['test']
 
 @bestrr.route('/best', methods=['GET'])
 def calculate_best_rr():
-    collection = db["test2_close"]
+    
 
     collection = request.args.get('collection', None)
     username = request.args.get('username', None)
