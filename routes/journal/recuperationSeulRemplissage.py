@@ -17,7 +17,7 @@ def get_recuperationSeulRemplissage():
         collection_brut = 'remplissageDefaut'
         collection = mongo.db[collection_brut]
 
-        remplissageDefaut = list(collection.find_one({"username": username, "nomRemplissageDefaut": nomRemplissageDefaut}))
+        remplissageDefaut = list(collection.find({"username": username}, {"nomRemplissageDefaut": nomRemplissageDefaut}))
         for strategy in remplissageDefaut:
             strategy['_id'] = str(strategy['_id'])
 
