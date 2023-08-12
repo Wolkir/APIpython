@@ -1,15 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
-from pymongo import MongoClient
-from datetime import datetime
+from flask import Blueprint, request, jsonify
 
-app = Flask(__name__)
 daytotal = Blueprint('daytotal', __name__)
-
-
-
-client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority')
-db = client['test']
-
 
 @daytotal.route('/daytotal', methods=['POST'])  # POST pour la sécurité des données de l'utilisateur
 def calculate_daycount(data):
@@ -23,17 +15,13 @@ def calculate_daycount(data):
     collection = db[collection_name]
     collection_unit = f"{username}_unitaire"
     unitaire_collection = db[collection_unit]
+    
 
-    # Grouper par jour (sans prendre en compte l'heure, les minutes, etc.)
+    # Supposition qu'il y a un champ 'date' dans chaque document contenant la date
     distinct_dates = collection.aggregate([
         {
             "$group": {
-                "_id": {
-                    "$dateToString": {
-                        "format": "%Y-%m-%d",
-                        "date": "$dateAndTimeOpening"
-                    }
-                }
+                "_id": "$dateandTimeOpening"
             }
         },
         {
