@@ -21,7 +21,7 @@ def calculate_daycount(data):
     distinct_dates = collection.aggregate([
         {
             "$group": {
-                "_id": "$dateandTimeOpening"
+                "_id": "$dateAndTimeOpening"
             }
         },
         {
