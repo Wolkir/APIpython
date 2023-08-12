@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
+from datetime import datetime
 
 app = Flask(__name__)
 daytotal = Blueprint('daytotal', __name__)
