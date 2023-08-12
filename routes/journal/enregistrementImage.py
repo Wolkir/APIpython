@@ -18,13 +18,17 @@ def enregistrer_image():
         id_value = request.form.get('id')
         collection_value = request.form.get('collection')
 
+        print(id_value)
+        print(collection_value)
+
         app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority'
         mongo = MongoClient(app.config['MONGO_URI'])
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        # Ajouter les champs 'id' et 'collection' en tant que métadonnées
         metadata = {'id': id_value, 'collection': collection_value}
+
+        print(metadata)
 
         image_id = fs.put(image.stream, filename=image.filename, metadata=metadata)
 
