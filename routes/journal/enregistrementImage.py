@@ -25,7 +25,7 @@ def enregistrer_image():
         fs = gridfs.GridFS(db)
 
         metadata = {'id': id_value, 'collection': collection_value}
-        metadata_json = json.dumps(metadata)
+        #metadata_json = json.dumps(metadata)
 
         image_id = fs.put(image.stream, filename=image.filename, metadata=metadata_json)
 
