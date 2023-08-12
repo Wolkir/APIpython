@@ -1,11 +1,13 @@
-from flask import Flask, Blueprint, jsonify, request
-from flask import Blueprint, request, jsonify
+from flask import Flask, Blueprint, jsonify
+from pymongo import MongoClient
+from datetime import datetime, timedelta
 
 daytotal = Blueprint('daytotal', __name__)
 
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
+
 
 @daytotal.route('/daytotal', methods=['POST'])  # POST pour la sécurité des données de l'utilisateur
 def calculate_daycount(data):
