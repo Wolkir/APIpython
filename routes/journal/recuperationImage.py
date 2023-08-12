@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, send_file, current_app, request, Flask
 from pymongo import MongoClient
-from bson import ObjectId
 import gridfs
 import io
 
@@ -17,7 +16,7 @@ def recuperation_image():
         db = mongo["test"]
         fs = gridfs.GridFS(db)
 
-        image = fs.get(ObjectId(image_id))
+        image = fs.find_one({'metadata.id': image_id})
         if image is None:
             return jsonify({'message': 'Image non trouvée'}), 404
 
