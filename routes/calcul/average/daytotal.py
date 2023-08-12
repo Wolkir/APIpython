@@ -11,7 +11,7 @@ db = client['test']
 
 @daytotal.route('/daytotal', methods=['POST'])  # POST pour la sécurité des données de l'utilisateur
 def calculate_daycount(data):
-    data = request.json
+   
     username = data.get('username')
     
     if not username:
