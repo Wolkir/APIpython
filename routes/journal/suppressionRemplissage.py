@@ -18,7 +18,7 @@ def suppression_remplissage():
 
         collection = mongo.db['remplissageDefaut']
 
-        result = collection.delete_many({"nomRemplissageDefaut": nomRemplissageDefaut}, {"username": username})
+        result = collection.delete_many({"nomRemplissageDefaut": nomRemplissageDefaut, "username": username})
 
         if result.deleted_count > 0:
             return jsonify({"message": "Repmlissage supprimée avec succès"}), 200
