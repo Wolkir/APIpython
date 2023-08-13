@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, jsonify
 from pymongo import MongoClient
 from datetime import datetime, timedelta
+from route.calcul.totaltrade import calculate_totaltrade
 
 daytotal = Blueprint('daytotal', __name__)
 
