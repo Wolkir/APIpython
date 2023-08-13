@@ -26,11 +26,21 @@ def calculate_daycount(data):
     # Supposition qu'il y a un champ 'date' dans chaque document contenant la date
     distinct_dates = collection.aggregate([
     {
+        "$addFields": {
+            "convertedDate": {
+                "$dateFromString": {
+                    "dateString": "$dateAndTimeOpening",
+                    "format": "%Y-%m-%dT%H:%M:%S.%f%z"
+                }
+            }
+        }
+    },
+    {
         "$group": {
             "_id": {
-                "year": {"$year": "$dateAndTimeOpening"},
-                "month": {"$month": "$dateAndTimeOpening"},
-                "day": {"$dayOfMonth": "$dateAndTimeOpening"},
+                "year": {"$year": "$convertedDate"},
+                "month": {"$month": "$convertedDate"},
+                "day": {"$dayOfMonth": "$convertedDate"},
             }
         }
     },
