@@ -67,9 +67,9 @@ def calculate_daycount(data):
     return jsonify({"error": "No distinct dates found"}), 400
 
 
-@app.route('/averagedaytrade', methods=['POST'])
-def calculate_averagedaytrade():
-    data = request.json
+@daytotal.route('/averagedaytrade', methods=['POST'])
+def calculate_averagedaytrade(data):
+
     username = data.get('username')
 
     if not username:
