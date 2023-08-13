@@ -44,12 +44,12 @@ def most_common_asset(data):
        most_common[0]["_id"] = str(most_common[0]["_id"])
     
     # Préparez l'objet à insérer
-     #  data_to_insert = {
-     #      "mainasset": most_common[0]["_id"]       
-    #}
+       data_to_insert = {
+          "mainasset": most_common[0]["_id"]       
+    }
 
     # Ajoutez l'objet à la collection unitaire
-       unitaire_collection.update_one({}, {"$set": {"mainasset": most_common}}, upsert=True)
+       unitaire_collection.update_one({}, {"$set": {"mainasset": data_to_insert}}, upsert=True)
 
     # Renvoyez une réponse (cela dépend de ce que vous voulez renvoyer)
        return "Data added successfully"
