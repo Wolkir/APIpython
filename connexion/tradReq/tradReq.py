@@ -31,6 +31,7 @@ from routes.calcul.tradecount import check_multiple_trades
 from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier pour appeler calculate_tpr et slr
 from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
+from routes.calcul.average.mainasset import most_common_asset
 
 
 
@@ -316,6 +317,7 @@ def save_trade_request():
         calculate_totaltrade(data)
         calculate_daycount(data)
         calculate_averagedaytrade(data)
+        most_common_asset(data)
    
         
              
