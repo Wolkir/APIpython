@@ -40,8 +40,17 @@ def most_common_asset(data):
     most_common = list(collection.aggregate(aggregation))
     
     if most_common:
-    # Convertir l'ObjectId en chaîne
-       most_common[0]["_id"] = str(most_common[0]["_id"])
+    # Convertir l'ObjectId en chaîne (si nécessaire)
+    most_common[0]["_id"] = str(most_common[0]["_id"])
     
-    # Retourner sous forme de texte
-       return str(most_common[0]["_id"])
+    # Préparez l'objet à insérer
+    data_to_insert = {
+        "mainasset": most_common[0]["_id"],
+        
+    }
+
+    # Ajoutez l'objet à la collection unitaire
+    unitaire_collection.insert_one(data_to_insert)
+
+    # Renvoyez une réponse (cela dépend de ce que vous voulez renvoyer)
+    return "Data added successfully"
