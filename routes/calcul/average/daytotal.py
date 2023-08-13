@@ -69,7 +69,7 @@ def calculate_daycount(data):
 
 @daytotal.route('/averagedaytrade', methods=['POST'])
 def calculate_averagedaytrade(data):
-    data = request.json
+
     username = data.get('username')
     
     if not username:
