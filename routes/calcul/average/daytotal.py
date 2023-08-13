@@ -64,3 +64,26 @@ def calculate_daycount(data):
         return jsonify({"distinctDateCount": distinct_count})
    
     return jsonify({"error": "No distinct dates found"}), 400
+   @daytotal.route('/average_trades_per_day', methods=['POST'])
+
+@daytotal.route('/average_trades_per_day', methods=['POST'])
+def calculate_and_store_average_trades_per_day(data):
+    username = data.get('username')
+    
+    if not username:
+        return jsonify({"error": "Username is required!"}), 400
+
+    total_trades = calculate_totaltrade(username)
+    total_days_response = calculate_daycount(data).get_json()
+
+    if "error" in total_days_response:
+        return total_days_response, 400
+
+    total_days = total_days_response.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
+    average_trades_per_day = total_trades / total_days
+
+    collection_unit = f"{username}_unitaire"
+    unitaire_collection = db[collection_unit]
+    unitaire_collection.update_one({}, {"$set": {"averagedaytrade": average_trades_per_day}}, upsert=True)
+
+    return jsonify({"averageTradesPerDay": average_trades_per_day})
