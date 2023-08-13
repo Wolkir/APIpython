@@ -85,6 +85,7 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.totaltrade import totaltrade
 from routes.calcul.sortiemanu import sortiemanu
 from routes.calcul.average.daytotal import daytotal
+from routes.calcul.average.mainasset import most_common_asset
 #code 12 aout 
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
@@ -149,6 +150,7 @@ app.register_blueprint(tradecount)
 app.register_blueprint(totaltrade)
 app.register_blueprint(sortiemanu)
 app.register_blueprint(daytotal)
+app.register_blueprint(mainasset)
 
 #app.register_blueprint(sharp) //groupé avec maxgain_minloss
 #app.register_blueprint(maxprofit) // remplacé par le code groupé maxprofit_minloss
