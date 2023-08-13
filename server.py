@@ -85,7 +85,7 @@ from routes.calcul.tradecount import tradecount
 from routes.calcul.totaltrade import totaltrade
 from routes.calcul.sortiemanu import sortiemanu
 from routes.calcul.average.daytotal import daytotal
-from routes.calcul.average.mainasset import most_common_asset
+from routes.calcul.average.mainasset import mainasset
 #code 12 aout 
 
 #from routes.calcul.maxprofit import maxprofit // remplacé par le code groupé maxprofit_minloss
