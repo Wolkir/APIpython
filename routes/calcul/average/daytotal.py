@@ -64,7 +64,7 @@ def calculate_daycount(data):
         return jsonify({"distinctDateCount": distinct_count})
    
     return jsonify({"error": "No distinct dates found"}), 400
-)
+
 
 @daytotal.route('/averagedaytrade', methods=['POST'])
 def calculate_averagedaytrade(data):
