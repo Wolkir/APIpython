@@ -67,31 +67,39 @@ def calculate_daycount(data):
     return jsonify({"error": "No distinct dates found"}), 400
 
 
-@daytotal.route('/averagedaytrade', methods=['POST'])
-def calculate_averagedaytrade(data):
-
+@app.route('/averagedaytrade', methods=['POST'])
+def calculate_averagedaytrade():
+    data = request.json
     username = data.get('username')
-    
+
     if not username:
         return jsonify({"error": "Username is required!"}), 400
 
-    # Obtenir le nombre total de trades
-    total_trades_response = calculate_totaltrade(data)
-    if "error" in total_trades_response:
-        return total_trades_response, 400
-    total_trades = total_trades_response.get('totalTrades', 0)  # Ici, vous devez ajuster la clé pour obtenir la valeur depuis le résultat de `calculate_totaltrade`
+    # Récupérer le nombre total de trades
+    collection_name = f"{username}_close"
+    collection = db[collection_name]
+    total_trades = collection.count_documents({})
 
-    # Obtenir le nombre total de jours
-    total_days_response = calculate_daycount(data)
-    if "error" in total_days_response:
-        return total_days_response, 400
-    total_days = total_days_response.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
+    # Récupérer le nombre total de jours
+    distinct_dates = collection.aggregate([
+        {"$addFields": {"dateParts": {"$split": ["$dateAndTimeOpening", "."]}}},
+        {"$addFields": {"convertedDate": {"$dateFromString": {"dateString": {"$arrayElemAt": ["$dateParts", 0]}, "format": "%Y-%m-%dT%H:%M:%S"}}}},
+        {"$group": {"_id": {"year": {"$year": "$convertedDate"}, "month": {"$month": "$convertedDate"}, "day": {"$dayOfMonth": "$convertedDate"}}}},
+        {"$count": "distinctDateCount"}
+    ])
+    result = list(distinct_dates)
+    if result:
+        distinct_count = result[0]['distinctDateCount']
+    else:
+        return jsonify({"error": "No distinct dates found"}), 400
 
     # Calculer la moyenne
-    average_trades_per_day = total_trades / total_days
+    average_trades_per_day = total_trades / distinct_count
 
+    # Mettre à jour la collection MongoDB
     collection_unit = f"{username}_unitaire"
     unitaire_collection = db[collection_unit]
     unitaire_collection.update_one({}, {"$set": {"averagedaytrade": average_trades_per_day}}, upsert=True)
 
     return jsonify({"averageTradesPerDay": average_trades_per_day})
+
