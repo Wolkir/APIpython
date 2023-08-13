@@ -40,14 +40,8 @@ def most_common_asset(data):
     most_common = list(collection.aggregate(aggregation))
     
     if most_common:
-        result = {
-            "most_common_asset": most_common[0]["_id"],
-            "count": most_common[0]["count"]
-        }
-        
-        # Sauvegarde de l'actif principal dans la collection unitaire
-        unitaire_collection.insert_one(result)
-        
-        return jsonify(result)
-    else:
-        return jsonify({"error": "No assets found in the database."}), 404
+    # Convertir l'ObjectId en chaîne
+    most_common[0]["_id"] = str(most_common[0]["_id"])
+    
+    # Retourner sous forme de texte
+    return str(most_common[0]["_id"])
