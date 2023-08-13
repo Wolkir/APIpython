@@ -68,31 +68,31 @@ def calculate_daycount(data):
 
 
 @daytotal.route('/averagedaytrade', methods=['POST'])
-def calculate_averagedaytrade(data):
+def calculate_averagedaytrade():
+    data = request.json
     username = data.get('username')
     
     if not username:
         return jsonify({"error": "Username is required!"}), 400
 
-    # Obtenir le total des trades depuis la collection_unitaire
+    total_trades = calculate_totaltrade(username)  # Vous avez mentionné que vous ne vouliez pas changer cette fonction
+    total_days_response = calculate_daycount(data)
+
+    # Convertir la réponse en dictionnaire
+    total_days_response_data = total_days_response.get_json() if hasattr(total_days_response, 'get_json') else {}
+
+    if "error" in total_days_response_data:
+        return total_days_response_data, 400
+
+    total_days = total_days_response_data.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
+    average_trades_per_day = total_trades / total_days
+
     collection_unit = f"{username}_unitaire"
     unitaire_collection = db[collection_unit]
-    unit_data = unitaire_collection.find_one()
-    total_trades = unit_data.get("totaltrade", 0) if unit_data else 0
-
-    # Si total_trades est une chaîne, convertissez-la en un nombre
-    if isinstance(total_trades, str):
-        total_trades = int(total_trades)
-
-    # Obtenez le compte total des jours
-    total_days_response = calculate_daycount(data)
-    if "error" in total_days_response:
-        return total_days_response, 400
-
-    total_days = total_days_response.json.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
-
-    # Calculez la moyenne
-    average_trades_per_day = total_trades / total_days
     unitaire_collection.update_one({}, {"$set": {"averagedaytrade": average_trades_per_day}}, upsert=True)
 
     return jsonify({"averageTradesPerDay": average_trades_per_day})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
