@@ -74,17 +74,25 @@ def calculate_averagedaytrade(data):
     if not username:
         return jsonify({"error": "Username is required!"}), 400
 
-    total_trades = calculate_totaltrade(username)
-    total_days_response = calculate_daycount(data).get_json()
+    # Obtenir le total des trades depuis la collection_unitaire
+    collection_unit = f"{username}_unitaire"
+    unitaire_collection = db[collection_unit]
+    unit_data = unitaire_collection.find_one()
+    total_trades = unit_data.get("totaltrade", 0) if unit_data else 0
 
+    # Si total_trades est une chaîne, convertissez-la en un nombre
+    if isinstance(total_trades, str):
+        total_trades = int(total_trades)
+
+    # Obtenez le compte total des jours
+    total_days_response = calculate_daycount(data)
     if "error" in total_days_response:
         return total_days_response, 400
 
-    total_days = total_days_response.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
-    average_trades_per_day = total_trades / total_days
+    total_days = total_days_response.json.get("distinctDateCount", 1)  # Default to 1 to avoid division by zero
 
-    collection_unit = f"{username}_unitaire"
-    unitaire_collection = db[collection_unit]
+    # Calculez la moyenne
+    average_trades_per_day = total_trades / total_days
     unitaire_collection.update_one({}, {"$set": {"averagedaytrade": average_trades_per_day}}, upsert=True)
 
     return jsonify({"averageTradesPerDay": average_trades_per_day})
