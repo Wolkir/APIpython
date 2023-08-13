@@ -39,7 +39,7 @@ def calculate_daycount(data):
                     "dateString": {
                         "$arrayElemAt": ["$dateParts", 0]
                     },
-                    "format": "%Y-%m-%dT%H:%M:%S%z"
+                    "format": "%Y-%m-%dT%H:%M:%S"
                 }
             }
         }
