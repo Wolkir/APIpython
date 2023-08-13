@@ -27,10 +27,19 @@ def calculate_daycount(data):
     distinct_dates = collection.aggregate([
     {
         "$addFields": {
+            "dateParts": {
+                "$split": ["$dateAndTimeOpening", "."]
+            }
+        }
+    },
+    {
+        "$addFields": {
             "convertedDate": {
                 "$dateFromString": {
-                    "dateString": "$dateAndTimeOpening",
-                    "format": "%Y-%m-%dT%H:%M:%S.%f%z"
+                    "dateString": {
+                        "$arrayElemAt": ["$dateParts", 0]
+                    },
+                    "format": "%Y-%m-%dT%H:%M:%S%z"
                 }
             }
         }
@@ -48,7 +57,6 @@ def calculate_daycount(data):
         "$count": "distinctDateCount"
     }
 ])
-
     result = list(distinct_dates)
     if result:
         distinct_count = result[0]['distinctDateCount']
