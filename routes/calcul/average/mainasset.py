@@ -41,7 +41,7 @@ def most_common_asset(data):
     
     if most_common:
     # Convertir l'ObjectId en chaîne
-    most_common[0]["_id"] = str(most_common[0]["_id"])
+       most_common[0]["_id"] = str(most_common[0]["_id"])
     
     # Retourner sous forme de texte
-    return str(most_common[0]["_id"])
+       return str(most_common[0]["_id"])
