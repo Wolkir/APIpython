@@ -49,7 +49,7 @@ def most_common_asset(data):
     }
 
     # Ajoutez l'objet à la collection unitaire
-       unitaire_collection.insert_one(data_to_insert,upsert=True)
+       unitaire_collection.update_one(data_to_insert, {"$set": data_to_insert}, upsert=True)
 
     # Renvoyez une réponse (cela dépend de ce que vous voulez renvoyer)
        return "Data added successfully"
