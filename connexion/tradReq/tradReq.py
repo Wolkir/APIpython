@@ -33,7 +33,7 @@ from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
 
-from.routes.calcul.week.profitw import calculate_profitw
+from routes.calcul.week.profitw import calculate_profitw
 
 
 
