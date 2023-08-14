@@ -33,6 +33,7 @@ from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
 
+from.routes.calcul.week.profitw import calculate_profitw(data)
 
 
 
@@ -318,6 +319,8 @@ def save_trade_request():
         calculate_daycount(data)
         calculate_averagedaytrade(data)
         most_common_asset(data)
+
+        calculate_profitw(data)
    
         
              
