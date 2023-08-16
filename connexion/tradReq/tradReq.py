@@ -249,6 +249,8 @@ def save_trade_request():
             "dateAndTimeOpening": data.get('dateAndTimeOpening'),
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
+            "point": data.get('point'),
+            "tick": data.get('tick')
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
@@ -278,6 +280,7 @@ def save_trade_request():
             "duration": data.get('duration'),
             "TPR": data.get('TPR'),
             "SLR": data.get('SLR'),
+            "exitReason":data.get('exitReason'),
             "RR": data.get('RR'),
             "RROpen": RROpen.get(data.get('identifier')),
             "RRT": data.get('RRT'),
