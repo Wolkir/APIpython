@@ -19,3 +19,11 @@ def calculate_risk(data):
 
     capitalrisk = (Entry - SL) * Volume * tick * (1/point)
     return capitalrisk
+
+def calculate_percent(data):
+    balance = data.get('balance')
+
+    
+     
+ 
+    
