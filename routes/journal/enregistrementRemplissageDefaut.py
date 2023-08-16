@@ -6,6 +6,7 @@ enregistrementRemplissageDefaut = Blueprint('enregistrementRemplissageDefaut', _
 @enregistrementRemplissageDefaut.route('/enregistrementRemplissageDefaut', methods=['POST'])
 def create_enregistrementRemplissageDefaut():
     data = request.get_json()
+    annonceEco_data = data.get('annonceEco', [])
     psychologie_data = data.get('psychologie', [])
     position_data = data.get('position', [])
     typeOrdre_data = data.get('typeOrdre', [])
@@ -29,6 +30,7 @@ def create_enregistrementRemplissageDefaut():
 
         if not verificationExiste:
             nouveauDocument = {
+                "annonceEconomique": annonceEco_data,
                 "psychologie": psychologie_data,
                 "position": position_data,
                 "typeOrdre": typeOrdre_data,
