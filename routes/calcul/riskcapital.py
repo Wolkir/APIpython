@@ -22,7 +22,7 @@ def calculate_risk(data):
 
 @risk.route('/risk_percent', methods=['GET'])
 def calculate_percent(data):
-    data = request.args
+   
     balance = float(data.get('balance', 1))
 
     # Calling the previous function to get the capital risk
