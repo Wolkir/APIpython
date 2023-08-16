@@ -20,10 +20,15 @@ def calculate_risk(data):
     capitalrisk = (Entry - SL) * Volume * tick * (1/point)
     return capitalrisk
 
-def calculate_percent(data):
-    balance = data.get('balance')
+@risk.route('/risk_percent', methods=['GET'])
+def calculate_percent():
+    data = request.args
+    balance = float(data.get('balance', 1))
 
-    
-     
- 
-    
+    # Calling the previous function to get the capital risk
+    capitalrisk = calculate_risk(data)
+
+    # Calculating the risk percentage
+    risk_percent = (capitalrisk / balance) * 100
+
+    return risk_percent
