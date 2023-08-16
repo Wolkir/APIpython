@@ -86,6 +86,7 @@ from routes.calcul.totaltrade import totaltrade
 from routes.calcul.sortiemanu import sortiemanu
 from routes.calcul.average.daytotal import daytotal
 from routes.calcul.average.mainasset import mainasset
+from routes.calcul.risk import risk
 
 from routes.calcul.week.profitw import profitw
 #code 12 aout 
@@ -153,6 +154,7 @@ app.register_blueprint(totaltrade)
 app.register_blueprint(sortiemanu)
 app.register_blueprint(daytotal)
 app.register_blueprint(mainasset)
+app.register_blueprint(risk)
 
 app.register_blueprint(profitw)
 
