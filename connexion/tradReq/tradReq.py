@@ -32,6 +32,7 @@ from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier p
 from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
+from routes.calcul.risk import calculate_risk
 
 from routes.calcul.week.profitw import calculate_profitw
 
@@ -194,6 +195,9 @@ def save_trade_request():
             multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
+            capitalrisk = calculate_risk(data)
+            data['risk']= capitalrisk
+
           
 
             
@@ -235,6 +239,9 @@ def save_trade_request():
             multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
+            capitalrisk = calculate_risk(data)
+            data['risk']= capitalrisk
+
             
             
         # Insert the data into the collection
@@ -259,6 +266,7 @@ def save_trade_request():
             "SLOpen" : SLOpen.get(data.get('identifier')),
             "takeProfit": data.get('takeProfit'),
             "TPOpen" : TPOpen.get(data.get('identifier')),
+            "Capitalrisk" : data.get('risk'),
             "dateAndTimeClosure": data.get('dateAndTimeClosure'),
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
