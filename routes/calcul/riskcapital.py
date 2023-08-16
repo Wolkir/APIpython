@@ -11,11 +11,11 @@ db = client['test']
 @risk.route('/risk', methods=['GET'])
 def calculate_risk(data):
  
-    point = float(request.args.get('point', 1))
-    tick = float(request.args.get('tick', 1))
-    SL = float(request.args.get('stopLoss', 1))
-    Entry = float(request.args.get('priceOpening', 1))
-    Volume = float(request.args.get('volume', 1))
+    point = float(data.get('point', 1))
+    tick = float(data.get('tick', 1))
+    SL = float(data.get('stopLoss', 1))
+    Entry = float(data.get('priceOpening', 1))
+    Volume = float(data.get('volume', 1))
 
     capitalrisk = (Entry - SL) * Volume * tick * (1/point)
     return capitalrisk
