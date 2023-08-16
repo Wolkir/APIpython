@@ -250,7 +250,7 @@ def save_trade_request():
             "typeOfTransaction": data.get('typeOfTransaction'),
             "orderType": data.get('orderType'),
             "point": data.get('point'),
-            "tick": data.get('tick')
+            "tick": data.get('tick'),
             "volume": data.get('volume'),
             "volume_remain": volume_remain,
             "symbol": data.get('symbole'),
