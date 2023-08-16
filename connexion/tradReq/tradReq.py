@@ -32,7 +32,7 @@ from routes.calcul.sortiemanu import calculate_sortiemanu # penser à modifier p
 from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
-from routes.calcul.risk import calculate_risk
+from routes.calcul.riskcapital import calculate_risk
 
 from routes.calcul.week.profitw import calculate_profitw
 
