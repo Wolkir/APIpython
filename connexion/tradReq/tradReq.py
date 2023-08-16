@@ -33,6 +33,7 @@ from routes.calcul.average.daytotal import calculate_daycount
 from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
+from routes.calcul.riskcapital import calculate_percent
 
 from routes.calcul.week.profitw import calculate_profitw
 
@@ -198,6 +199,9 @@ def save_trade_request():
             capitalrisk = calculate_risk(data)
             data['risk']= capitalrisk
 
+            risk_percent = calculate_percent(data)
+            data['percent']=  risk_percent
+
           
 
             
@@ -242,6 +246,9 @@ def save_trade_request():
             capitalrisk = calculate_risk(data)
             data['risk']= capitalrisk
 
+            risk_percent = calculate_percent(data)
+            data['percent']=  risk_percent
+
             
             
         # Insert the data into the collection
@@ -267,6 +274,7 @@ def save_trade_request():
             "takeProfit": data.get('takeProfit'),
             "TPOpen" : TPOpen.get(data.get('identifier')),
             "Capitalrisk" : data.get('risk'),
+            "Percent" : data.get('percent'),
             "dateAndTimeClosure": data.get('dateAndTimeClosure'),
             "priceClosure": data.get('priceClosure'),
             "swap": data.get('swap'),
