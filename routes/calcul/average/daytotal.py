@@ -94,7 +94,7 @@ def calculate_averagedaytrade(data):
         return jsonify({"error": "No distinct dates found"}), 400
 
     # Calculer la moyenne
-    average_trades_per_day = total_trades / distinct_count
+    average_trades_per_day = total_trades / distinct_count if distinct_count > 0 else 0
 
     # Mettre à jour la collection MongoDB
     collection_unit = f"{username}_unitaire"
