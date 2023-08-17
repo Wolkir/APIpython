@@ -18,7 +18,7 @@ def calculate_sharp_ratio(data):
     profits = [doc['profit'] for doc in collection.find()]
 
     # Calculer le ratio de Sharpe
-    sharpe_ratio = np.mean(profits) / np.std(profits) if (np.std(profits)) > 0 else 0
+    sharpe_ratio = np.mean(profits) / np.std(profits) if np.std(profits) > 0 else 0
 
 
      # Insérer le winrate_value dans la collection "unitaire"
