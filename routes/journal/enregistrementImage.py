@@ -30,11 +30,19 @@ def enregistrer_image():
 
         print(metadata)
 
+        # Récupération des images existantes avec le même id_value
+        existing_images = list(fs.find({'metadata.id': id_value}))
+
+        # Calcul du nombre total d'images après l'ajout
+        total_images = len(existing_images) + 1
+
+        if total_images > 3:
+            return jsonify({'message': 'Il ne peut y avoir que 3 images par trade'}), 400
+
+        # Enregistrement de l'image
         image_id = fs.put(image.stream, filename=image.filename, metadata=metadata)
 
         return jsonify({'message': 'Image enregistrée avec succès', 'image_id': str(image_id)})
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
-
-
