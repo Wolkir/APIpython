@@ -13,7 +13,7 @@ def calculate_rr(data):
     price_close = data['priceClosure']
     price_opening = data['priceOpening']
     stop_loss = data['stopLoss']
-    rr = (price_close - price_opening) / (price_opening - stop_loss)
+    rr = (price_close - price_opening) / (price_opening - stop_loss) if (price_opening - stop_loss) > 0 else 0
     rr = round(rr, 2)
     return rr  # Renvoie la valeur de la clé "RR"
 
