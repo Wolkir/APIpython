@@ -41,10 +41,9 @@ def calculate_best_rr():
 
         if average_rr > best_rr:
             best_rr = average_rr
-            best_day, best_symbol, best_order_type = combination
+            best_symbol, best_order_type = combination
 
     response = {
-        'best_day': best_day,
         'best_symbol': best_symbol,
         'best_order_type': best_order_type,
         'best_rr': best_rr
