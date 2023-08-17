@@ -17,7 +17,7 @@ def calculate_risk(data):
     Entry = float(data.get('priceOpening', 1))
     Volume = float(data.get('volume', 1))
 
-    capitalrisk = (Entry - SL) * Volume * tick * (1/point)
+    capitalrisk = ((Entry - SL) * Volume * tick) * (1/point)  if ((Entry - SL) * Volume * tick) > 0 else 0
     return capitalrisk
 
 @risk.route('/risk_percent', methods=['GET'])
@@ -29,6 +29,6 @@ def calculate_percent(data):
     capitalrisk = calculate_risk(data)
 
     # Calculating the risk percentage
-    risk_percent = (capitalrisk / balance) * 100
+    risk_percent = (capitalrisk / balance) * 100 if (capitalrisk / balance) > 0 else 0
 
     return risk_percent
