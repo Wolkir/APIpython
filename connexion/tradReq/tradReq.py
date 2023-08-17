@@ -243,11 +243,11 @@ def save_trade_request():
             multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
-            capitalrisk = calculate_risk(data)
-            data['risk']= capitalrisk
+            #capitalrisk = calculate_risk(data)
+            #data['risk']= capitalrisk
 
-            risk_percent = calculate_percent(data)
-            data['percent']=  risk_percent
+            #risk_percent = calculate_percent(data)
+            #data['percent']=  risk_percent
 
             
             
@@ -335,7 +335,7 @@ def save_trade_request():
         calculate_average_gain_loss_rr(data) 
         calculate_winrrtflat(data)
         calculate_totaltrade(data)
-        calculate_daycount(data)
+        #calculate_daycount(data)
         #calculate_averagedaytrade(data)
         most_common_asset(data)
 
