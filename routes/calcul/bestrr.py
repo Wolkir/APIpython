@@ -26,10 +26,10 @@ def calculate_best_rr():
 
     for doc in collection.find():
         rr_value = doc.get('RR', 0)
-        day = doc.get('Day')
+        #day = doc.get('Day')
         symbol = doc.get('symbol')
         order_type = doc.get('orderType')
-        combination = (day, symbol, order_type)
+        combination = (symbol, order_type)
 
         if rr_value is not None:
             meilleur_by_combination[combination] =  meilleur_by_combination.get(combination, 0) + rr_value
