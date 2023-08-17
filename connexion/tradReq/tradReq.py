@@ -336,7 +336,7 @@ def save_trade_request():
         calculate_winrrtflat(data)
         calculate_totaltrade(data)
         calculate_daycount(data)
-        calculate_averagedaytrade(data)
+        #calculate_averagedaytrade(data)
         most_common_asset(data)
 
         #calculate_profitw(data)
