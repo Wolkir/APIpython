@@ -35,7 +35,7 @@ from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 
-from routes.calcul.week.profitw import calculate_profitw
+#from routes.calcul.week.profitw import calculate_profitw
 
 
 
