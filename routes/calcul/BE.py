@@ -13,7 +13,7 @@ def find_BE(data):
     price_close = data['priceClosure']
     price_opening = data['priceOpening']
     stop_loss = data['stopLoss']
-    rrcalculation = (price_close - price_opening) / (price_opening - stop_loss)
+    rrcalculation = (price_close - price_opening) / (price_opening - stop_loss) if (price_opening - stop_loss) > 0 else 0
     rrcalculation = round(rrcalculation, 2)
 
     #resultBE = {}  # Initialize the 'resultBE' dictionary
