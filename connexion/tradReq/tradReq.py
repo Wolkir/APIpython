@@ -196,11 +196,11 @@ def save_trade_request():
             multiple = check_multiple_trades(data)
             data['simultane'] = multiple
 
-            capitalrisk = calculate_risk(data)
-            data['risk']= capitalrisk
+            #capitalrisk = calculate_risk(data)
+            #data['risk']= capitalrisk
 
-            risk_percent = calculate_percent(data)
-            data['percent']=  risk_percent
+            #risk_percent = calculate_percent(data)
+            #data['percent']=  risk_percent
 
           
 
