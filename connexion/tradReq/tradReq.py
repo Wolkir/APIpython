@@ -339,7 +339,7 @@ def save_trade_request():
         calculate_averagedaytrade(data)
         most_common_asset(data)
 
-        calculate_profitw(data)
+        #calculate_profitw(data)
    
         
              
