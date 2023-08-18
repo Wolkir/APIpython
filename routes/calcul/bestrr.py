@@ -14,39 +14,36 @@ def calculate_best_rr():
     username = request.args.get('username', None)
     meilleur = request.args.get('meilleur', None)
     
-    collection = db[collection_name]  # Utilisation du nom de la collection pour interroger la BD
+    collection = db[collection_name]
 
-    best_rr = 0
-    best_day = ""
+    best_value = 0  # Remplacé best_rr par best_value pour généralisation
     best_symbol = ""
     best_order_type = ""
 
-    meilleur_by_combination = {}
-    meilleur_count_combination = {}
+    total_by_combination = {}  # Renommé pour la clarté
+    count_combination = {}
 
     for doc in collection.find():
-        rr_value = doc.get('RR', 0)
-        #day = doc.get('Day')
+        variable_value = doc.get(meilleur, 0)  # Utilisez la valeur de 'meilleur' comme clé
         symbol = doc.get('symbol')
         order_type = doc.get('orderType')
         combination = (symbol, order_type)
 
-        if rr_value is not None:
-            meilleur_by_combination[combination] =  meilleur_by_combination.get(combination, 0) + rr_value
-            meilleur_count_combination[combination] = meilleur_count_combination.get(combination, 0) + 1
+        total_by_combination[combination] =  total_by_combination.get(combination, 0) + variable_value
+        count_combination[combination] = count_combination.get(combination, 0) + 1
 
-    for combination, rr_total in meilleur_by_combination.items():
-        rr_count = meilleur_count_combination.get(combination, 0)
-        average_rr = rr_total / rr_count if rr_count > 0 else 0
+    for combination, total_value in total_by_combination.items():
+        count_value = count_combination.get(combination, 0)
+        average_value = total_value / count_value if count_value > 0 else 0
 
-        if average_rr > best_rr:
-            best_rr = average_rr
+        if average_value > best_value:
+            best_value = average_value
             best_symbol, best_order_type = combination
 
     response = {
         'best_symbol': best_symbol,
         'best_order_type': best_order_type,
-        'best_rr': best_rr
+        'best_value': best_value  # Remplacé best_rr par best_value
     }
 
     # Stockage des résultats dans la nouvelle collection
