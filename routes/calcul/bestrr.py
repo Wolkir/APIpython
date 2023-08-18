@@ -43,6 +43,8 @@ def calculate_best_rr():
     best_orderType, best_orderType_avg = get_best_average_for_key("orderType")
     best_Multi, best_Multi_avg = get_best_average_for_key("Multi")
     best_killzone, best_killzone_avg = get_best_average_for_key("killzone")
+    best_percent, best_percent_avg = get_best_average_for_key("percent")
+    best_tradecount, best_tradecount_avg = get_best_average_for_key("tradecount")
     
     
     # ... votre code pour d'autres combinaisons ...
@@ -59,7 +61,11 @@ def calculate_best_rr():
         'best_Multi': best_Multi,
         'best_Multi_average': best_Multi_avg,
         'best_killzone': best_killzone,
-        'best_killzone_average': best_killzone_avg
+        'best_killzone_average': best_killzone_avg,
+        'best_percent': best_percent,
+        'best_percent_average': best_percent_avg,
+        'best_tradecount': best_tradecount,
+        'best_tradecount_average': best_tradecount_avg
         
         # ... ajoutez d'autres éléments de réponse ici ...
     }
