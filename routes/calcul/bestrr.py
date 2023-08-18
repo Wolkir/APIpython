@@ -16,49 +16,42 @@ def calculate_best_rr():
     
     collection = db[collection_name]
 
-    best_value = 0  # Remplacé best_rr par best_value pour généralisation
-    best_symbol = ""
-    best_order_type = ""
-    best_day=""
-    best_session=""
+    def get_best_average_for_key(key):
+        total_by_key = {}
+        count_by_key = {}
+
+        for doc in collection.find():
+            value = doc.get(meilleur, 0)
+            key_value = doc.get(key)
+            if key_value:
+                total_by_key[key_value] = total_by_key.get(key_value, 0) + value
+                count_by_key[key_value] = count_by_key.get(key_value, 0) + 1
+
+        best_avg = -float("inf") 
+        best_key_value = None
+        for key_value, total in total_by_key.items():
+            avg = total / count_by_key[key_value]
+            if avg > best_avg:
+                best_avg = avg
+                best_key_value = key_value
+
+        return best_key_value, best_avg
+
+    best_day, best_day_avg = get_best_average_for_key("Day")
+    best_session, best_session_avg = get_best_average_for_key("session")
     
-    total_by_combination = {}  # Renommé pour la clarté
-    count_combination = {}
-
-    for doc in collection.find():
-        variable_value = doc.get(meilleur, 0)  # Utilisez la valeur de 'meilleur' comme clé
-        symbol = doc.get('symbol')
-        order_type = doc.get('orderType')
-        day = doc.get('Day')
-        session=doc.get('session')
-        combination = (symbol, order_type,day,session)
-
-        total_by_combination[combination] =  total_by_combination.get(combination, 0) + variable_value
-        count_combination[combination] = count_combination.get(combination, 0) + 1
-
-    for combination, total_value in total_by_combination.items():
-        count_value = count_combination.get(combination, 0)
-        average_value = total_value / count_value if count_value > 0 else 0
-
-        if average_value > best_value:
-            best_value = average_value
-            best_symbol, best_order_type, best_day, best_session = combination
+    # ... votre code pour d'autres combinaisons ...
 
     response = {
-        'best_symbol': best_symbol,
-        'best_order_type': best_order_type,
         'best_day': best_day,
+        'best_day_average': best_day_avg,
         'best_session': best_session,
-        'best_value': best_value  # Remplacé best_rr par best_value
+        'best_session_average': best_session_avg
+        # ... ajoutez d'autres éléments de réponse ici ...
     }
-
+    
     # Stockage des résultats dans la nouvelle collection
     new_collection_name = f"{username}_temporaire"
     db[new_collection_name].insert_one(response)
 
     return jsonify(response)
-
-app.register_blueprint(bestrr, url_prefix='/bestrr')
-
-if __name__ == '__main__':
-    app.run()
