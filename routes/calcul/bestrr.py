@@ -47,8 +47,8 @@ def calculate_best_rr():
     response = {
         'best_symbol': best_symbol,
         'best_order_type': best_order_type,
-        'best_day': best_day
-        'best_session': best_session
+        'best_day': best_day,
+        'best_session': best_session,
         'best_value': best_value  # Remplacé best_rr par best_value
     }
 
