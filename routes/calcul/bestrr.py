@@ -19,7 +19,9 @@ def calculate_best_rr():
     best_value = 0  # Remplacé best_rr par best_value pour généralisation
     best_symbol = ""
     best_order_type = ""
-
+    best_day=""
+    best_session=""
+    
     total_by_combination = {}  # Renommé pour la clarté
     count_combination = {}
 
@@ -27,7 +29,9 @@ def calculate_best_rr():
         variable_value = doc.get(meilleur, 0)  # Utilisez la valeur de 'meilleur' comme clé
         symbol = doc.get('symbol')
         order_type = doc.get('orderType')
-        combination = (symbol, order_type)
+        day = doc.get('Day')
+        session=doc.get('session')
+        combination = (symbol, order_type,day,session)
 
         total_by_combination[combination] =  total_by_combination.get(combination, 0) + variable_value
         count_combination[combination] = count_combination.get(combination, 0) + 1
@@ -38,11 +42,13 @@ def calculate_best_rr():
 
         if average_value > best_value:
             best_value = average_value
-            best_symbol, best_order_type = combination
+            best_symbol, best_order_type, best_day, best_session = combination
 
     response = {
         'best_symbol': best_symbol,
         'best_order_type': best_order_type,
+        'best_day': best_day
+        'best_session': best_session
         'best_value': best_value  # Remplacé best_rr par best_value
     }
 
