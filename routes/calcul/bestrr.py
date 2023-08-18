@@ -39,6 +39,11 @@ def calculate_best_rr():
 
     best_day, best_day_avg = get_best_average_for_key("Day")
     best_session, best_session_avg = get_best_average_for_key("session")
+    best_symbol, best_symbol = get_best_average_for_key("symbol")
+    best_orderType, best_orderType = get_best_average_for_key("orderType")
+    best_Multi, best_Multi = get_best_average_for_key("Multi")
+    best_killzone, best_killzone = get_best_average_for_key("killzone")
+    
     
     # ... votre code pour d'autres combinaisons ...
 
@@ -46,7 +51,16 @@ def calculate_best_rr():
         'best_day': best_day,
         'best_day_average': best_day_avg,
         'best_session': best_session,
-        'best_session_average': best_session_avg
+        'best_session_average': best_session_avg,
+        'best_symbol': best_symbol,
+        'best_symbol_average': best_symbol_avg,
+        'best_orderType': best_orderType,
+        'best_orderType_average': best_orderType_avg,
+        'best_Multi': best_Multi,
+        'best_Multi_average': best_Multi_avg,
+        'best_killzone': best_killzone,
+        'best_killzone_average': best_killzone_avg
+        
         # ... ajoutez d'autres éléments de réponse ici ...
     }
     
