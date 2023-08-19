@@ -64,7 +64,7 @@ def calculate_best_rr():
         'best_day': best_day,
         'best_day_value': best_day_value,
         'best_session': best_session,
-        'best_session_value': best_session_value
+        'best_session_value': best_session_value,
         'best_symbol':best_symbol,
         'best_symbol_value':best_symbol_value,
         'best_orderType':best_orderType,
