@@ -15,7 +15,7 @@ def calculate_best_rr():
     meilleur = request.args.get('meilleur', None)
     
     collection = db[collection_name]
-    
+
     def get_best_for_key(key):
         count_by_key = {}
         total_by_key = {}
@@ -27,15 +27,9 @@ def calculate_best_rr():
                 key_value = doc.get(key)
                 if value:
                     count_by_key[key_value] = count_by_key.get(key_value, 0) + 1
-                    
-            max_count = -1
-            best_key_value = None
-            for key, count in count_by_key.items():
-                if count > max_count:
-                    max_count = count
-                    best_key_value = key
-                    
-            return best_key_value, max_count  # on retourne le nombre de `True` pour la meilleure clé
+            max_count = max(count_by_key.values(), default=0)
+            best_key_value = next((k for k, v in count_by_key.items() if v == max_count), None)
+            return best_key_value, max_count
         
         else:  # Sinon, on suppose que c'est une valeur numérique et on calcule une moyenne
             for doc in collection.find():
@@ -51,28 +45,40 @@ def calculate_best_rr():
                 if avg > best_avg:
                     best_avg = avg
                     best_key_value = key_value
-                    
-            return best_key_value, best_avg  # on retourne la moyenne pour la meilleure clé
-    
-    # Utilisez la fonction pour chaque clé
-    best_symbol, best_symbol_value = get_best_for_key('symbol')
-    best_orderType, best_orderType_value = get_best_for_key('orderType')
-    best_day, best_day_value = get_best_for_key('Day')
-    best_session, best_session_value = get_best_for_key('session')
-    # ... ajoutez d'autres clés si nécessaire
+            return best_key_value, best_avg
 
+    best_day, best_day_value = get_best_for_key("Day")
+    best_session, best_session_value = get_best_for_key("session")
+    best_day,best_day_value=get_best_for_key("Day")
+    best_session,best_session_value=get_best_for_key("session")
+    best_symbol,best_symbol_value=get_best_for_key("symbol")
+    best_orderType,best_orderType_value=get_best_for_key("orderType")
+    best_Multi,best_Multi_value=get_best_for_key("Multi")
+    best_killzone,best_killzone_value=get_best_for_key("killzone")
+    best_percent,best_percent_value=get_best_for_key("percent")
+    best_tradecount,best_tradecount_value=get_best_for_key("tradecount")
+    
+    
+    
     response = {
-        'best_symbol': best_symbol,
-        'best_symbol_value': best_symbol_value,
-        'best_orderType': best_orderType,
-        'best_orderType_value': best_orderType_value,
         'best_day': best_day,
         'best_day_value': best_day_value,
         'best_session': best_session,
-        'best_session_value': best_session_value
-        # ... ajoutez d'autres clés si nécessaire
+        'best_session_value': best_session_value,
+        'best_symbol':best_symbol,
+        'best_symbol_value':best_symbol_value,
+        'best_orderType':best_orderType,
+        'best_orderType_value':best_orderType_value,
+        'best_Multi':best_Multi,
+        'best_Multi_value':best_Multi_value,
+        'best_killzone':best_killzone,
+        'best_killzone_value':best_killzone_value,
+        'best_percent':best_percent,
+        'best_percent_value':best_percent_value,
+        'best_tradecount':best_tradecount,
+        'best_tradecount_value':best_tradecount_value
     }
-
+    
     # Stockage des résultats dans la nouvelle collection
     new_collection_name = f"{username}_temporaire"
     db[new_collection_name].insert_one(response)
