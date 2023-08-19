@@ -16,26 +16,36 @@ def calculate_best_rr():
     
     collection = db[collection_name]
 
-    def get_best_average_for_key(key):
-        total_by_key = {}
+    def get_best_for_key(key):
         count_by_key = {}
-
-        for doc in collection.find():
-            value = doc.get(meilleur, 0)
-            key_value = doc.get(key)
-            if key_value:
+        total_by_key = {}
+        first_value = collection.find_one().get(meilleur, None)
+        
+        if isinstance(first_value, bool):  # Si la première valeur est un booléen
+            for doc in collection.find():
+                value = doc.get(meilleur, False)
+                key_value = doc.get(key)
+                if value:
+                    count_by_key[key_value] = count_by_key.get(key_value, 0) + 1
+            max_count = max(count_by_key.values(), default=0)
+            best_key_value = next((k for k, v in count_by_key.items() if v == max_count), None)
+            return best_key_value, max_count
+        
+        else:  # Sinon, on suppose que c'est une valeur numérique et on calcule une moyenne
+            for doc in collection.find():
+                value = doc.get(meilleur, 0)
+                key_value = doc.get(key)
                 total_by_key[key_value] = total_by_key.get(key_value, 0) + value
                 count_by_key[key_value] = count_by_key.get(key_value, 0) + 1
-
-        best_avg = -float("inf") 
-        best_key_value = None
-        for key_value, total in total_by_key.items():
-            avg = total / count_by_key[key_value]
-            if avg > best_avg:
-                best_avg = avg
-                best_key_value = key_value
-
-        return best_key_value, best_avg
+            
+            best_avg = -float("inf")
+            best_key_value = None
+            for key_value, total in total_by_key.items():
+                avg = total / count_by_key[key_value]
+                if avg > best_avg:
+                    best_avg = avg
+                    best_key_value = key_value
+            return best_key_value, best_avg
 
     best_day, best_day_avg = get_best_average_for_key("Day")
     best_session, best_session_avg = get_best_average_for_key("session")
@@ -46,9 +56,6 @@ def calculate_best_rr():
     best_percent, best_percent_avg = get_best_average_for_key("percent")
     best_tradecount, best_tradecount_avg = get_best_average_for_key("tradecount")
     
-    
-    # ... votre code pour d'autres combinaisons ...
-
     response = {
         'best_day': best_day,
         'best_day_average': best_day_avg,
@@ -66,8 +73,6 @@ def calculate_best_rr():
         'best_percent_average': best_percent_avg,
         'best_tradecount': best_tradecount,
         'best_tradecount_average': best_tradecount_avg
-        
-        # ... ajoutez d'autres éléments de réponse ici ...
     }
     
     # Stockage des résultats dans la nouvelle collection
