@@ -47,32 +47,14 @@ def calculate_best_rr():
                     best_key_value = key_value
             return best_key_value, best_avg
 
-    best_day, best_day_avg = get_best_average_for_key("Day")
-    best_session, best_session_avg = get_best_average_for_key("session")
-    best_symbol, best_symbol_avg = get_best_average_for_key("symbol")
-    best_orderType, best_orderType_avg = get_best_average_for_key("orderType")
-    best_Multi, best_Multi_avg = get_best_average_for_key("Multi")
-    best_killzone, best_killzone_avg = get_best_average_for_key("killzone")
-    best_percent, best_percent_avg = get_best_average_for_key("percent")
-    best_tradecount, best_tradecount_avg = get_best_average_for_key("tradecount")
+    best_day, best_day_value = get_best_for_key("Day")
+    best_session, best_session_value = get_best_for_key("session")
     
     response = {
         'best_day': best_day,
-        'best_day_average': best_day_avg,
+        'best_day_value': best_day_value,
         'best_session': best_session,
-        'best_session_average': best_session_avg,
-        'best_symbol': best_symbol,
-        'best_symbol_average': best_symbol_avg,
-        'best_orderType': best_orderType,
-        'best_orderType_average': best_orderType_avg,
-        'best_Multi': best_Multi,
-        'best_Multi_average': best_Multi_avg,
-        'best_killzone': best_killzone,
-        'best_killzone_average': best_killzone_avg,
-        'best_percent': best_percent,
-        'best_percent_average': best_percent_avg,
-        'best_tradecount': best_tradecount,
-        'best_tradecount_average': best_tradecount_avg
+        'best_session_value': best_session_value
     }
     
     # Stockage des résultats dans la nouvelle collection
