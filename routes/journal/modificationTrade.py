@@ -49,10 +49,14 @@ def setup_modificationTrade_routes(app):
             # Mise à jour ou création des champs tag
             for tag_item in tag_data:
                 trade_id = tag_item.get('id')
-                value_tag = tag_item.get('valueTag')
-
-                if trade_id and value_tag:
-                    things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'tag': value_tag}}, upsert=True)
+                value_tags = tag_item.get('valueTag')  # Note the change to "value_tags" (plural)
+            
+                if trade_id and value_tags:
+                    things_collection.update_one(
+                        {'_id': ObjectId(trade_id)},
+                        {'$set': {'tags': value_tags}},
+                        upsert=True
+                    )
 
             # Mise à jour ou création des champs note
             for note_item in note_data:
