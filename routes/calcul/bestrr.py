@@ -49,12 +49,34 @@ def calculate_best_rr():
 
     best_day, best_day_value = get_best_for_key("Day")
     best_session, best_session_value = get_best_for_key("session")
+    best_day,best_day_value=get_best_for_key("Day")
+    best_session,best_session_value=get_best_for_key("session")
+    best_symbol,best_symbol_value=get_best_for_key("symbol")
+    best_orderType,best_orderType_value=get_best_for_key("orderType")
+    best_Multi,best_Multi_value=get_best_for_key("Multi")
+    best_killzone,best_killzone_value=get_best_for_key("killzone")
+    best_percent,best_percent_value=get_best_for_key("percent")
+    best_tradecount,best_tradecount_value=get_best_for_key("tradecount")
+    
+    
     
     response = {
         'best_day': best_day,
         'best_day_value': best_day_value,
         'best_session': best_session,
         'best_session_value': best_session_value
+        'best_symbol':best_symbol,
+        'best_symbol_value':best_symbol_value,
+        'best_orderType':best_orderType,
+        'best_orderType_value':best_orderType_value,
+        'best_Multi':best_Multi,
+        'best_Multi_value':best_Multi_value,
+        'best_killzone':best_killzone,
+        'best_killzone_value':best_killzone_value,
+        'best_percent':best_percent,
+        'best_percent_value':best_percent_value,
+        'best_tradecount':best_tradecount,
+        'best_tradecount_value':best_tradecount_value
     }
     
     # Stockage des résultats dans la nouvelle collection
