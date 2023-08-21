@@ -14,8 +14,10 @@ def get_recuperationPorteFeuille():
 
         if not username:
             return jsonify({"error": "L'argument 'username' est manquant dans la requête"}), 400
+        
+        exception = "utile"
 
-        collections = [name for name in db.list_collection_names() if username in name]
+        collections = [name for name in db.list_collection_names() if username in name and exception not in name.split('_')]
 
         data = [{"nomSeul": collection.replace("_" + username, "").replace(username + "_", "").replace(username, ""), "nomComplet": collection} for collection in collections]
 
