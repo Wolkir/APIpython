@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, current_app
 from flask_pymongo import PyMongo
 import jwt
 from bson import ObjectId
+import sys
 
 
 modificationTrade = Blueprint('modificationTrade', __name__)
@@ -43,27 +44,26 @@ def setup_modificationTrade_routes(app):
             tag_data = data.get('tag', [])
             note_data = data.get('note', [])
             things_collection = mongo.db[collection_data]
-
+            
             reinsertion = []
 
             # Mise à jour ou création des champs tag
-            for tag_item in tag_data:
-                trade_id = tag_item.get('id')
-                value_tags = tag_item.get('valueTag')  # Note the change to "value_tags" (plural)
-            
-                if trade_id and value_tags:
-                    things_collection.update_one(
-                        {'_id': ObjectId(trade_id)},
-                        {'$set': {'tags': value_tags}},
-                        upsert=True
-                    )
-
+            print("moncul")
+            print(tag_data)
+            for tag_entry in tag_data:
+                for trade_id, value_tags in tag_entry.items():
+                    if isinstance(value_tags, list):
+                        things_collection.update_one(
+                            {'_id': ObjectId(trade_id)},
+                            {'$set': {'tags': value_tags}},
+                            upsert=True
+                        )
             # Mise à jour ou création des champs note
             for note_item in note_data:
                 trade_id = note_item.get('id')
                 value_note = note_item.get('valueNote')
 
-                if trade_id and value_tag:
+                if trade_id and value_note:
                     things_collection.update_one({'_id': ObjectId(trade_id)}, {'$set': {'note': value_note}}, upsert=True)
 
             # Mise à jour ou création des champs psychologie
@@ -207,3 +207,4 @@ def setup_modificationTrade_routes(app):
             return jsonify({"error": str(e)}), 500
 
     return modificationTrade
+
