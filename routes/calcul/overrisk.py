@@ -13,15 +13,17 @@ def find_overrisk(data):
     percent = data.get('percent', None)
     
     if percent is None:
-        return jsonify({"error": "No 'percent' value provided"}), 400
+        raise ValueError("No 'percent' value provided")
     
     try:
         percent_value = float(percent)
     except ValueError:
-        return jsonify({"error": "'percent' should be a number"}), 400
+        raise ValueError("'percent' should be a number")
     
     # Comparaison de la valeur avec 1
     if percent_value > 1:
-        return jsonify({"overrisk": True})
+        overrisk = True
     else:
-        return jsonify({"overrisk": False})
+        overrisk = False
+    
+    return overrisk
