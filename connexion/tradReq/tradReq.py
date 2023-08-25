@@ -34,6 +34,7 @@ from routes.calcul.average.daytotal import calculate_averagedaytrade
 from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
+from routes.calcul.overrisk import find_overrisk
 
 #from routes.calcul.week.profitw import calculate_profitw
 
@@ -202,6 +203,9 @@ def save_trade_request():
             risk_percent = calculate_percent(data)
             data['percent']=  risk_percent
 
+            overrisk = find_overrisk(data)
+            data['overrisk'] = overrisk
+
           
 
             
@@ -322,6 +326,7 @@ def save_trade_request():
             "indicateur3": None,
             "tag": None,
             "note": None,
+            "overrisk : data.get('overrisk')
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
