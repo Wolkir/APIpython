@@ -35,7 +35,7 @@ from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
-from routes.calcul.overrisk import save_balance
+
 from routes.calcul.average.balanceopen import save_balance
 
 
