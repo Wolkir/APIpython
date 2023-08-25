@@ -14,12 +14,12 @@ def save_balance(data):
     tradecount = data.get('tradecount')
     closurePosition  = data.get('closurePosition')
     balance = data.get('balance')
-    date_received = data.get('date')  # Je suppose que vous recevez aussi une date avec le format donné
+    date = data.get('dateAndTimeOpening')  # Je suppose que vous recevez aussi une date avec le format donné
     collection_name = f"{username}_temporaire"
     collection = db[collection_name]
 
     # Vérifier si les clés nécessaires sont présentes dans la demande
-    if not all([tradecount, closurePosition, balance, date_received]):
+    if not all([tradecount, closurePosition, balance,date]):
         abort(400, 'Missing data')
 
     # Convertir la date reçue en objet datetime pour extraire seulement la partie jour
