@@ -12,14 +12,14 @@ db = client['test']
 def save_balance(data):
     username = data.get('username')
     tradecount = data.get('tradecount')
-    status = data.get('status')
+    closurePosition  = data.get('closurePosition')
     balance = data.get('balance')
     date_received = data.get('date')  # Je suppose que vous recevez aussi une date avec le format donné
     collection_name = f"{username}_temporaire"
     collection = db[collection_name]
 
     # Vérifier si les clés nécessaires sont présentes dans la demande
-    if not all([tradecount, status, balance, date_received]):
+    if not all([tradecount, closurePosition, balance, date_received]):
         abort(400, 'Missing data')
 
     # Convertir la date reçue en objet datetime pour extraire seulement la partie jour
@@ -27,7 +27,7 @@ def save_balance(data):
     current_date = date_obj.strftime('%Y-%m-%d')
 
     # Si c'est le premier trade ouvert du jour
-    if tradecount == 1 and status == "open":
+    if tradecount == 1 and closurePosition == "open":
         # Vérifier si la valeur a déjà été enregistrée aujourd'hui
         existing_balance = collection.find_one({'date': current_date})
         if not existing_balance:
