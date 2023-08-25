@@ -5,9 +5,8 @@ from datetime import datetime
 balanceopen = Blueprint('balanceopen', __name__)
 
 # Connexion à la base de données MongoDB
-client = MongoClient('mongodb+srv://USERNAME:PASSWORD@YOUR_URL')
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
-
 
 @balanceopen.route('/save_balance', methods=['POST'])
 def save_balance(data):
