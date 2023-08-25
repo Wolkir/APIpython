@@ -253,6 +253,9 @@ def save_trade_request():
             risk_percent = calculate_percent(data)
             data['percent']=  risk_percent
 
+            overrisk = find_overrisk(data)
+            data['overrisk'] = overrisk
+
             
             
         # Insert the data into the collection
