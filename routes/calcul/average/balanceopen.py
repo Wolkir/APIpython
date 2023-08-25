@@ -10,7 +10,7 @@ db = client['test']
 
 @balanceopen.route('/save_balance', methods=['POST'])
 def save_balance(data):
-    data = request.get_json()
+    username = data.get('username')
     tradecount = data.get('tradecount')
     status = data.get('status')
     balance = data.get('balance')
