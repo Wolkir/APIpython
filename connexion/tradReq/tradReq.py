@@ -282,7 +282,7 @@ def save_trade_request():
             "Max profit": data.get('maxProfit'),
             "Max loss" : data.get('maxLoss'),
             "Highest price": data.get('highestPrice'),
-            "Lowest price':data.get('lowestPrice'),
+            "Lowest price': data.get('lowestPrice'),
             "commision": data.get('commision'),
             "closurePosition": data.get('closurePosition'),
             "tradecount" : data.get('tradecount'),
