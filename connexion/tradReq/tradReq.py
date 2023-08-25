@@ -326,7 +326,7 @@ def save_trade_request():
             "indicateur3": None,
             "tag": None,
             "note": None,
-            "overrisk : data.get('overrisk')
+            "overrisk" : data.get('overrisk')
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
