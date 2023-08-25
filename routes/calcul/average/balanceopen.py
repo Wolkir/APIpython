@@ -23,7 +23,7 @@ def save_balance(data):
         abort(400, 'Missing data')
 
     # Convertir la date reçue en objet datetime pour extraire seulement la partie jour
-    date_obj = datetime.strptime(date_received, '%Y-%m-%dT%H:%M:%S.%f%z')
+    date_obj = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f%z')
     current_date = date_obj.strftime('%Y-%m-%d')
 
     # Si c'est le premier trade ouvert du jour
