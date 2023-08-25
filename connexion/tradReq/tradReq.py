@@ -35,8 +35,8 @@ from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
-
-#from routes.calcul.week.profitw import calculate_profitw
+from routes.calcul.overrisk import save_balance
+from routes.balanceopen import save_balance
 
 
 
@@ -350,6 +350,7 @@ def save_trade_request():
         calculate_daycount(data)
         calculate_averagedaytrade(data)
         most_common_asset(data)
+        save_balance(data)
 
         #calculate_profitw(data)
    
