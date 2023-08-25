@@ -88,6 +88,7 @@ from routes.calcul.average.daytotal import daytotal
 from routes.calcul.average.mainasset import mainasset
 from routes.calcul.riskcapital import risk
 from routes.calcul.overrisk import overrisk
+from routes.calcul.average.balanceopen import balanceopen
 
 
 from routes.calcul.week.profitw import profitw
@@ -158,6 +159,7 @@ app.register_blueprint(daytotal)
 app.register_blueprint(mainasset)
 app.register_blueprint(risk)
 app.register_blueprint(overrisk)
+app.register_blueprint(balanceopen)
 
 app.register_blueprint(profitw)
 
