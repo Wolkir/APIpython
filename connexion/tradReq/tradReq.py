@@ -211,8 +211,8 @@ def save_trade_request():
             tilt_status= find_tilt(data)
             data['tilt'] = tilt_status
 
-            overtrade = find_overtrade(data)
-            data['overtrading'] = overtrade
+            overtradenumber = find_overtrade(data)
+            data['overtrading'] = overtradenumber
 
           
 
@@ -267,8 +267,8 @@ def save_trade_request():
             #tilt_status= find_tilt(data)
             #data['tilt'] = tilt_status
 
-            overtrade = find_overtrade(data)
-            data['overtrading'] = overtrade
+            overtradenumber = find_overtrade(data)
+            data['overtrading'] = overtradenumber
 
             
             
@@ -344,7 +344,7 @@ def save_trade_request():
             "tag": None,
             "note": None,
             "overrisk" : data.get('overrisk'),
-            "overtrading": data.get('overtrade')
+            "overtrading": data.get('overtradenumber')
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
