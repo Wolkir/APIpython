@@ -36,7 +36,7 @@ from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
 from routes.calcul.overtrade import find_overtrade
-from routes.calcul.profit.pfreal import calculalte_pfreal
+from routes.calcul.profit.pfreal import calculate_pfreal
 
 from routes.calcul.average.balanceopen import save_balance
 from routes.calcul.tilt import find_tilt
