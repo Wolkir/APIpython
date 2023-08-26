@@ -207,8 +207,8 @@ def save_trade_request():
             overrisk = find_overrisk(data)
             data['overrisk'] = overrisk
 
-            #tilt_status= find_tilt(data)
-            #data['tilt'] = tilt_status
+            tilt_status= find_tilt(data)
+            data['tilt'] = tilt_status
 
           
 
@@ -260,8 +260,8 @@ def save_trade_request():
             overrisk = find_overrisk(data)
             data['overrisk'] = overrisk
 
-            tilt_status= find_tilt(data)
-            data['tilt'] = tilt_status
+            #tilt_status= find_tilt(data)
+            #data['tilt'] = tilt_status
 
             
             
