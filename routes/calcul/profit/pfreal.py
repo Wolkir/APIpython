@@ -8,7 +8,7 @@ client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm
 db = client['test']
 
 @pfreal.route('/calculer_profit_factor_reel', methods=['POST'])
-def calculer_profit_factor_reel(data):
+def calculate_pfreal(data):
     # Récupération des données du POST request
     data = request.get_json()
     username = data.get('username')
