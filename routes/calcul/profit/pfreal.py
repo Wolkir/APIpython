@@ -41,7 +41,7 @@ def calculate_pfreal(data):
 
     # Sauvegardons le résultat dans la collection 'username_unitaire'
     result_collection = db[username + '_unitaire']
-    result_collection.insert_one({
+    result_collection.update_one({
         'profit_factor_reel': profit_factor_reel
     })
 
