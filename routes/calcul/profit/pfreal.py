@@ -7,55 +7,42 @@ pfreal = Blueprint('pfreal', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-def calculate_pfreal(transactions):
-    gains_pondere = 0
-    pertes_pondere = 0
-
-    for trans in transactions:
-        profit = trans.get('profit', 0)
-        percent = trans.get('percent', 1)
-        if profit > 0:
-            gains_pondere += profit * percent
-        else:
-            pertes_pondere += abs(profit) * percent
-
-    if pertes_pondere == 0:
-        return float('inf')
-    return gains_pondere / pertes_pondere
-
-@pfreal.route('/profit-factor-real', methods=['GET'])
-def get_profit_factor_real(data):
-   
+pfreal.route('/calculer_profit_factor_reel', methods=['POST'])
+def calculate_pfreal(data):
+    # Récupération des données du POST request
+    data = request.get_json()
     username = data.get('username')
 
-    # Si le nom d'utilisateur n'est pas fourni, retourner une erreur
-    if not username:
-        return jsonify({"error": "Le champ 'username' est requis"}), 400
+    # Récupération de la collection spécifique pour l'utilisateur
+    user_collection = db[username + '_close']
 
-    # Récupération des transactions de la collection appropriée
-    close_collection_name = f"{username}_close"
-    transactions = list(db[close_collection_name].find())
+    # Initialisation des totaux pondérés
+    total_profit_pondere = 0
+    total_perte_pondere = 0
 
-    # Calculer le Profit Factor Réel
-    result = calculate_pfreal(transactions)
+    # Recherche de tous les trades pour cet utilisateur
+    trades = user_collection.find({})
 
-    # Mettre à jour ou insérer dans la base de données
-    unitaire_collection_name = f"{username}_unitaire"
-    db[unitaire_collection_name].update_one(
-        {"username": username},
-        {"$set": {"profit_factor_real": result}},
-        upsert=True
-    )
+    for trade in trades:
+        profit = trade.get('profit', 0)
+        percent = trade.get('percent', 1)  # si percent n'est pas présent, considérez-le comme 1 par défaut
+        
+        # Calculez le profit ou la perte pondérée
+        if profit > 0:
+            total_profit_pondere += profit * percent
+        else:
+            total_perte_pondere += abs(profit) * percent  # Nous utilisons abs() pour s'assurer que la perte est positive
 
-    return jsonify({"profit_factor_real": result, "message": "Mis à jour avec succès"})
+    # Évitons la division par zéro
+    if total_perte_pondere == 0:
+        profit_factor_reel = float('inf')  # signifie que nous avons seulement des profits, pas de pertes
+    else:
+        profit_factor_reel = total_profit_pondere / total_perte_pondere
 
-# Pour l'intégrer dans une application Flask
-app = Flask(__name__)
-app.register_blueprint(pfreal)
+    # Sauvegardons le résultat dans la collection 'username_unitaire'
+    result_collection = db[username + '_unitaire']
+    result_collection.insert_one({
+        'profit_factor_reel': profit_factor_reel
+    })
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
-
-
-
+    return jsonify({'message': 'Profit factor réel calculé et sauvegardé avec succès', 'profit_factor_reel': profit_factor_reel})
