@@ -11,7 +11,7 @@ db = client['test']
 @tilt.route('/tilt', methods=['GET'])
 def find_tilt(data):
     username = data.get('username')
-    equity = data.get('equity')
+    equity = data.get('Equity')
     date = data.get('dateAndTimeOpening') # Je suppose que la date est aussi fournie
 
     if not all([username, equity, date]):
