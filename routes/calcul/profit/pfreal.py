@@ -29,9 +29,9 @@ def calculate_pfreal(data):
 
         # Calculez le profit ou la perte pondérée basé sur le risque standard de 1%
         if profit > 0:
-            total_gain_pondere += profit * (0.01 / percent)
+            total_gain_pondere += profit / percent 
         else:
-            total_perte_pondere += abs(profit) * (0.01 / percent)  # Nous utilisons abs() pour s'assurer que la perte est positive
+            total_perte_pondere += abs(profit) / percent # Nous utilisons abs() pour s'assurer que la perte est positive
 
     # Évitons la division par zéro
     if total_perte_pondere == 0:
