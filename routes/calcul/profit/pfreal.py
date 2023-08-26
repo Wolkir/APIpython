@@ -26,18 +26,18 @@ def calculate_pfreal(data):
     for trade in trades:
         profit = trade.get('profit', 0)
         percent = trade.get('percent', 1)  # si percent n'est pas présent, considérez-le comme 1 par défaut
-        
-        # Calculez le profit ou la perte pondérée
+
+        # Calculez le profit ou la perte pondérée basé sur le risque standard de 1%
         if profit > 0:
-            total_profit_pondere += profit * percent
+            total_gain_pondere += profit * (0.01 / percent)
         else:
-            total_perte_pondere += abs(profit) * percent  # Nous utilisons abs() pour s'assurer que la perte est positive
+            total_perte_pondere += abs(profit) * (0.01 / percent)  # Nous utilisons abs() pour s'assurer que la perte est positive
 
     # Évitons la division par zéro
     if total_perte_pondere == 0:
-        profit_factor_reel = float('inf')  # signifie que nous avons seulement des profits, pas de pertes
+        profit_factor_reel = float('inf')  # signifie que nous avons seulement des gains, pas de pertes
     else:
-        profit_factor_reel = total_profit_pondere / total_perte_pondere
+        profit_factor_reel = total_gain_pondere / total_perte_pondere
 
     # Sauvegardons le résultat dans la collection 'username_unitaire'
     result_collection = db[username + '_unitaire']
