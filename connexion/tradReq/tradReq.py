@@ -37,6 +37,7 @@ from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
 
 from routes.calcul.average.balanceopen import save_balance
+from routes.calcul.tilt import find_tilt
 
 
 
@@ -206,6 +207,9 @@ def save_trade_request():
             overrisk = find_overrisk(data)
             data['overrisk'] = overrisk
 
+            tilt_status= find_tilt(data)
+            data['tilt'] = tilt_status
+
           
 
             
@@ -255,6 +259,9 @@ def save_trade_request():
 
             overrisk = find_overrisk(data)
             data['overrisk'] = overrisk
+
+            tilt_status= find_tilt(data)
+            data['tilt'] = tilt_status
 
             
             
@@ -318,7 +325,7 @@ def save_trade_request():
             "timeEntree": None,
             "timeSetup": None,
             "sortieManuelle":data.get('sortiemanu'),
-            "journeeDeTilt": None,
+            "tilt": data.get('tilt'),
             "TJS": None,
             "totaltrade": data.get('total_trade'),
             #"daytrade": data.get('daytrade_value'),
