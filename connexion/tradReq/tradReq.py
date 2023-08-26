@@ -35,6 +35,7 @@ from routes.calcul.average.mainasset import most_common_asset
 from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
+from routes.calcul.overtrade import find_overtrade
 
 from routes.calcul.average.balanceopen import save_balance
 from routes.calcul.tilt import find_tilt
@@ -210,6 +211,9 @@ def save_trade_request():
             tilt_status= find_tilt(data)
             data['tilt'] = tilt_status
 
+            overtrade = find_overtrade(data)
+            data['overtrading'] = overtrade
+
           
 
             
@@ -262,6 +266,9 @@ def save_trade_request():
 
             #tilt_status= find_tilt(data)
             #data['tilt'] = tilt_status
+
+            overtrade = find_overtrade(data)
+            data['overtrading'] = overtrade
 
             
             
@@ -336,7 +343,8 @@ def save_trade_request():
             "indicateur3": None,
             "tag": None,
             "note": None,
-            "overrisk" : data.get('overrisk')
+            "overrisk" : data.get('overrisk'),
+            "overtrading": data.get('overtrade')
         }
         if not (data.get('closure_position') == "" and data.get('typeOfTransaction') == "ModifySl"):
             data["volume_remain"] = volume_remain
