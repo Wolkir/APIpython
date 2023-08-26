@@ -36,6 +36,7 @@ from routes.calcul.riskcapital import calculate_risk
 from routes.calcul.riskcapital import calculate_percent
 from routes.calcul.overrisk import find_overrisk
 from routes.calcul.overtrade import find_overtrade
+from routes.calcul.profit.pfreal import calculalte_pfreal
 
 from routes.calcul.average.balanceopen import save_balance
 from routes.calcul.tilt import find_tilt
@@ -366,6 +367,7 @@ def save_trade_request():
         calculate_averagedaytrade(data)
         most_common_asset(data)
         save_balance(data)
+        calculate_pfreal(data)
 
         #calculate_profitw(data)
    
