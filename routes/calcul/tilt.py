@@ -32,10 +32,10 @@ def find_tilt(data):
     opening_balance = balance_record.get('balanceopen')
 
     # Calculer le pourcentage de changement
-    percent_change = ((equity - opening_balance) / opening_balance) * 100
+    percent_change = (equity / opening_balance) * 100
 
     # Vérifier si le changement est inférieur à -2% et renvoyer True ou False
-    if percent_change < -2:
+    if percent_change > 2:
         tilt_status = True
     else:
         tilt_status = False
