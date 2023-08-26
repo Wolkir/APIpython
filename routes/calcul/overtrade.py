@@ -16,11 +16,11 @@ def find_overtrade(data):
         return "Invalid Input", 400
 
     if tradecount > 5:
-        overtrade = True
+        overtradenumber = True
     else:
-        overtrade = False
+        overtradenumber = False
 
-    return overtrade
+    return overtradenumber
 
 
 
