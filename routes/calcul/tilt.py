@@ -8,7 +8,7 @@ tilt_blueprint = Blueprint('tilt', __name__)
 # Connexion à la base de données MongoDB
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
-
+@app.route('/tilt', methods=['GET'])
 def find_tilt(data):
     username = data.get('username')
     equity = data.get('equity')
