@@ -91,6 +91,7 @@ from routes.calcul.overrisk import overrisk
 from routes.calcul.average.balanceopen import balanceopen
 from routes.calcul.tilt import tilt
 from routes.calcul.overtrade import overtrade
+from route.calcul.profit.pfreal import pfreal
 
 
 from routes.calcul.week.profitw import profitw
@@ -164,6 +165,7 @@ app.register_blueprint(overrisk)
 app.register_blueprint(balanceopen)
 app.register_blueprint(tilt)
 app.register_blueprint(overtrade)
+app.register_blueprint(pfreal)
 
 app.register_blueprint(profitw)
 
