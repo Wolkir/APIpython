@@ -8,7 +8,7 @@ balanceopen = Blueprint('balanceopen', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@balanceopen.route('/save_balance', methods=['POST'])
+@balanceopen.route('/save_balance', methods=['GET'])
 def save_balance(data):
     username = data.get('username')
     tradecount = data.get('tradecount')
