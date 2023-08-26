@@ -23,7 +23,7 @@ def calculate_pfreal(transactions):
         return float('inf')
     return gains_pondere / pertes_pondere
 
-@pfreal.route('/profit-factor-real', methods=['POST'])
+@pfreal.route('/profit-factor-real', methods=['GET'])
 def get_profit_factor_real(data):
    
     username = data.get('username')
