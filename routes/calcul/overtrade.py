@@ -19,7 +19,7 @@ def find_overtrade(data):
     else:
         overtradenumber = False
 
-    return str(overtradenumber)
+    return overtradenumber
 
 
 
