@@ -91,7 +91,7 @@ from routes.calcul.overrisk import overrisk
 from routes.calcul.average.balanceopen import balanceopen
 from routes.calcul.tilt import tilt
 from routes.calcul.overtrade import overtrade
-from route.calcul.profit.pfreal import pfreal
+from routes.calcul.profit.pfreal import pfreal
 
 
 from routes.calcul.week.profitw import profitw
