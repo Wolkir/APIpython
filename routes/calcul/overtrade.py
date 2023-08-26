@@ -9,10 +9,10 @@ db = client['test']
 
 @overtrade.route('/overtrade', methods=['GET'])
 def find_overtrade(data):
-   
+     
     tradecount = data.get('tradecount')
     
-    if not username or tradecount is None:
+    if tradecount is None:
         return "Invalid Input", 400
 
     if tradecount > 5:
