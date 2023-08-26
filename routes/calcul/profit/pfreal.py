@@ -24,8 +24,8 @@ def calculate_pfreal(data):
     trades = user_collection.find({})
 
     for trade in trades:
-        profit = trade.get('profit', 0)
-        percent = trade.get('percent', 1)  # si percent n'est pas présent, considérez-le comme 1 par défaut
+        profit = data.get('profit', 0)
+        percent = data.get('percent', 1)  # si percent n'est pas présent, considérez-le comme 1 par défaut
 
         # Calculez le profit ou la perte pondérée basé sur le risque standard de 1%
         if profit > 0:
