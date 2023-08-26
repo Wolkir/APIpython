@@ -7,7 +7,7 @@ pfreal = Blueprint('pfreal', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@pfreal.route('/calculer_profit_factor_reel', methods=['POST'])
+@pfreal.route('/calculer_profit_factor_reel', methods=['GET'])
 def calculate_pfreal(data):
     # Récupération des données du POST request
     data = request.get_json()
