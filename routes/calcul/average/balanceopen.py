@@ -27,7 +27,7 @@ def save_balance(data):
     current_date = date_obj.strftime('%Y-%m-%d')
 
     # Si c'est le premier trade ouvert du jour
-    if tradecount == 1 and closurePosition == "open":
+    if tradecount == 1 and closurePosition == "Open":
         # Vérifier si la valeur a déjà été enregistrée aujourd'hui
         existing_balance = collection.find_one({'date': current_date})
         if not existing_balance:
