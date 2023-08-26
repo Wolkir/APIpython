@@ -66,7 +66,7 @@ def check_multiple_trades(data):
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-    collection_name = f"{username}_unitaire"
+    collection_name = f"{username}_temporaire"
     collection = db[collection_name]
     collection_open = db[f"{username}_open"]
 
