@@ -41,8 +41,15 @@ def calculate_pfreal(data):
 
     # Sauvegardons le résultat dans la collection 'username_unitaire'
     result_collection = db[username + '_unitaire']
-    result_collection.update_one({
-        'profit_factor_reel': profit_factor_reel
-    })
+    result_collection.update_one(
+        {},  # cela mettra à jour le premier document trouvé, ou en insérera un nouveau si aucun document n'est trouvé
+        {
+            '$set': {
+                'profit_factor_reel': profit_factor_reel,
+                # ajoutez ici d'autres clés et valeurs si nécessaire
+            }
+        },
+        upsert=True
+    )
 
     return jsonify({'message': 'Profit factor réel calculé et sauvegardé avec succès', 'profit_factor_reel': profit_factor_reel})
