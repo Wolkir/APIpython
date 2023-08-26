@@ -1,4 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
+from pymongo import MongoClient
+
 overtrade = Blueprint('overtrade', __name__)
 
 # Connexion à la base de données MongoDB
