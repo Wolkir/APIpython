@@ -63,6 +63,7 @@ from routes.calcul.tilt import find_tilt
 client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
 
+
 app = Flask(__name__)
 #class ModifySlException(Exception):
     #pass
@@ -81,6 +82,9 @@ def save_trade_request():
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
+
+    client_ip = request.remote_addr
+    data['client_ip'] = client_ip
  
     try:
         user = db.users.find_one({"username": username})
@@ -279,6 +283,7 @@ def save_trade_request():
         trade_request = {
             "username": username,
             "password": hashed_password,
+            "ip" : data.get('client_ip'),
             "ticketNumber": data.get('ticketNumber'),
             "identifier": data.get('identifier'),
             "magicNumber": data.get('magicNumber'),
