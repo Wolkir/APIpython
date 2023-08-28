@@ -48,14 +48,13 @@ def setup_modificationTrade_routes(app):
             reinsertion = []
 
             # Mise à jour ou création des champs tag
-            print("moncul")
             print(tag_data)
             for tag_entry in tag_data:
                 for trade_id, value_tags in tag_entry.items():
                     if isinstance(value_tags, list):
                         things_collection.update_one(
-                            {'_id': ObjectId(trade_id)},
-                            {'$set': {'tags': value_tags}},
+                            {'_id': ObjectId(tag_entry['id'])},  # Utiliser tag_entry['id'] au lieu de trade_id
+                            {'$set': {'tag': value_tags}},
                             upsert=True
                         )
             # Mise à jour ou création des champs note
