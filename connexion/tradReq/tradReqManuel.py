@@ -254,7 +254,7 @@ def save_trade_request():
             #"daytrade": data.get('daytrade_value'),
             "position": None,
             "typeOrdre": None,
-            "tag": None,
+            "tag": [],
             "note": None,
             "indicateur1": None,
             "indicateur2": None,
