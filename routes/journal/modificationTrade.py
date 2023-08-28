@@ -53,8 +53,8 @@ def setup_modificationTrade_routes(app):
                 for trade_id, value_tags in tag_entry.items():
                     if isinstance(value_tags, list):
                         things_collection.update_one(
-                            {'_id': ObjectId(tag_entry['id'])},  # Utiliser tag_entry['id'] au lieu de trade_id
-                            {'$set': {'tag': value_tags}},
+                            {'_id': ObjectId(tag_entry['id'])},
+                            {'$push': {'tag': {'$each': value_tags}}},
                             upsert=True
                         )
             # Mise à jour ou création des champs note
