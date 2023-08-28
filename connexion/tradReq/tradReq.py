@@ -347,7 +347,7 @@ def save_trade_request():
             "indicateur1": None,
             "indicateur2": None,
             "indicateur3": None,
-            "tag": None,
+            "tag": [],
             "note": None,
             "overrisk" : data.get('overrisk'),
             "overtrading": data.get('overtrading')
