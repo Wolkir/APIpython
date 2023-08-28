@@ -7,6 +7,16 @@ averagegainloss = Blueprint('averagegainloss', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 @averagegainloss.route('/averagegainloss', methods=['GET'])
+def calculate_median(values):
+    values.sort()
+    n = len(values)
+    if n == 0:
+        return 0
+    if n % 2 == 1:
+        return values[n//2]
+    else:
+        return (values[(n-1)//2] + values[n//2]) / 2
+       
 def calculate_average_gain_loss_rr(data):
    
     username = data.get('username')
@@ -80,7 +90,9 @@ def calculate_average_gain_loss_rr(data):
                 rr_values_long.append(doc["RR"])  # Ajouter la valeur directement, pas la liste entière
             elif typeofTransaction == "SELL":
                 rr_values_short.append(doc["RR"])
-
+    median_rr = calculate_median(rr_values)
+    median_rr_long = calculate_median(rr_values_long)
+    median_rr_short = calculate_median(rr_values_short)
    
     # Calcul de la moyenne des gains et pertes
     average_gain = positive_gains_total / positive_gains_count if positive_gains_count > 0 else 0
@@ -130,7 +142,10 @@ def calculate_average_gain_loss_rr(data):
                 'RRaverage': average_rr,
                 'averagelong_rr': average_rrlong,
                 'averageshort_rr': average_rrshort,
-                'average_duration': str(average_duration)
+                'average_duration': str(average_duration),
+                'median_rr': median_rr,
+                'median_rr_long': median_rr_long,
+                'median_rr_short': median_rr_short,
             }
         },
         upsert=True
