@@ -18,6 +18,9 @@ app.after_request(after_request)
 app.debug = False
 CORS(app, resources={r"*": {"origins": "*"}})
 
+# tag
+from routes.journal.suppressionTag import suppressionTag
+
 # RemplissageDefaut
 from routes.journal.enregistrementRemplissageDefaut import enregistrementRemplissageDefaut
 from routes.journal.recuperationRemplissageDefaut import recuperationRemplissageDefaut
@@ -228,6 +231,9 @@ app.register_blueprint(set_correctionTrade(app))
 # image
 app.register_blueprint(enregistrerImage)
 app.register_blueprint(recuperationImage)
+
+# tag
+app.register_blueprint(suppressionTag)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
