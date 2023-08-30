@@ -120,6 +120,7 @@ from routes.envoie.envoie import envoie
 # image
 from routes.journal.enregistrementImage import enregistrerImage
 from routes.journal.recuperationImage import recuperationImage
+from routes.journal.suppression import suppressionImage
 
 #journal
 from routes.journal.modificationTrade import setup_modificationTrade_routes
@@ -231,6 +232,7 @@ app.register_blueprint(set_correctionTrade(app))
 # image
 app.register_blueprint(enregistrerImage)
 app.register_blueprint(recuperationImage)
+app.register_blueprint(suppressionImage)
 
 # tag
 app.register_blueprint(suppressionTag)
