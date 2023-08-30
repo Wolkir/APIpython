@@ -120,7 +120,7 @@ from routes.envoie.envoie import envoie
 # image
 from routes.journal.enregistrementImage import enregistrerImage
 from routes.journal.recuperationImage import recuperationImage
-from routes.journal.suppression import suppressionImage
+from routes.journal.suppressionImage import suppressionImage
 
 #journal
 from routes.journal.modificationTrade import setup_modificationTrade_routes
