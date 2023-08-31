@@ -22,10 +22,19 @@ def recuperation_image():
             return jsonify({'message': 'Aucune image trouvée'}), 404
 
         image_data = []
+        image_ids = []  # Liste pour stocker les _id des images
+
         for image in images:
             image_data.append(image.read())
+            image_ids.append(str(image._id))  # Convertissez l'ObjectId en chaîne si nécessaire
 
-        return send_file(io.BytesIO(b''.join(image_data)), mimetype='image/jpeg')
+        response = send_file(io.BytesIO(b''.join(image_data)), mimetype='image/jpeg')
+        
+        # Ajoutez le champ _id à la réponse JSON
+        response.headers['image_id'] = ','.join(image_ids)
+
+        return response
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
+
