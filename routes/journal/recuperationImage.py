@@ -20,24 +20,17 @@ def recuperation_image():
         if images.count() == 0:
             return jsonify({'message': 'Aucune image trouvée'}), 404
 
-        image_data = []
         image_info_list = []
 
         for image in images:
-            image_data.append(io.BytesIO(image.read()))
-
             # Récupérez l'_id directement de l'objet image
             image_info = {
                 '_id': str(image._id)
+                'image_url': f'https://https://apipython2.onrender.com/recuperationImage?imageId={str(image._id)}'
             }
             image_info_list.append(image_info)
 
-        response = app.response_class(
-            response=image_data[0].getvalue(),
-            content_type='image/jpeg'
-        )
-
-        return jsonify({'infos_image': image_info_list, 'donnees_image': response.data})
+        return jsonify({'infos_image': image_info_list})
     except Exception as e:
         current_app.logger.error(f"Une erreur s'est produite : {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
