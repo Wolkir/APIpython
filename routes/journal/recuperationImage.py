@@ -26,11 +26,9 @@ def recuperation_image():
         for image in images:
             image_data.append(io.BytesIO(image.read()))
 
-            # Assuming you have metadata associated with the image
+            # Récupérez l'_id directement de l'objet image
             image_info = {
-                'id': image.metadata['id'],
-                'filename': image.metadata['filename'],
-                # Add other image metadata fields here
+                '_id': str(image._id)
             }
             image_info_list.append(image_info)
 
@@ -39,8 +37,8 @@ def recuperation_image():
             content_type='image/jpeg'
         )
 
-        return jsonify({'image_info': image_info_list, 'image_data': response.data})
+        return jsonify({'infos_image': image_info_list, 'donnees_image': response.data})
     except Exception as e:
-        current_app.logger.error(f"Error occurred: {e}")
+        current_app.logger.error(f"Une erreur s'est produite : {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
 
