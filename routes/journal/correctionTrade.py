@@ -46,6 +46,7 @@ def set_correctionTrade(app):
             commission = data.get('commision', None)
             closurePosition = data.get('closurePosition', None)
             balance = data.get('balance', None)
+            typeOrder = data.get('typeOrder', None)
 
             update_data = {
                 '$set': {
@@ -67,6 +68,7 @@ def set_correctionTrade(app):
                     'commission': commission,
                     'closurePosition': closurePosition,
                     'balance': balance,
+                    'typeOrdre': typeOrder,
                 }
             }
 
