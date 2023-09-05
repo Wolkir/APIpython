@@ -12,7 +12,8 @@ def create_strategie():
     try:
         mongo = PyMongo(current_app)
         collection = mongo.db['strategies']
-        strategies = list(collection.find({"nomStrategie": nomStrategie}, {"username": username}))
+        strategies = list(collection.find({"nomStrategie": nomStrategie, "username": username}))
+
         if strategies:
             return jsonify({"error": "Cette stratégie existe déjà"}), 400
 
