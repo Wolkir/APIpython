@@ -3,9 +3,8 @@ from pymongo import MongoClient
 
 suppressionRemplissage = Blueprint('suppressionRemplissage', __name__)
 
-app.config['MONGO_URI'] = 'mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority'
-mongo = MongoClient(app.config['MONGO_URI'])
-db = mongo["test"]
+client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
+db = client['test']
 collection = db['remplissageFiltre']
 
 @suppressionRemplissage.route('/suppressionRemplissage', methods=['DELETE'])
