@@ -34,10 +34,10 @@ def creation_remplissage_filtre():
 
             # Ajouter le champ nomRemplissage au document
             document_mongodb["nomRemplissage"] = nomRemplissage
-            document_mongodb2["username"] = username
+            document_mongodb["username"] = username
 
             # Insérer le document MongoDB unique dans la collection MongoDB
-            collection.insert_one(document_mongodb2)
+            collection.insert_one(document_mongodb)
 
             return jsonify({"message": "Données insérées avec succès"}), 200
         else:
