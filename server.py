@@ -133,6 +133,7 @@ from routes.journal.suppressionTrade import suppressionTrade
 #statistique
 from routes.statistique.creationRemplissageFiltre import creationRemplissageFiltre
 from routes.statistique.recuperationNomRemplissageFiltre import recuperationNomRemplissageFiltre
+from routes.statistique.recuperationRemplissageFiltre import recuperationRemplissageFiltre
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
@@ -237,6 +238,7 @@ app.register_blueprint(suppressionTrade)
 # statistique
 app.register_blueprint(creationRemplissageFiltre)
 app.register_blueprint(recuperationNomRemplissageFiltre)
+app.register_blueprint(recuperationRemplissageFiltre)
 
 # image
 app.register_blueprint(enregistrerImage)
