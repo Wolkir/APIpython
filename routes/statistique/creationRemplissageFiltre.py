@@ -14,11 +14,12 @@ collection = db['remplissageFiltre']
 def creation_remplissage_filtre():
     try:
         nomRemplissage = request.args.get('nomRemplissage', None)
+        username = request.args.get('username', None)
         tableau_json = request.get_json()
 
         if isinstance(tableau_json, list):
             # Vérifier si un document avec le même nomRemplissage existe déjà
-            existing_document = collection.find_one({"nomRemplissage": nomRemplissage})
+            existing_document = collection.find_one({"nomRemplissage": nomRemplissage, "username": username})
 
             if existing_document:
                 return jsonify({"message": f"Un document avec nomRemplissage='{nomRemplissage}' existe déjà"}), 400
