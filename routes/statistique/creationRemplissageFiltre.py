@@ -13,9 +13,17 @@ collection = db['remplissageFiltre']
 @creationRemplissageFiltre.route('/creationRemplissageFiltre', methods=['POST'])
 def creation_remplissage_filtre():
     try:
+        nomRemplissage = request.args.get('nomRemplissage', None)
         tableau_json = request.get_json()
+
         if isinstance(tableau_json, list):
-            # Créez un document MongoDB unique qui contient tous les sous-tableaux
+            # Vérifier si un document avec le même nomRemplissage existe déjà
+            existing_document = collection.find_one({"nomRemplissage": nomRemplissage})
+
+            if existing_document:
+                return jsonify({"message": f"Un document avec nomRemplissage='{nomRemplissage}' existe déjà"}), 400
+
+            # Si aucun document avec le même nomRemplissage n'a été trouvé, insérer les données
             document_mongodb = {}
             for item in tableau_json:
                 for key, value in item.items():
@@ -23,17 +31,10 @@ def creation_remplissage_filtre():
                         document_mongodb[key] = []
                     document_mongodb[key].append(value)
 
-            # Vérifiez si les champs 'string' de 'nomRemplissage' ne sont pas déjà présents dans la collection
-            if 'nomRemplissage' in document_mongodb:
-                existing_documents = collection.find({'nomRemplissage': {'$in': document_mongodb['nomRemplissage']}})
-                for existing_doc in existing_documents:
-                    for item in tableau_json:
-                        if 'nomRemplissage' in item:
-                            for value in item['nomRemplissage']:
-                                if value in existing_doc['nomRemplissage']:
-                                    return jsonify({"message": f"La valeur '{value}' existe déjà dans la collection"}), 400
+            # Ajouter le champ nomRemplissage au document
+            document_mongodb["nomRemplissage"] = nomRemplissage
 
-            # Insérez le document MongoDB unique dans la collection MongoDB
+            # Insérer le document MongoDB unique dans la collection MongoDB
             collection.insert_one(document_mongodb)
 
             return jsonify({"message": "Données insérées avec succès"}), 200
@@ -42,6 +43,4 @@ def creation_remplissage_filtre():
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
-if __name__ == '__main__':
-    app.register_blueprint(creationRemplissageFiltre)
-    app.run()
+
