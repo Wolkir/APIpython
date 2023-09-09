@@ -21,6 +21,7 @@ def get_nom_remplissage():
         # Extraire les valeurs du champ 'nomRemplissage' dans une liste
         nom_remplissage_list = [doc["nomRemplissage"] for doc in cursor]
 
-        return jsonify({"nomRemplissage": nom_remplissage_list}), 200
+        # Retournez directement la liste sans l'envelopper dans un objet JSON
+        return jsonify(nom_remplissage_list), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
