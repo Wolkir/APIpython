@@ -130,11 +130,12 @@ from routes.journal.recuperationUnTrade import recuperation_un_seul_trade
 from routes.journal.correctionTrade import set_correctionTrade
 from routes.journal.suppressionTrade import suppressionTrade
 
-#statistique
+#statistique 
 from routes.statistique.creationRemplissageFiltre import creationRemplissageFiltre
 from routes.statistique.recuperationNomRemplissageFiltre import recuperationNomRemplissageFiltre
 from routes.statistique.recuperationRemplissageFiltre import recuperationRemplissageFiltre
 from routes.statistique.suppressionRemplissage import suppressionRemplissage
+from routes.statistique.recuperationTradeParFiltre import recuperationTradeParFiltre
 
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
@@ -241,6 +242,7 @@ app.register_blueprint(creationRemplissageFiltre)
 app.register_blueprint(recuperationNomRemplissageFiltre)
 app.register_blueprint(recuperationRemplissageFiltre)
 app.register_blueprint(suppressionRemplissage)
+app.register_blueprint(recuperationTradeParFiltre)
 
 # image
 app.register_blueprint(enregistrerImage)
