@@ -21,6 +21,13 @@ def process_data():
     try:
         data = request.json
         collection = db[request.args.get('collection', None)]
+        volume = None
+        volume_remain = None
+        profit = None
+        symbol = None
+        typeOfTransaction = None
+        dateAndTimeOpening = None
+        dateAndTimeClosure = None
         if isinstance(data, list):
             for item in data:
                 if item and item.get('volume') is not None:
