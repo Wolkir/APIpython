@@ -76,4 +76,4 @@ def process_data():
         return jsonify({'data': data})
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
-        return jsonify({"error": "Erreur lors de la récupération des données par filtre, "details": str(e)}), 500
+        return jsonify({"error": "Erreur lors de la récupération des données par filtre", "details": str(e)}), 500
