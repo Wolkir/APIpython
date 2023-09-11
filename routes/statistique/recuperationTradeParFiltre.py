@@ -16,7 +16,7 @@ db = mongo["test"]
 
 recuperationTradeParFiltre = Blueprint('recuperationTradeParFiltre', __name__)
 
-@recuperationTradeParFiltre.route('/recuperationTradeParFiltre', methods=['POST'])
+@recuperationTradeParFiltre.route('/recuperationTradeParFiltre', methods=['GET'])
 def process_data():
     try:
         data = request.json
