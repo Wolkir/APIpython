@@ -27,10 +27,11 @@ def recuperation_images():
 
         # Parcourez les images et ajoutez leurs données à la liste
         for image in images:
-            image_data = {
-                'image_id': image_id,
-                'image_url': f'/image/{images._id}',  # URL pour récupérer l'image individuelle
-            }
+            image_url = f'/image/{image["_id"]}'
+            image_list.append({
+                'image_id': image["_id"],
+                'image_url': image_url
+            })
             image_data_list.append(image_data)
 
         # Renvoyez la liste des données JSON (toutes les images correspondantes)
