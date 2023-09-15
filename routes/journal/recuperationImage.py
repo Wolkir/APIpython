@@ -29,7 +29,7 @@ def recuperation_images():
         for image in images:
             image_data = {
                 'image_id': image_id,
-                'image_url': f'/image/{image_id}',  # URL pour récupérer l'image individuelle
+                'image_url': f'/image/{images._id}',  # URL pour récupérer l'image individuelle
             }
             image_data_list.append(image_data)
 
