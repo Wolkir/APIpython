@@ -1,7 +1,6 @@
-from flask import Blueprint, send_file, current_app, request, jsonify, Flask
+from flask import Blueprint, jsonify, Flask, request
 from pymongo import MongoClient
 import gridfs
-import io
 
 app = Flask(__name__)
 
@@ -18,23 +17,16 @@ def recuperation_image():
 
         images = fs.find({'metadata.id': image_id})
         if images.count() == 0:
-            print(images)
             return jsonify({'message': 'Aucune image trouvée'}), 404
 
         image_data = []
-        image_ids = []  # Liste pour stocker les _id des images
 
         for image in images:
-            image_data.append(image.read())
-            image_ids.append(str(image._id))  # Convertissez l'ObjectId en chaîne si nécessaire
+            image_data.append({'_id': str(image._id), 'url': image['metadata']['url']})
 
-        response = send_file(io.BytesIO(b''.join(image_data)), mimetype='image/jpeg')
-        
-        # Ajoutez le champ _id à la réponse JSON
-        response.headers['image_id'] = ','.join(image_ids)
-
-        return response
+        return jsonify(image_data)
     except Exception as e:
         app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
+
 
