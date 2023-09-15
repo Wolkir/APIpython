@@ -17,7 +17,7 @@ def recuperation_images():
         fs = gridfs.GridFS(db)
 
         # Recherche de toutes les images correspondant à la condition
-        images = fs.find({'metadata.id': image_id})
+        images = fs.find({'metadata.imageId': image_id})
 
         if images.count() == 0:
             return jsonify({'message': 'Aucune image trouvée'}), 404
@@ -28,8 +28,8 @@ def recuperation_images():
         # Parcourez les images et ajoutez leurs données à la liste
         for image in images:
             image_data = {
-                'image_id': image_id,
-                'image_url': f'/image/{image_id}',  # URL pour récupérer l'image individuelle
+                'image_id': str(image.metadata['imageId']),  # Convertissez l'ID en chaîne
+                'image_url': f'/image/{str(image.metadata["imageId"])}',  # URL pour récupérer l'image individuelle
             }
             image_data_list.append(image_data)
 
@@ -50,7 +50,7 @@ def recuperation_image(image_id):
         fs = gridfs.GridFS(db)
 
         # Recherche de l'image par ID
-        image = fs.find_one({'metadata.id': image_id})
+        image = fs.find_one({'metadata.imageId': image_id})
 
         if image is None:
             return jsonify({'message': 'Image non trouvée'}), 404
