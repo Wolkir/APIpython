@@ -22,12 +22,12 @@ def recuperation_image():
         if image is None:
             return jsonify({'message': 'Aucune image trouvée'}), 404
 
-        # Renvoyer l'image en tant que fichier
+        # Renvoyer l'image en tant que fichier téléchargeable
         response = send_file(
             image, 
             mimetype='image/jpeg',
-            as_attachment=True,
-            download_name=f'image_{image_id}.jpg'
+            as_attachment=True,  # Permet le téléchargement
+            attachment_filename=f'image_{image_id}.jpg'  # Nom du fichier à télécharger
         )
         return response
 
@@ -38,3 +38,4 @@ def recuperation_image():
 if __name__ == "__main__":
     app.register_blueprint(recuperationImage)
     app.run(debug=True)
+
