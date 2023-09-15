@@ -7,7 +7,7 @@ app = Flask(__name__)
 recuperationImage = Blueprint('recuperationImage', __name__)
 
 @recuperationImage.route('/recuperationImage', methods=['GET'])
-def recuperation_image():
+def recuperation_images():
     try:
         image_id = request.args.get('imageId', None)
 
@@ -16,20 +16,27 @@ def recuperation_image():
         db = client["test"]
         fs = gridfs.GridFS(db)
 
-        # Recherche de l'image par ID
-        image = fs.find_one({'metadata.id': image_id})
+        # Recherche de toutes les images correspondant à la condition
+        images = fs.find({'metadata.id': image_id})
 
-        if image is None:
+        if images.count() == 0:
             return jsonify({'message': 'Aucune image trouvée'}), 404
 
-        # Renvoyer l'image en tant que fichier téléchargeable
-        response = send_file(
-            image, 
-            mimetype='image/jpeg',
-            as_attachment=True,  # Permet le téléchargement
-            attachment_filename=f'image_{image_id}.jpg'  # Nom du fichier à télécharger
-        )
-        return response
+        # Créez une liste pour stocker les réponses
+        responses = []
+
+        # Parcourez les images et ajoutez-les à la liste de réponses
+        for image in images:
+            response = send_file(
+                image, 
+                mimetype='image/jpeg',
+                as_attachment=True,  # Permet le téléchargement
+                attachment_filename=f'image_{image_id}.jpg'  # Nom du fichier à télécharger
+            )
+            responses.append(response)
+
+        # Renvoyer la liste de réponses (toutes les images correspondantes)
+        return responses
 
     except Exception as e:
         app.logger.error(f"Error occurred: {e}")
