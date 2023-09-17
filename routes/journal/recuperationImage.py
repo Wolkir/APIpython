@@ -26,12 +26,15 @@ def recuperation_images():
         image_data_list = []
 
         # Parcourez les images et ajoutez leurs données à la liste
-        for image in images:
-            image_url = f'/image/{image["_id"]}'
-            image_data_list.append({
-                'image_id': str(image["_id"]),
-                'image_url': image_url
-            })
+        image_data_list = []
+        for image_id in images:
+            image = fs.get(image_id)
+            if image:
+                image_url = f'/image/{image_id}'
+                image_data_list.append({
+                    'image_id': str(image_id),
+                    'image_url': image_url
+                })
 
         # Renvoyez la liste des données JSON (toutes les images correspondantes)
         return jsonify(image_data_list)
