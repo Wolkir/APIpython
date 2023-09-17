@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 recuperationImage = Blueprint('recuperationImage', __name__)
 
-@recuperationImage.route('/recuperationImage', methods=['GET'])
+@recuperationImage.route('/recuperationImage/<imageId>', methods=['GET'])
 def recuperation_images():
     try:
         image_id = request.args.get('imageId', None)
@@ -39,11 +39,3 @@ def recuperation_images():
     except Exception as e:
         app.logger.error(f"Error occurred: {e}")
         return jsonify({'message': f'Une erreur est survenue : {str(e)}'}), 500
-
-if __name__ == "__main__":
-    app.register_blueprint(recuperationImage)
-    app.run(debug=True)
-
-    app.run(debug=True)
-
-
