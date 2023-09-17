@@ -25,16 +25,20 @@ def recuperation_images():
         # Créez une liste pour stocker les données JSON des images
         image_data_list = []
 
-        # Parcourez les images et ajoutez leurs données à la liste
-        image_data_list = []
-        for image_id in images:
-            image = fs.get(image_id)
-            if image:
-                image_url = f'/image/{image_id}'
-                image_data_list.append({
-                    'image_id': str(image_id),
-                    'image_url': image_url
-                })
+      image_data_list = []
+
+      # Parcourez les images et ajoutez leurs données à la liste
+      for image_id in images:
+          image = fs.get(image_id)
+          if image:
+              image_bytes = image.read()  # Lire les données binaires de l'image
+              image_base64 = base64.b64encode(image_bytes).decode('utf-8')  # Convertir en base64
+              image_url = f'/image/{image_id}'
+              image_data_list.append({
+                  'image_id': str(image_id),
+                  'image_url': image_url,
+                  'image_data': image_base64  # Ajoutez les données binaires encodées en base64
+              })
 
         # Renvoyez la liste des données JSON (toutes les images correspondantes)
         return jsonify(image_data_list)
