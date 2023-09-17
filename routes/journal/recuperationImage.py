@@ -31,7 +31,7 @@ def recuperation_images():
         for image in images:
             image_id = image.metadata.get('id')
             if image_id:
-                imageID = image._id
+                imageID = str(image._id)
                 image_bytes = image.read()  # Lire les données binaires de l'image
                 image_base64 = base64.b64encode(image_bytes).decode('utf-8')  # Convertir en base64
                 image_url = f'/image/{image_id}'
