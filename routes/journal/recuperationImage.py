@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 recuperationImage = Blueprint('recuperationImage', __name__)
 
-@app.route('/recuperationImage', methods=['GET'])
+@recuperationImage.route('/recuperationImage', methods=['GET'])
 def recuperation_images():
     try:
         image_id = request.args.get('imageId', None)
