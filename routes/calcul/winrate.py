@@ -9,11 +9,11 @@ db = client['test']
 
 
 @winrate.route('/winrate', methods=['GET'])
-def calculate_winrate(data):
-    
+def calculate_winrate():
+    data = request.json
     username = data.get('username')
     identifier = data.get('identifier')
-    collection_name = f"{username}_close"
+    collection_name = data.get('collection')
     collection_unitaire = f"{username}_unitaire"
     collection = db[collection_name]
   
