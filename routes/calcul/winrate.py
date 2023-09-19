@@ -37,12 +37,9 @@ def calculate_winrate():
                 negative_profits_count += 1
                 negative_identifiers.add(identifier)
     
-        # Vérification pour éviter la division par zéro
-        if positive_profits_count + negative_profits_count > 0:
-            # Calcul du winrate
-            winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-        else:
-            winrate_value = 0
+
+        winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+   
 
         # Insérer le winrate_value dans la collection "unitaire"
         unitaire_collection = db[collection_unitaire]
