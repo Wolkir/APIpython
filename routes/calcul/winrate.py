@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, , request
+from flask import Flask, Blueprint, jsonify, request
 from pymongo import MongoClient
 
 winrate = Blueprint('winrate', __name__)
