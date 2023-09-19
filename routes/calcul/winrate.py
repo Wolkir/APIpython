@@ -7,7 +7,6 @@ winrate = Blueprint('winrate', __name__)
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-
 @winrate.route('/winrate', methods=['GET'])
 def calculate_winrate():
     try:
@@ -47,7 +46,8 @@ def calculate_winrate():
         unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
 
         return jsonify({"message": "Winrate calculé avec succès"})
-    else:
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    except:
         return jsonify({"error": "La demande ne contient pas de données JSON valide"}), 400
-except Exception as e:
-    return jsonify({"error": str(e)}), 500
+
