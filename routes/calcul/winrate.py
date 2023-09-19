@@ -37,10 +37,13 @@ def calculate_winrate():
                 negative_profits_count += 1
                 negative_identifiers.add(identifier)
     
-        
-        # Calcul du winrate
-        winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-        
+        # Vérification pour éviter la division par zéro
+        if positive_profits_count + negative_profits_count > 0:
+            # Calcul du winrate
+            winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+        else:
+            winrate_value = 0
+
         # Insérer le winrate_value dans la collection "unitaire"
         unitaire_collection = db[collection_unitaire]
         unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
@@ -50,4 +53,3 @@ def calculate_winrate():
         return jsonify({"error": str(e)}), 500
     except:
         return jsonify({"error": "La demande ne contient pas de données JSON valide"}), 400
-
