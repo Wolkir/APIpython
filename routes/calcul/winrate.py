@@ -10,10 +10,12 @@ db = client['test']
 @winrate.route('/winrate', methods=['GET'])
 def calculate_winrate():
     try:
-        collection_name = request.args.get('collection', None)
+        collection = request.args.get('collection', None)
         username = request.args.get('username', None)
         filtreDeBase = request.args.get('filtreDeBase', None)
-        tableauFiltreValue = request.args.get('tableauFiltreValue', None)
+        tableauFiltreValue_json = request.args.get('tableauFiltreValue')
+        tableauFiltreValue = json.loads(tableauFiltreValue_json)
+        
         collection_unitaire = f"{username}_unitaire"
         collection = db[collection_name]
 
@@ -24,10 +26,19 @@ def calculate_winrate():
         print(collection_unitaire)
         print(collection)
       
-        # Récupérer tous les documents
         documents = list(collection.find())
         
         print(documents)
+
+        query = {}
+
+        for item in tableauFiltreValue:
+            condition = {}
+            for key, value in item.items():
+                condition[key] = {'$ne': value}
+            or_conditions.append(condition)
+    
+        query = {'$and': or_conditions}
         
         positive_profits_count = 0
         negative_profits_count = 0
@@ -58,7 +69,11 @@ def calculate_winrate():
         unitaire_collection = db[collection_unitaire]
         unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
 
-        return jsonify({"message": "Winrate calculé avec succès"})
+        return jsonify({
+            "message": "Données traitées avec succès",
+            "query": query
+        })
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     except:
