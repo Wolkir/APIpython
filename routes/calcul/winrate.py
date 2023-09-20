@@ -16,9 +16,18 @@ def calculate_winrate():
         tableauFiltreValue = request.args.get('tableauFiltreValue', None)
         collection_unitaire = f"{username}_unitaire"
         collection = db[collection_name]
+
+        print(collection_name)
+        print(username)
+        print(filtreDeBase)
+        print(tableauFiltreValue)
+        print(collection_unitaire)
+        print(collection)
       
         # Récupérer tous les documents
         documents = list(collection.find())
+        
+        print(documents)
         
         positive_profits_count = 0
         negative_profits_count = 0
@@ -29,6 +38,7 @@ def calculate_winrate():
         for doc in documents:
             profit = doc['profit']
             identifier = doc['identifier']
+            print(doc)
             
             if profit > 0 and identifier not in positive_identifiers:
                 positive_profits_count += 1
@@ -39,8 +49,11 @@ def calculate_winrate():
     
 
         winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-   
 
+        print(positive_profits_count)
+        print(negative_profits_count)
+        print(winrate_value)
+   
         # Insérer le winrate_value dans la collection "unitaire"
         unitaire_collection = db[collection_unitaire]
         unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
@@ -50,3 +63,4 @@ def calculate_winrate():
         return jsonify({"error": str(e)}), 500
     except:
         return jsonify({"error": "La demande ne contient pas de données JSON valide"}), 400
+
