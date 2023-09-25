@@ -25,8 +25,6 @@ def calculate_winrate():
         filtreDeBase = ""
         filtreAnnexe = ""
         premier_element = ""
-        temporaire = ""
-        collection_temporaire = ""
         collection = ""
         
         if isinstance(data, list):
