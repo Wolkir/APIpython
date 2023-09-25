@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request, current_app
 from typing import Dict, List, Any
 from pymongo import MongoClient, UpdateOne
 
@@ -210,6 +210,8 @@ def calculate_winrate():
 
         return jsonify({"message": f"{filtreDeBase} calculé avec succès", "resultats_modifies": resultats_modifies})
     except Exception as e:
+        current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
+    
     except:
         return jsonify({"error": "La demande ne contient pas de données JSON valide"}), 400
