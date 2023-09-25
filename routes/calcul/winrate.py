@@ -20,11 +20,14 @@ def calculate_winrate():
         data = request.get_json()
 
         tableauFiltreValue = []
-        collection_name = ""
-        username = ""
-        filtreDeBase = ""
-        filtreAnnexe = ""
-        premier_element = ""
+        collection_name = None
+        username = None
+        filtreDeBase = None
+        filtreAnnexe = None
+        premier_element = None
+        temporaire = None
+        collection_temporaire = None
+        collection = None
         
         if isinstance(data, list):
             for item in data:
