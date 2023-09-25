@@ -31,13 +31,17 @@ def calculate_winrate():
                     
                 #print("argument annexe : ", filtreAnnexe)
 
-                temporaire = f"{username}_temporaire"
+                temporaire = f"utile_{username}_temporaire"
 
-                collection_unitaire = f"{username}_unitaire"
+                collection_unitaire = f"utile_{username}_unitaire"
                 collection_temporaire = db[temporaire]
                 collection = db[collection_name]
 
 
+
+        # ================= OPTIONS TOUS COLLECTION ================= #
+
+        documents = []
 
         # ================= CREATION QUERY / TABLEAU ENREGISTREMENT ================= #
 
@@ -56,10 +60,33 @@ def calculate_winrate():
             or_conditions.append(condition)
 
         query = {'$and': or_conditions}
-      
-        documents = list(collection.find(query))
 
-        #print("nombre d'éléments récupéré : ", len(documents))
+        if collection_name == "tous":
+            exception = "utile"
+            toutLesNoms = [name for name in db.list_collection_names() if username in name and exception not in name.split('_')]
+            toutes_les_donnees = []
+            for collection_name in toutLesNoms:
+                collection = db[collection_name]
+                data = list(collection.find({}))
+                toutes_les_donnees.extend(data)
+            documents = toutes_les_donnees
+            #print('documents', len(documents))
+        else:
+            documents = list(collection.find(query))
+
+
+
+        # ================= SUPPRESSION DES NOMBRE A VIRGULES ================= #
+
+
+
+        for data in documents:
+            for key, value in data.items():
+                if isinstance(value, float):
+                    data[key] = int(value)
+
+        print("documents entier : ", documents)
+
 
 
 
@@ -103,6 +130,9 @@ def calculate_winrate():
         winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
         """
         resultats_par_psychologie = {}
+        winrate_value = 0
+        typeEnregistrement = ""
+        resultats_modifies = {}
 
         for psychologie, donnees in donnees_par_psychologie.items():
             if psychologie not in resultats_par_psychologie:
@@ -135,10 +165,6 @@ def calculate_winrate():
                 if psychologie not in resultats_sans_doublons:
                     resultats_sans_doublons[psychologie] = resultats
 
-            #print(resultats_sans_doublons)
-
-            resultats_modifies = {}
-
             for psychologie, resultats in resultats_sans_doublons.items():
                 nouvelle_cle = f'{psychologie}'
                 valeur_winrate = resultats[f'{filtreDeBase}_value']
@@ -148,8 +174,6 @@ def calculate_winrate():
             typeEnregistrement = f"{filtreDeBase}_{filtreAnnexe}"
 
             resultats_modifies["typeEnregistrement"] = typeEnregistrement
-
-            print(resultats_modifies)
 
 
 
@@ -161,8 +185,6 @@ def calculate_winrate():
             for key, value in item.items():
                 if key == filtreAnnexe:
                     enregistrement[0][f'{filtreDeBase}_{filtreAnnexe}_colere'] = winrate_value
-
-        #print(enregistrement)
    
         unitaire_collection = db[collection_unitaire]
         unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
