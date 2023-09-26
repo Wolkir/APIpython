@@ -22,6 +22,7 @@ def calculate_winrate():
         collection_name = ""
         username = ""
         filtreDeBase = ""
+        filtreAnnexe = ""
         collection_unitaire = None
 
         # Utilisation de request.args.get pour récupérer les paramètres de requête
