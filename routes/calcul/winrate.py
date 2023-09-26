@@ -57,6 +57,8 @@ def calculate_winrate():
 
         or_conditions = []
         enregistrement = []
+        condition1 = {'champ1': valeur1}
+        condition2 = {'champ2': valeur2}
 
         for item in tableauFiltreValue:
             condition = {}
