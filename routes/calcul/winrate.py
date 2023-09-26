@@ -23,7 +23,7 @@ def calculate_winrate():
         collection_name = ""
         username = ""
         filtreDeBase = ""
-        collection_unitaire = db[f"utile_{username}_unitaire"] # valeur sans consequence pour pouvoir initialiser la variable
+        collection_unitaire = None
         collection = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
         collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
         
@@ -202,8 +202,8 @@ def calculate_winrate():
                 if key == filtreAnnexe:
                     enregistrement[0][f'{filtreDeBase}_{filtreAnnexe}_colere'] = winrate_value
    
-        unitaire_collection = db[collection_unitaire]
-        unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
+        #unitaire_collection = db[collection_unitaire]
+        #unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
 
 
 
