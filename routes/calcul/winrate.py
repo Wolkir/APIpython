@@ -61,6 +61,9 @@ def calculate_winrate():
         condition1 = {'champ1': valeur1}
         condition2 = {'champ2': valeur1}
 
+        or_conditions.append(condition1)
+        or_conditions.append(condition2)
+
         for item in tableauFiltreValue:
             condition = {}
             for key, value in item.items():
