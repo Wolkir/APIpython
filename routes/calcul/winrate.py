@@ -25,23 +25,29 @@ def calculate_winrate():
         filtreAnnexe = ""
         collection_unitaire = None
 
-        # Utilisation de request.args.get pour récupérer les paramètres de requête
         collection_name = request.args.get('collection')
         username = request.args.get('username')
         filtreDeBase = request.args.get('filtreDeBase')
         tableauFiltreValue = json.loads(request.args.get('tableauFiltreValue'))
+        filtreAnnexe = list(tableauFiltreValue[0].keys())[0]
 
         tableauFiltreValue_param = request.args.get('tableauFiltreValue')
         if tableauFiltreValue_param:
             try:
+                print('okokokok')
                 tableauFiltreValue = json.loads(tableauFiltreValue_param)
             except json.JSONDecodeError:
                 print("Erreur lors de la conversion de tableauFiltreValue en JSON.")
 
 
-        collection = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
+        collection = db[collection_name]
         collection_temporaire = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
 
+        print("tableauFiltreValue : ", tableauFiltreValue)
+        print("collection_name : ", collection_name)
+        print("username : ", username)
+        print("filtreDeBase : ", filtreDeBase)
+        print("filtreAnnexe : ", filtreAnnexe)
 
 
         # ================= OPTIONS TOUS COLLECTION ================= #
@@ -54,12 +60,6 @@ def calculate_winrate():
 
         or_conditions = []
         enregistrement = []
-        valeur1 = "igo"
-        condition1 = {'champ1': valeur1}
-        condition2 = {'champ2': valeur1}
-
-        or_conditions.append(condition1)
-        or_conditions.append(condition2)
 
         for item in tableauFiltreValue:
             condition = {}
@@ -72,6 +72,8 @@ def calculate_winrate():
 
         query = {'$and': or_conditions}
 
+        print("query : ", query)
+
         if collection_name == "tous":
             exception = "utile"
             toutLesNoms = [name for name in db.list_collection_names() if username in name and exception not in name.split('_')]
@@ -82,8 +84,13 @@ def calculate_winrate():
                 toutes_les_donnees.extend(data)
             documents = toutes_les_donnees
             #print('documents', len(documents))
+            print("igo")
         else:
             documents = list(collection.find(query))
+            print("d'acc")
+            print("collection : ", collection)
+
+        print("documents : ", documents)
 
 
 
@@ -217,6 +224,3 @@ def calculate_winrate():
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
-    
-    except:
-        return jsonify({"error": "La demande ne contient pas de données JSON valide"}), 400
