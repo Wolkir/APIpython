@@ -23,7 +23,7 @@ def calculate_winrate():
         collection_name = ""
         username = ""
         filtreDeBase = ""
-        collection = db['f"utile_{username}_temporaire"'] # valeur sans consequence pour pouvoir initialiser la variable
+        collection = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
         
         if isinstance(data, list):
             for item in data:
