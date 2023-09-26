@@ -17,35 +17,20 @@ def calculate_winrate():
 
 
 
-        data = request.get_json()
-
         tableauFiltreValue = []
         collection_name = ""
         username = ""
         filtreDeBase = ""
         collection_unitaire = None
-        collection = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
-        collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
-        
-        if isinstance(data, list):
-            for item in data:
-                collection_name = item.get('collection', None)
-                username = item.get('username', None)
-                filtreDeBase = item.get('filtreDeBase', None)
-                tableauFiltreValue = item.get('tableauFiltreValue', None)
-                if isinstance(tableauFiltreValue, list) and len(tableauFiltreValue) > 0:
-                    premier_element = tableauFiltreValue[0]
-                    filtreAnnexe = list(premier_element.keys())[0]
-                    
-                #print("argument annexe : ", filtreAnnexe)
-        
-                temporaire = f"utile_{username}_temporaire"
-        
-                collection_unitaire = f"utile_{username}_unitaire"
-                collection_temporaire = db[temporaire]
-        
-                # Maintenant, vous pouvez définir 'collection' en fonction de 'collection_name'
-                collection = db[collection_name]
+
+        # Utilisation de request.args.get pour récupérer les paramètres de requête
+        collection_name = request.args.get('collection')
+        username = request.args.get('username')
+        filtreDeBase = request.args.get('filtreDeBase')
+        tableauFiltreValue = json.loads(request.args.get('tableauFiltreValue'))
+
+        collection = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
+        collection_temporaire = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
 
 
 
