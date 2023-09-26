@@ -220,7 +220,7 @@ def calculate_winrate():
         else:
             print("Erreur lors de l'enregistrement des données dans la collection temporaire.")
 
-        return jsonify(resultats_modifies)
+        return jsonify(resultats_modifies), 200
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
