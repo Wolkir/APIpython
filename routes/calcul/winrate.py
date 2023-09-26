@@ -23,7 +23,7 @@ def calculate_winrate():
         collection_name = ""
         username = ""
         filtreDeBase = ""
-        collection_unitaire = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
+        collection_unitaire = db[f"utile_{username}_unitaire"] # valeur sans consequence pour pouvoir initialiser la variable
         collection = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
         collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans consequence pour pouvoir initialiser la variable
         
