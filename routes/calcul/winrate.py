@@ -21,14 +21,13 @@ def calculate_winrate():
 
         tableauFiltreValue = []
         collection_name = ""
+        collection_name = item.get('collection', None)
         username = ""
         filtreDeBase = ""
-        collection = db['']
+        collection = db[collection_name]
         
         if isinstance(data, list):
             for item in data:
-                collection_name = item.get('collection', None)
-                username = item.get('username', None)
                 filtreDeBase = item.get('filtreDeBase', None)
                 tableauFiltreValue = item.get('tableauFiltreValue', None)
                 if isinstance(tableauFiltreValue, list) and len(tableauFiltreValue) > 0:
@@ -41,7 +40,6 @@ def calculate_winrate():
 
                 collection_unitaire = f"utile_{username}_unitaire"
                 collection_temporaire = db[temporaire]
-                collection = db[collection_name]
 
 
 
