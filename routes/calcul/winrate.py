@@ -23,7 +23,6 @@ def calculate_winrate():
         collection_name = ""
         username = ""
         filtreDeBase = ""
-        collection = []
         
         if isinstance(data, list):
             for item in data:
