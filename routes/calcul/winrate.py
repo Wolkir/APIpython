@@ -31,6 +31,14 @@ def calculate_winrate():
         filtreDeBase = request.args.get('filtreDeBase')
         tableauFiltreValue = json.loads(request.args.get('tableauFiltreValue'))
 
+        tableauFiltreValue_param = request.args.get('tableauFiltreValue')
+        if tableauFiltreValue_param:
+            try:
+                tableauFiltreValue = json.loads(tableauFiltreValue_param)
+            except json.JSONDecodeError:
+                print("Erreur lors de la conversion de tableauFiltreValue en JSON.")
+
+
         collection = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
         collection_temporaire = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
 
