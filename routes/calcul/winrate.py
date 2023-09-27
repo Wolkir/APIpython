@@ -74,6 +74,7 @@ def calculate_winrate():
         documents = []
         or_conditions = []
         enregistrement = []
+        query = {}
 
         if dateDebutFormatee is not None and dateFinFormatee is not None:
             query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee, '$lt': dateFinFormatee}})
