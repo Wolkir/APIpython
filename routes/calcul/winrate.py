@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request, current_app
-from typing import Dict, List, Any
 from pymongo import MongoClient, UpdateOne
+from datetime import datetime, timedelta
+from typing import Dict, List, Any
 import json
 
 winrate = Blueprint('winrate', __name__)
@@ -19,12 +20,16 @@ def calculate_winrate():
 
 
         tableauFiltreValue = []
+        dateDebut = ""
+        dateFin = ""
         collection_name = ""
         username = ""
         filtreDeBase = ""
         filtreAnnexe = ""
         collection_unitaire = None
 
+        dateDebut = request.args.get('dateDebut', None)
+        dateFin = request.args.get('dateFin', None)
         collection_name = request.args.get('collection')
         username = request.args.get('username')
         filtreDeBase = request.args.get('filtreDeBase')
@@ -34,7 +39,6 @@ def calculate_winrate():
         tableauFiltreValue_param = request.args.get('tableauFiltreValue')
         if tableauFiltreValue_param:
             try:
-                print('okokokok')
                 tableauFiltreValue = json.loads(tableauFiltreValue_param)
             except json.JSONDecodeError:
                 print("Erreur lors de la conversion de tableauFiltreValue en JSON.")
@@ -50,29 +54,44 @@ def calculate_winrate():
         print("filtreAnnexe : ", filtreAnnexe)
 
 
-        # ================= OPTIONS TOUS COLLECTION ================= #
 
-        documents = []
+        # ================= DATE ================== #
+
+        
+
+        dateDebutFormatee = None
+        dateFinFormatee = None
+        date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
+        try:
+            dateDebutFormatee = datetime.strptime(dateDebut, date_format)
+            dateFinFormatee = datetime.strptime(dateFin, date_format)
+            return dateDebutFormatee, dateFinFormatee
+        except ValueError as e:
+            print("Erreur lors de la conversion des dates:", e)
+            return None, None
+        
+    
 
         # ================= CREATION QUERY / TABLEAU ENREGISTREMENT ================= #
 
 
-
+        documents = []
         or_conditions = []
         enregistrement = []
 
-        for item in tableauFiltreValue:
-            condition = {}
-            for key, value in item.items():
-                if value is not None:
-                    condition[key] = {'$ne': None}
-                    ligne = {f"{filtreDeBase}_{key}_{value}": None}
-                    enregistrement.append(ligne)
-            or_conditions.append(condition)
-
-        query = {'$and': or_conditions}
-
-        print("query : ", query)
+        if dateDebutFormatee is not None and dateFinFormatee is not None:
+            query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee, '$lt': dateFinFormatee}})
+        else:
+            for item in tableauFiltreValue:
+                condition = {}
+                for key, value in item.items():
+                    if value is not None:
+                        condition[key] = {'$ne': None}
+                        ligne = {f"{filtreDeBase}_{key}_{value}": None}
+                        enregistrement.append(ligne)
+                or_conditions.append(condition)
+    
+            query = {'$and': or_conditions}
 
         if collection_name == "tous":
             exception = "utile"
