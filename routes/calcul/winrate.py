@@ -62,13 +62,9 @@ def calculate_winrate():
         dateDebutFormatee = None
         dateFinFormatee = None
         date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
-        try:
+        if dateDebut is not None and dateFin is not None:
             dateDebutFormatee = datetime.strptime(dateDebut, date_format)
             dateFinFormatee = datetime.strptime(dateFin, date_format)
-            return dateDebutFormatee, dateFinFormatee
-        except ValueError as e:
-            print("Erreur lors de la conversion des dates:", e)
-            return None, None
         
     
 
