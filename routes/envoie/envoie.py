@@ -256,8 +256,38 @@ def update_envoie():
         print("max_equity : ", max_equity)
         #print("total_trade : ", total_trade)
 
+        result_dict = {
+            "max_successive_losses_count": max_successive_losses_count,
+            "profit_factor": profit_factor,
+            "profit_factor_buy": profit_factor_buy,
+            "profit_factor_sell": profit_factor_sell,
+            "total_profit": total_profit,
+            "total_loss": total_loss,
+            "total_profit_buy": total_profit_buy,
+            "total_loss_buy": total_loss_buy,
+            "total_profit_sell": total_profit_sell,
+            "total_loss_sell": total_loss_sell,
+            "winratestd": winratestd,
+            "winrate_value_real": winrate_value_real,
+            "winratelongstd": winratelongstd,
+            "winrateshortstd": winrateshortstd,
+            "average_rr": average_rr,
+            "average_duration": average_duration,
+            "average_gain": average_gain,
+            "sharpe_ratio": sharpe_ratio,
+            "max_profit_value": max_profit_value,
+            "min_loss_value": min_loss_value,
+            "max_equity": max_equity,
+        }
+        
+        result_list = [{"titre": titre, "value": valeur} for titre, valeur in result_dict.items()]
+        
+        result_json = jsonify(data=result_list)
+        return result_json
+        """
         data = json.loads(json.dumps(data, default=json_serial))
         return jsonify({'data': data})
+        """
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": "Erreur lors du renvoie des données", "details": str(e)}), 500
