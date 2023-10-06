@@ -280,9 +280,17 @@ def update_envoie():
             "max_equity": max_equity,
         }
         
-        result_list = [{"titre": titre, "value": valeur} for titre, valeur in result_dict.items()]
-        
-        result_json = jsonify(data=result_list)
+        def timedelta_serialization(obj):
+            if isinstance(obj, timedelta):
+                return {
+                    "days": obj.days,
+                    "seconds": obj.seconds,
+                    "microseconds": obj.microseconds
+                }
+            raise TypeError(f"Object of type {obj.__class__.__name__} is not JSON serializable")
+
+        result_json = json.dumps(result_dict, default=timedelta_serialization)
+
         return result_json
         """
         data = json.loads(json.dumps(data, default=json_serial))
