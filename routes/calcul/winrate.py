@@ -30,10 +30,14 @@ def calculate_winrate():
 
         dateDebut = request.args.get('dateDebut', None)
         dateFin = request.args.get('dateFin', None)
-        collection_name = request.args.get('collection')
-        username = request.args.get('username')
-        filtreDeBase = request.args.get('filtreDeBase')
-        tableauFiltreValue = json.loads(request.args.get('tableauFiltreValue'))
+        collection_name = request.args.get('collection', None)
+        username = request.args.get('username', None)
+        filtreDeBase = request.args.get('filtreDeBase', None)
+        tableauFiltreValue = request.args.get('tableauFiltreValue', None)
+        if tableauFiltreValue is not None:
+            tableauFiltreValue = json.loads(tableauFiltreValue)
+        else:
+            tableauFiltreValue = {}
         filtreAnnexe = list(tableauFiltreValue[0].keys())[0]
 
         tableauFiltreValue_param = request.args.get('tableauFiltreValue')
@@ -52,6 +56,8 @@ def calculate_winrate():
         print("username : ", username)
         print("filtreDeBase : ", filtreDeBase)
         print("filtreAnnexe : ", filtreAnnexe)
+        print("dateDebut : ", dateDebut)
+        print("dateFin : ", dateFin)
 
 
 
@@ -65,10 +71,20 @@ def calculate_winrate():
         if dateDebut is not None and dateFin is not None:
             dateDebutFormatee = datetime.strptime(dateDebut, date_format)
             dateFinFormatee = datetime.strptime(dateFin, date_format)
-        
+
+            print("dateDebutFormatee : ", dateDebutFormatee)
+            print("dateFinFormatee : ", dateFinFormatee)
+
+            dateDebutFormatee_str = dateDebutFormatee.strftime('%Y-%m-%d %H:%M:%S')
+            dateFinFormatee_str = dateFinFormatee.strftime('%Y-%m-%d %H:%M:%S')
+
+            print("dateDebutFormatee_str : ", dateDebutFormatee_str)
+            print("dateFinFormatee_str : ", dateFinFormatee_str)
+
     
 
         # ================= CREATION QUERY / TABLEAU ENREGISTREMENT ================= #
+
 
 
         documents = []
@@ -77,7 +93,8 @@ def calculate_winrate():
         query = {'$and': []}
 
         if dateDebutFormatee is not None and dateFinFormatee is not None:
-            query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee, '$lt': dateFinFormatee}})
+            query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee_str, '$lt': dateFinFormatee_str}})
+            print(query)
         else:
             for item in tableauFiltreValue:
                 condition = {}
@@ -89,6 +106,7 @@ def calculate_winrate():
                 or_conditions.append(condition)
     
             query = {'$and': or_conditions}
+            print(query)
 
         if collection_name == "tous":
             exception = "utile"
@@ -100,11 +118,8 @@ def calculate_winrate():
                 toutes_les_donnees.extend(data)
             documents = toutes_les_donnees
             #print('documents', len(documents))
-            print("igo")
         else:
             documents = list(collection.find(query))
-            print("d'acc")
-            print("collection : ", collection)
 
         print("documents : ", documents)
 
@@ -118,8 +133,6 @@ def calculate_winrate():
             for key, value in data.items():
                 if isinstance(value, float):
                     data[key] = int(value)
-
-        print("documents entier : ", documents)
 
 
 
@@ -143,26 +156,6 @@ def calculate_winrate():
 
 
 
-        """
-        positive_profits_count = 0
-        negative_profits_count = 0
-        
-        positive_identifiers = set()
-        negative_identifiers = set()
-        
-        for doc in documents:
-            profit = doc['profit']
-            identifier = doc['identifier']
-            
-            if profit > 0 and identifier not in positive_identifiers:
-                positive_profits_count += 1
-                positive_identifiers.add(identifier)
-            elif profit < 0 and identifier not in negative_identifiers:
-                negative_profits_count += 1
-                negative_identifiers.add(identifier)
-    
-        winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
-        """
         resultats_par_psychologie = {}
         winrate_value = 0
         typeEnregistrement = ""
@@ -170,12 +163,16 @@ def calculate_winrate():
 
         for psychologie, donnees in donnees_par_psychologie.items():
             if psychologie not in resultats_par_psychologie:
+
+                # déclaration variable
                 positive_profits_count = 0
                 negative_profits_count = 0
                 positive_identifiers = set()
                 negative_identifiers = set()
 
                 for doc in donnees:
+
+                    # calcul
                     profit = doc.get('profit')
                     identifier = doc.get('identifier')
 
@@ -189,6 +186,7 @@ def calculate_winrate():
 
                 winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
 
+                # assignation de la valeur au tableau
                 resultats_par_psychologie[psychologie] = {
                     f'{filtreDeBase}_value': winrate_value
                 }
