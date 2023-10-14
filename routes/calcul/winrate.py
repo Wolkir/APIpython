@@ -49,7 +49,7 @@ def calculate_winrate():
 
 
         collection = db[collection_name]
-        collection_temporaire = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
+        collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans conséquence pour pouvoir initialiser la variable
 
         print("tableauFiltreValue : ", tableauFiltreValue)
         print("collection_name : ", collection_name)
@@ -184,7 +184,12 @@ def calculate_winrate():
                             negative_profits_count += 1
                             negative_identifiers.add(identifier)
 
-                winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+                print("session : ", doc.get('session'))
+                print("positive_profits_count : ", positive_profits_count)
+                print("negative_profits_count : ", negative_profits_count)
+
+                if positive_profits_count != 0 and negative_profits_count != 0:
+                    winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
 
                 # assignation de la valeur au tableau
                 resultats_par_psychologie[psychologie] = {
