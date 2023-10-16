@@ -64,9 +64,9 @@ from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
 
-from routes.calcul.SLR import slrbp
+from routes.calcul.SLR import SLR
 from routes.calcul.Tilts import Tilts
-from routes.calcul.TPR import tprbp
+from routes.calcul.TPR import TPR
 #from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
