@@ -55,7 +55,7 @@ from connexion.user.signup import setup_signup_route
 # calcul
 #from routes.calcul.assign_order import assign_order
 
-#from routes.calcul.BE_RR.RR import RR
+from routes.calcul.BE_RR.RR import RR
 #from routes.calcul.BE_RR.BE import BE
 from routes.calcul.calculate_duration import calculate_duration
 
