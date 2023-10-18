@@ -3,6 +3,7 @@ from pymongo import MongoClient, UpdateOne
 from datetime import datetime, timedelta
 from typing import Dict, List, Any
 import json
+from bson import json_util
 
 winrate = Blueprint('winrate', __name__)
 
@@ -51,14 +52,6 @@ def calculate_winrate():
         collection = db[collection_name]
         collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans conséquence pour pouvoir initialiser la variable
 
-        print("tableauFiltreValue : ", tableauFiltreValue)
-        print("collection_name : ", collection_name)
-        print("username : ", username)
-        print("filtreDeBase : ", filtreDeBase)
-        print("filtreAnnexe : ", filtreAnnexe)
-        print("dateDebut : ", dateDebut)
-        print("dateFin : ", dateFin)
-
 
 
         # ================= DATE ================== #
@@ -94,7 +87,6 @@ def calculate_winrate():
 
         if dateDebutFormatee is not None and dateFinFormatee is not None:
             query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee_str, '$lt': dateFinFormatee_str}})
-            print(query)
         else:
             for item in tableauFiltreValue:
                 condition = {}
@@ -106,7 +98,6 @@ def calculate_winrate():
                 or_conditions.append(condition)
     
             query = {'$and': or_conditions}
-            print(query)
 
         if collection_name == "tous":
             exception = "utile"
@@ -121,8 +112,6 @@ def calculate_winrate():
         else:
             documents = list(collection.find(query))
 
-        print("documents : ", documents)
-
 
 
         # ================= SUPPRESSION DES NOMBRE A VIRGULES ================= #
@@ -133,6 +122,74 @@ def calculate_winrate():
             for key, value in data.items():
                 if isinstance(value, float):
                     data[key] = int(value)
+
+
+
+
+        # ================= SUPPRESSION VARIABLES INUTILES ================= #
+
+
+        if filtreAnnexe == 'Percent':
+            variableRequise = ['Percent', 'session', 'profit', 'identifier']
+
+            for d in documents:
+                clés_a_supprimer = [cle for cle in d.keys() if cle not in variableRequise]
+                
+                for cle in clés_a_supprimer:
+                    del d[cle]
+
+
+
+
+        # ================= RECUPERATION ECHELLE PERCENT ================= #
+
+
+        if filtreAnnexe == 'Percent':
+            minPercent = float('inf')
+            maxPercent = float('-inf')
+
+            for d in documents:
+                for cle, valeur in d.items():
+                    if cle in variableRequise:
+                        if cle == 'Percent':
+                            if valeur < minPercent:
+                                minPercent = valeur
+                            if valeur > maxPercent:
+                                maxPercent = valeur
+
+            differencePercent = maxPercent - minPercent
+
+            divisionPercent = differencePercent / 5
+
+
+
+        # ================= TRIE ================= #
+
+        
+
+        if filtreAnnexe == 'Percent':
+            compte1 = 0.0
+            compte2 = round(divisionPercent, 1)
+            nouveau_tableau = {}
+
+            while compte2 <= differencePercent:
+                tranche = None
+
+                tranche = f'{int(compte1) if compte1.is_integer() else compte1:.1f} - {int(compte2) if compte2.is_integer() else compte2:.1f}'
+
+                if tranche not in nouveau_tableau:
+                    nouveau_tableau[tranche] = []
+
+                for data in documents:
+                    if 'Percent' in data:
+                        percent_value = data['Percent']
+                        if compte1 <= percent_value < compte2:
+                            nouveau_tableau[tranche].append(data)
+
+                compte1 = round(compte1 + divisionPercent, 1)
+                compte2 = round(compte2 + divisionPercent, 1)
+
+            print(nouveau_tableau)
 
 
 
@@ -156,90 +213,110 @@ def calculate_winrate():
 
 
 
-        resultats_par_psychologie = {}
-        winrate_value = 0
-        typeEnregistrement = ""
-        resultats_modifies = {}
+        resultats_par_tranche = {}
 
-        for psychologie, donnees in donnees_par_psychologie.items():
-            if psychologie not in resultats_par_psychologie:
+        if filtreAnnexe == 'Percent':
+            winrate_value = 0
+            typeEnregistrement = ""
 
-                # déclaration variable
-                positive_profits_count = 0
-                negative_profits_count = 0
-                positive_identifiers = set()
-                negative_identifiers = set()
+            for tranche, donnees in nouveau_tableau.items():
+                tranche_str = str(tranche)  
+                if tranche_str not in resultats_par_tranche:
 
-                for doc in donnees:
+                    # Déclaration de variables
+                    positive_profits_count = 0
+                    negative_profits_count = 0
+                    positive_identifiers = set()
+                    negative_identifiers = set()
 
-                    # calcul
-                    profit = doc.get('profit')
-                    identifier = doc.get('identifier')
+                    for doc in donnees:
+                        # Calcul
+                        profit = doc.get('profit')
+                        identifier = doc.get('identifier')
 
-                    if profit is not None and identifier is not None:
-                        if profit > 0 and identifier not in positive_identifiers:
-                            positive_profits_count += 1
-                            positive_identifiers.add(identifier)
-                        elif profit < 0 and identifier not in negative_identifiers:
-                            negative_profits_count += 1
-                            negative_identifiers.add(identifier)
+                        if profit is not None and identifier is not None:
+                            if profit > 0 and identifier not in positive_identifiers:
+                                positive_profits_count += 1
+                                positive_identifiers.add(identifier)
+                            elif profit < 0 and identifier not in negative_identifiers:
+                                negative_profits_count += 1
+                                negative_identifiers.add(identifier)
 
-                print("session : ", doc.get('session'))
-                print("positive_profits_count : ", positive_profits_count)
-                print("negative_profits_count : ", negative_profits_count)
+                    if positive_profits_count != 0 and negative_profits_count != 0:
+                        winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
 
-                if positive_profits_count != 0 and negative_profits_count != 0:
-                    winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
+                    resultats_par_tranche[tranche] = {
+                        f'{filtreDeBase}_value': winrate_value
+                    }
+        else:
+            resultats_par_psychologie = {}
+            winrate_value = 0
+            typeEnregistrement = ""
+            resultats_modifies = {}
 
-                # assignation de la valeur au tableau
-                resultats_par_psychologie[psychologie] = {
-                    f'{filtreDeBase}_value': winrate_value
-                }
+            for psychologie, donnees in donnees_par_psychologie.items():
+                if psychologie not in resultats_par_psychologie:
 
-            resultats_sans_doublons = {}
+                    # déclaration variable
+                    positive_profits_count = 0
+                    negative_profits_count = 0
+                    positive_identifiers = set()
+                    negative_identifiers = set()
 
-            for psychologie, resultats in resultats_par_psychologie.items():
-                if psychologie not in resultats_sans_doublons:
-                    resultats_sans_doublons[psychologie] = resultats
+                    for doc in donnees:
 
-            for psychologie, resultats in resultats_sans_doublons.items():
-                nouvelle_cle = f'{psychologie}'
-                valeur_winrate = resultats[f'{filtreDeBase}_value']
-                
-                resultats_modifies[nouvelle_cle] = valeur_winrate
+                        # calcul
+                        profit = doc.get('profit')
+                        identifier = doc.get('identifier')
 
-            typeEnregistrement = f"{filtreDeBase}_{filtreAnnexe}"
+                        if profit is not None and identifier is not None:
+                            if profit > 0 and identifier not in positive_identifiers:
+                                positive_profits_count += 1
+                                positive_identifiers.add(identifier)
+                            elif profit < 0 and identifier not in negative_identifiers:
+                                negative_profits_count += 1
+                                negative_identifiers.add(identifier)
 
-            resultats_modifies["typeEnregistrement"] = typeEnregistrement
+                    print("session : ", doc.get('session'))
+                    print("positive_profits_count : ", positive_profits_count)
+                    print("negative_profits_count : ", negative_profits_count)
 
+                    if positive_profits_count != 0 and negative_profits_count != 0:
+                        winrate_value = positive_profits_count / (positive_profits_count + negative_profits_count) * 100
 
+                    # assignation de la valeur au tableau
+                    resultats_par_psychologie[psychologie] = {
+                        f'{filtreDeBase}_value': winrate_value
+                    }
 
-        # ================= FINITION ================= #
+                resultats_sans_doublons = {}
 
+                for psychologie, resultats in resultats_par_psychologie.items():
+                    if psychologie not in resultats_sans_doublons:
+                        resultats_sans_doublons[psychologie] = resultats
 
-        
-        for item in tableauFiltreValue:
-            for key, value in item.items():
-                if key == filtreAnnexe:
-                    enregistrement[0][f'{filtreDeBase}_{filtreAnnexe}_colere'] = winrate_value
-   
-        #unitaire_collection = db[collection_unitaire]
-        #unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
+                for psychologie, resultats in resultats_sans_doublons.items():
+                    nouvelle_cle = f'{psychologie}'
+                    valeur_winrate = resultats[f'{filtreDeBase}_value']
+                    
+                    resultats_modifies[nouvelle_cle] = valeur_winrate
+
+                typeEnregistrement = f"{filtreDeBase}_{filtreAnnexe}"
+
+                resultats_modifies["typeEnregistrement"] = typeEnregistrement
 
 
 
         # ================= ENREGISTREMENT DES WINRATE ================= #
 
+        print("succes")
 
 
-        result = collection_temporaire.update_one({'typeEnregistrement': typeEnregistrement}, {'$set': resultats_modifies}, upsert=True)
 
-        if result:
-            print("Données enregistrées avec succès dans la collection temporaire.")
+        if filtreAnnexe == 'Percent':
+            return jsonify(resultats_par_tranche), 200
         else:
-            print("Erreur lors de l'enregistrement des données dans la collection temporaire.")
-
-        return jsonify(resultats_modifies), 200
+            return json_util.dumps(resultats_modifies), 200
     except Exception as e:
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
