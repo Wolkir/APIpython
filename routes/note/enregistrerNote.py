@@ -10,9 +10,9 @@ enregistrerNote = Blueprint('enregistrerNote', __name__)
 
 @enregistrerNote.route('/enregistrerNote', methods=['POST'])
 def enregistrer_note():
-    username = request.form.get('username')
-    titre_value = request.form.get('titreValue')
-    texte_value = request.form.get('texteValue')
+    username = request.args.get('username')
+    titre_value = request.args.get('titreValue')
+    texte_value = request.args.get('texteValue')
 
     formatted_date = datetime.now().strftime('%d %B %Y')
     date_iso = datetime.now().replace(microsecond=0).isoformat() + "+00:00"
