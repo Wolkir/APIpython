@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+    from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
@@ -14,7 +14,7 @@ def get_notes():
     
     query = {
         '$and': [
-            {'username': argUsername},
+            {'username': username},
         ]
     }
 
