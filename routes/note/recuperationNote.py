@@ -31,7 +31,7 @@ def get_notes():
                 'username': note['username'],
                 'titreValue': note['titreValue'],
                 'texteValue': note['texteValue'],
-                'datePrecis': note['datePrecis'],
+                'datePrecise': note['datePrecise'],
                 'date': note['date']
             }
             serialized_notes.append(serialized_note)
