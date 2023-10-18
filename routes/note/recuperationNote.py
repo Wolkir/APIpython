@@ -16,10 +16,11 @@ def get_notes():
         serialized_notes = []
         for note in notes:
             serialized_note = {
+                'id': str(note['_id']),
                 'username': note['username'],
                 'titreValue': note['titreValue'],
                 'texteValue': note['texteValue'],
-                'datePrecis': note['datePrecis']
+                'datePrecis': note['datePrecis'],
                 'date': note['date']
             }
             serialized_notes.append(serialized_note)
