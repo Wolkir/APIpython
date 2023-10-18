@@ -15,7 +15,7 @@ def enregistrer_note():
     texte_value = request.form.get('texteValue')
 
     formatted_date = datetime.now().strftime('%d %B %Y')
-    date_iso = datetime.now().replace(microsecond=0).isoformat() + "+00:00"  # Format "2023-10-09T00:02:23.000+00:00"
+    date_iso = datetime.now().replace(microsecond=0).isoformat() + "+00:00"
   
     if username and titre_value and texte_value:
         note = {
