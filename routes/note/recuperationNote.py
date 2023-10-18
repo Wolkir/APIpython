@@ -10,7 +10,7 @@ recuperationNote = Blueprint('recuperationNote', __name__)
 @recuperationNote.route('/recuperationNote', methods=['GET'])
 def get_notes():
     username = request.args.get('username')
-    argRechercheDonnee = request.args.get('rechercheDonnee', None)
+    argRechercheDonnee = request.args.get('rechercheNoteValue', None)
     
     query = {
         '$and': [
