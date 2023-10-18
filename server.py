@@ -37,6 +37,11 @@ from connexion.portefeuille.createPortefeuille import createPorteFeuille
 from connexion.portefeuille.suppressionPortefeuille import suppressionPorteFeuille
 from connexion.portefeuille.recuperationPortefeuille import recuperationPorteFeuille
 
+# Note
+from routes.note.enregistrerNote import enregistrerNote
+from routes.note.suppressionNote import suppressionNote
+from routes.note.recuperationNote import recuperationNote
+
 # strategie
 from connexion.strategie.createStrategie import createStrategie
 from connexion.strategie.recuperationStrategie import recuperationStrategie
@@ -65,12 +70,13 @@ from routes.calcul.killzone import killzone
 from routes.calcul.session import session
 
 from routes.calcul.SLR import SLR
-from routes.calcul.Tilts import Tilts
 from routes.calcul.TPR import TPR
+from routes.calcul.Tilts import Tilts
 #from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
 #from routes.calcul.conversion_map import conversion_map
+from routes.calcul.filtreAnnexe import filtreAnnexe
 from routes.calcul.RR import RR
 from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
@@ -131,7 +137,7 @@ from routes.journal.recuperationUnTrade import recuperation_un_seul_trade
 from routes.journal.correctionTrade import set_correctionTrade
 from routes.journal.suppressionTrade import suppressionTrade
 
-#statistique 
+#statistique
 from routes.statistique.creationRemplissageFiltre import creationRemplissageFiltre
 from routes.statistique.recuperationNomRemplissageFiltre import recuperationNomRemplissageFiltre
 from routes.statistique.recuperationRemplissageFiltre import recuperationRemplissageFiltre
@@ -141,7 +147,7 @@ from routes.statistique.recuperationTradeParFiltre import recuperationTradeParFi
 #===========================================INITIALISATION DU SERVEUR TERMINE===============================================#
 
 
-app.register_blueprint(tprbp)
+app.register_blueprint(TPR)
 #app.register_blueprint(assign_order)
 app.register_blueprint(BE)
 app.register_blueprint(RR)
@@ -152,10 +158,11 @@ app.register_blueprint(Equity)
 app.register_blueprint(killzone)
 app.register_blueprint(session)
 
-app.register_blueprint(slrbp)
-app.register_blueprint(Tilts)
-app.register_blueprint(tprbp)
+app.register_blueprint(SLR)
+app.register_blueprint(TPR)
+app.register_blueprint(Tilts) 
 
+app.register_blueprint(filtreAnnexe)
 app.register_blueprint(weekday)
 app.register_blueprint(envoie)
 app.register_blueprint(max_successive_counts)
@@ -250,6 +257,11 @@ app.register_blueprint(enregistrerImage)
 app.register_blueprint(recuperationImage)
 app.register_blueprint(suppressionImage)
 app.register_blueprint(recuperationDonneeImage)
+
+# Note
+app.register_blueprint(enregistrerNote)
+app.register_blueprint(suppressionNote)
+app.register_blueprint(recuperationNote)
 
 # tag
 app.register_blueprint(suppressionTag)
