@@ -24,7 +24,7 @@ def enregistrer_note():
             'datePrecise': date_iso,
             'date': formatted_date
         }
-        note_collection.insert_one(note)
+        collection.insert_one(note)
         return jsonify({"message": "Note enregistrée avec succès!"}), 201
     else:
         return jsonify({"error": "Paramètres manquants"}), 400
