@@ -10,8 +10,19 @@ recuperationNote = Blueprint('recuperationNote', __name__)
 @recuperationNote.route('/recuperationNote', methods=['GET'])
 def get_notes():
     username = request.args.get('username')
+    argRechercheDonnee = request.args.get('rechercheDonnee', None)
+    
+    query = {
+        '$and': [
+            {'username': argUsername},
+        ]
+    }
+
+    if argRechercheDonnee is not None and argRechercheDonnee != "":
+        regex_pattern = f".*{argRechercheDonnee}.*"
+        query['$and'].append({'tag': {'$regex': regex_pattern}})
     if username:
-        notes = list(collection.find({'username': username}))
+        notes = list(collection.find(query))
         
         serialized_notes = []
         for note in notes:
