@@ -4,14 +4,12 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any
 import json
 
-RR = Blueprint('RR', __name__)
-
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@RR.route('/RR', methods=['GET'])
-
-def calculate_rr():
+TPR = Blueprint('TPR', __name__)
+@TPR.route('/TPR', methods=['GET'])
+def calculate_tpr():
     try:
 
 
@@ -27,7 +25,7 @@ def calculate_rr():
         username = ""
         filtreDeBase = ""
         filtreAnnexe = ""
-        collection_unitaire = ""
+        collection_unitaire = None
 
         dateDebut = request.args.get('dateDebut', None)
         dateFin = request.args.get('dateFin', None)
@@ -48,9 +46,8 @@ def calculate_rr():
             except json.JSONDecodeError:
                 print("Erreur lors de la conversion de tableauFiltreValue en JSON.")
 
-
         collection = db[collection_name]
-        collection_temporaire = db[f"utile_{username}_temporaire"]  # valeur sans conséquence pour pouvoir initialiser la variable
+        collection_temporaire = db[f"utile_{username}_temporaire"]
 
         print("tableauFiltreValue : ", tableauFiltreValue)
         print("collection_name : ", collection_name)
@@ -84,8 +81,8 @@ def calculate_rr():
 
         
     
-
         # ================= CREATION QUERY / TABLEAU ENREGISTREMENT ================= #
+
 
 
         documents = []
@@ -130,12 +127,11 @@ def calculate_rr():
 
 
 
-        """
         for data in documents:
             for key, value in data.items():
                 if isinstance(value, float):
                     data[key] = int(value)
-        """
+
 
 
 
@@ -154,32 +150,35 @@ def calculate_rr():
 
 
 
-        # ================= CALCUL DU WINRATE ================= #
+        # ================= CALCUL DE TPR ================= #
 
 
 
         resultats_par_psychologie = {}
         typeEnregistrement = ""
         resultats_modifies = {}
-        rr = 0
 
         for psychologie, donnees in donnees_par_psychologie.items():
             if psychologie not in resultats_par_psychologie:
                 for doc in donnees:
-                    price_close = doc.get('priceClosure')
-                    price_opening = doc.get('priceOpening')
-                    stop_loss = doc.get('stopLoss')
 
-                    print(price_close)
-                    print(price_opening)
-                    print(stop_loss)
-                    rr = (price_close - price_opening) / (price_opening - stop_loss) if (price_opening - stop_loss) > 0 else 0
-                    rr = round(rr, 2)
-                print("rr : ", rr)
+                    tpr_value = None
 
-                resultats_par_psychologie[psychologie] = {
-                    f'{filtreDeBase}_value': rr
-                }
+                    orderType = data.get('orderType')
+                    price_closure = data.get('priceClosure')
+                    take_profit = data.get('takeProfit')
+                    
+                    if orderType == "BUY" and price_closure >= take_profit and take_profit>0:
+                        tpr_value = True
+                    elif orderType == "SELL" and price_closure <= take_profit and take_profit>0 :
+                        tpr_value = True
+                    else:
+                        tpr_value = False
+
+                    resultats_par_psychologie[psychologie] = {
+                        f'{filtreDeBase}_value': tpr_value
+                    }
+
 
             resultats_sans_doublons = {}
 
@@ -198,18 +197,17 @@ def calculate_rr():
             resultats_modifies["typeEnregistrement"] = typeEnregistrement
 
 
-
+    
         # ================= FINITION ================= #
 
 
-        
+
+        """
         for item in tableauFiltreValue:
             for key, value in item.items():
                 if key == filtreAnnexe:
-                    enregistrement[0][f'{filtreDeBase}_{filtreAnnexe}_colere'] = rr
-   
-        #unitaire_collection = db[collection_unitaire]
-        #unitaire_collection.update_one({}, {'$set': {'winratereal': (winrate_value)}}, upsert=True)
+                    enregistrement[0][f'{filtreDeBase}_{filtreAnnexe}_colere'] = winrate_value
+        """
 
 
 
