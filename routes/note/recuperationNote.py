@@ -20,7 +20,7 @@ def get_notes():
 
     if argRechercheDonnee is not None and argRechercheDonnee != "":
         regex_pattern = f".*{argRechercheDonnee}.*"
-        query['$and'].append({'tag': {'$regex': regex_pattern}})
+        query['$and'].append({'titre': {'$regex': regex_pattern}})
     if username:
         notes = list(collection.find(query))
         
