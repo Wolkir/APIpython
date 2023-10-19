@@ -4,7 +4,7 @@ import time
 import threading
 import requests
 
-app = Flask(__name)
+app = Flask(__name__)
 
 recuperationAnnonce = Blueprint('recuperationAnnonce', __name)
 
