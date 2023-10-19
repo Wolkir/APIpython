@@ -22,7 +22,7 @@ def run_schedule():
         schedule.run_pending()
         time.sleep(1)
 
-@app.route('/get_data', methods=['GET'])
+@app.route('/recuperationAnnonce', methods=['GET'])
 def get_data():
     data = get_data_from_api()
     return jsonify(data)
