@@ -18,7 +18,7 @@ def run_schedule():
         schedule.run_pending()
         time.sleep(1)
 
-@weekly_task.record
+@recuperationAnnonce.record
 def setup_schedule(state):
     app = state.app
     if app:
