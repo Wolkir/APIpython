@@ -6,7 +6,7 @@ import requests
 
 app = Flask(__name__)
 
-recuperationAnnonce = Blueprint('recuperationAnnonce', __name)
+recuperationAnnonce = Blueprint('recuperationAnnonce', __name__)
 
 def get_data_from_api():
     api_url = 'https://eodhd.com/api/economic-events?api_token=6530da188309e6.66620223'
@@ -35,7 +35,3 @@ def setup_schedule(state):
         t = threading.Thread(target=run_schedule)
         t.daemon = True
         t.start()
-
-if __name__ == '__main__':
-    app.register_blueprint(recuperationAnnonce)
-    app.run()
