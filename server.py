@@ -21,6 +21,9 @@ CORS(app, resources={r"*": {"origins": "*"}})
 # tag
 from routes.journal.suppressionTag import suppressionTag
 
+# annonceEconomique
+from routes.annonceEconomique.recuperationAnnonce import recuperationAnnonce
+
 # RemplissageDefaut
 from routes.journal.enregistrementRemplissageDefaut import enregistrementRemplissageDefaut
 from routes.journal.recuperationRemplissageDefaut import recuperationRemplissageDefaut
@@ -265,6 +268,9 @@ app.register_blueprint(recuperationNote)
 
 # tag
 app.register_blueprint(suppressionTag)
+
+# annonceEconomique
+app.register_blueprint(recuperationAnnonce)
 
 #===========================================LANCEMENT DU SERVER===============================================#
 if __name__ == '__main__':
