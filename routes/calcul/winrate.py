@@ -28,9 +28,8 @@ def calculate_winrate():
         filtreDeBase = ""
         filtreAnnexe = ""
         collection_unitaire = None
-
-        dateDebut = request.args.get('dateDebut', None)
-        dateFin = request.args.get('dateFin', None)
+        dateDebut_str = request.args.get('dateDebut', None)
+        dateFin_str = request.args.get('dateFin', None)
         collection_name = request.args.get('collection', None)
         username = request.args.get('username', None)
         filtreDeBase = request.args.get('filtreDeBase', None)
@@ -39,7 +38,8 @@ def calculate_winrate():
             tableauFiltreValue = json.loads(tableauFiltreValue)
         else:
             tableauFiltreValue = {}
-        filtreAnnexe = list(tableauFiltreValue[0].keys())[0]
+        if tableauFiltreValue is not None and len(tableauFiltreValue) > 0:
+            filtreAnnexe = list(tableauFiltreValue[0].keys())[0]
 
         tableauFiltreValue_param = request.args.get('tableauFiltreValue')
         if tableauFiltreValue_param:
@@ -53,26 +53,19 @@ def calculate_winrate():
         collection_temporaire = db[f"utile_{username}_temporaire"] # valeur sans conséquence pour pouvoir initialiser la variable
 
 
-
+        
         # ================= DATE ================== #
 
         
 
-        dateDebutFormatee = None
-        dateFinFormatee = None
-        date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
-        if dateDebut is not None and dateFin is not None:
-            dateDebutFormatee = datetime.strptime(dateDebut, date_format)
-            dateFinFormatee = datetime.strptime(dateFin, date_format)
+        print(dateDebut_str)
+        print(dateFin_str)
+        if dateDebut_str and dateFin_str:
+            dateDebut_obj = datetime.strptime(dateDebut_str, "%Y-%m-%dT%H:%M:%S.%f+00:00")
+            dateFin_obj = datetime.strptime(dateFin_str, "%Y-%m-%dT%H:%M:%S.%f+00:00")
 
-            print("dateDebutFormatee : ", dateDebutFormatee)
-            print("dateFinFormatee : ", dateFinFormatee)
-
-            dateDebutFormatee_str = dateDebutFormatee.strftime('%Y-%m-%d %H:%M:%S')
-            dateFinFormatee_str = dateFinFormatee.strftime('%Y-%m-%d %H:%M:%S')
-
-            print("dateDebutFormatee_str : ", dateDebutFormatee_str)
-            print("dateFinFormatee_str : ", dateFinFormatee_str)
+            dateDebut_formatted = dateDebut_obj.strftime("%Y-%m-%dT%H:%M:%S.%f+00:00")
+            dateFin_formatted = dateFin_obj.strftime("%Y-%m-%dT%H:%M:%S.%f+00:00")
 
     
 
@@ -85,8 +78,8 @@ def calculate_winrate():
         enregistrement = []
         query = {'$and': []}
 
-        if dateDebutFormatee is not None and dateFinFormatee is not None:
-            query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebutFormatee_str, '$lt': dateFinFormatee_str}})
+        if dateDebut_formatted is not None and dateFin_formatted is not None:
+            query['$and'].append({'dateAndTimeOpening': {'$gte': dateDebut_formatted, '$lt': dateFin_formatted}})
         else:
             for item in tableauFiltreValue:
                 condition = {}
