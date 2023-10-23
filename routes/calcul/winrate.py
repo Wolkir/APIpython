@@ -57,7 +57,8 @@ def calculate_winrate():
         # ================= DATE ================== #
 
         
-
+        dateDebut_formatted = ''
+        dateFin_formatted = ''
         print(dateDebut_str)
         print(dateFin_str)
         if dateDebut_str and dateFin_str:
