@@ -23,7 +23,9 @@ def calculate_winrate():
 
         tableauFiltreValue = []
         dateDebutBrut = ""
+        dateDebut = ""
         dateFinBrut = ""
+        dateFin = ""
         collection_name = ""
         username = ""
         filtreDeBase = ""
