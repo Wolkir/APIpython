@@ -59,7 +59,7 @@ def calculate_winrate():
 
         
 
-        if dateDebut is not None and dateFin is not None
+        if dateDebut is not None and dateFin is not None:
             print("ahahahah")
             dateDebut, dateFin = process_argument_date(dateDebutBrut, dateFinBrut)
             print('dateDebut : ', dateDebut)
