@@ -11,6 +11,5 @@ def process_argument_date(debutDate, finDate):
     except ValueError as e:
         print("Erreur lors de la conversion des dates:", e)
         return None, None
-    return None, None
 
 
