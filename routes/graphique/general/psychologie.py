@@ -4,15 +4,14 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any
 import json
 
-filtreAnnexe = Blueprint('filtreAnnexe', __name__)
+psychologie = Blueprint('psychologie', __name__)
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-@filtreAnnexe.route('/filtreAnnexe', methods=['GET'])
+@psychologie.route('/psychologie', methods=['GET'])
 def calculate_winrate():
     try:
-        print("efrrerrefrefefr")
 
 
 
