@@ -115,7 +115,7 @@ from routes.calcul.week.profitw import profitw
 #from routes.calcul.profit.profitfactorlong import profitfactorlong // remplacé par le code groupé profit_factor_group
 #from routes.calcul.profit.profitfactorshort import profitfactorshort // remplacé par le code groupé profit_factor_group
 #from routes.calcul.winrate import winrate // remplacé par winrategroup
-from routes.calcul.winrate import winrate
+from routes.graphique.general.winrate import winrate
 #from routes.calcul.winratestd import winratestd // remplacé par winrategroup
 #from routes.calcul.ddmax import ddmax // remplacé par le code maxprofit_minloss
 #from routes.calcul.average.average_duration import average_duration // remplacé par le code groupe averagegainloss
