@@ -72,6 +72,7 @@ from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
 
+from routes.graphique.general.psychologie import psychologie
 from routes.graphique.general.SLR import SLR
 from routes.graphique.general.TPR import TPR
 from routes.calcul.Tilts import Tilts
