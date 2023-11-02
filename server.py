@@ -72,18 +72,18 @@ from routes.calcul.killzone import killzone
 
 from routes.calcul.session import session
 
-from routes.calcul.SLR import SLR
-from routes.calcul.TPR import TPR
+from routes..graphique.general.SLR import SLR
+from routes..graphique.general.TPR import TPR
 from routes.calcul.Tilts import Tilts
 #from routes.calcul.tradecount import tradecount
 from routes.calcul.weekday import weekday
 
 #from routes.calcul.conversion_map import conversion_map
 from routes.calcul.filtreAnnexe import filtreAnnexe
-from routes.calcul.RR import RR
+from routes..graphique.general.RR import RR
 from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
-from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
+from routes..graphique.general.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
 from routes.calcul.average.averagegainloss import averagegainloss 
