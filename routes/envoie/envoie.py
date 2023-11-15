@@ -27,7 +27,7 @@ from .calcul.totalTrade import totalTrade
 from .calcul.RRaverage import RRaverage
 from .calcul.averageDuration import averageDuration 
 from .calcul.averageGain import averageGain
-from .calcul.maxProfitMinLoss import maxProfitMinLoss
+from .calcul.maxProfitMinLoss import find_max_profit_and_min_loss
 
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 envoie = Blueprint('envoie', __name__)
