@@ -84,7 +84,7 @@ from routes.calcul.filtreAnnexe import filtreAnnexe
 from routes.graphique.general.RR import RR
 from routes.calcul.RRT import RRT
 from routes.calcul.max_successive_counts import max_successive_counts #code groupé max successive gain et loss
-from routes.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
+from routes.calcul.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 #from routes.graphique.general.maxprofit_minloss import maxprofit_minloss #code groupé max gain et max loss
 from routes.calcul.profit.profitfactorgroup import profitfactorgroup
 from routes.calcul.winrategroup import winrategroup
