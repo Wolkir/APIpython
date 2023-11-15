@@ -4,7 +4,7 @@ import numpy as np
 client = MongoClient('mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/?retryWrites=true&w=majority')
 db = client['test']
 
-def maxProfitMinLoss(data, collection_unitaire):
+def maxProfitMinLoss(data):
     max_profit_value = float('-inf')
     min_loss_value = float('inf')
     max_equity = None
