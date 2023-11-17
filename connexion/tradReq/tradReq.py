@@ -394,7 +394,14 @@ def save_trade_request():
         #calculate_ddmax(data)  // remplacé par le code maxprofit_minloss
         #calculate_sharp_ratio(data) // groupé avec maxgain_minloss
         
-        return jsonify({"message": "Data saved successfully with TPR and SLR kill"}), 201
+        return jsonify({
+            "message": "Data saved successfully with TPR and SLR kill",
+            "overrisk": data.get('overtrading'),
+            "overtrading": data.get('overtrading'),
+            "RR": data.get('RR'),
+            "killzone": data.get("killzone"),
+            "session": data.get("session")
+        }), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
