@@ -79,6 +79,8 @@ def compare_passwords(password, hashed_password):
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     data = request.json
+    if(data == None):
+        data = request.form
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
