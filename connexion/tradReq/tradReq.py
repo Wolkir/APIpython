@@ -123,7 +123,7 @@ def save_trade_request():
             
         
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
-            volume_remain = data.get('volume')
+            volume_remain = float(data.get('volume'))
             if volume_remain < 0.01:
                 volume_remain = 0
                 user_collection.delete_one({"identifier": data.get('identifier')})
@@ -138,7 +138,7 @@ def save_trade_request():
             open_orders = db[f"{username}_open"]
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
-                volume_remain = open_order.get('volume_remain', 0) - data.get('volume')
+                volume_remain = open_order.get('volume_remain', 0) - float(data.get('volume'))
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
@@ -149,7 +149,7 @@ def save_trade_request():
         
         
         if closure_position == "ModiySl":
-            data['volume'] = round(data.get('volume'), 2)
+            data['volume'] = round(float(data.get('volume')), 2)
             volume_remain = round(volume_remain, 2)
             
 
