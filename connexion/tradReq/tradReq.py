@@ -80,7 +80,7 @@ def compare_passwords(password, hashed_password):
 def save_trade_request():
     data = request.json
     if(data == None):
-        data = request.form
+        data = request.form.to_dict()
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
