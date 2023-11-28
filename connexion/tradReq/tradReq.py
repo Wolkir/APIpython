@@ -78,19 +78,14 @@ def compare_passwords(password, hashed_password):
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
-    #data = request.json
-    data = request.get_data()
-    if(data == None):
-        #data = request.form.to_dict()
-        return jsonify({"message": +str(data)}), 200
-    return jsonify({"message": str(data)}), 200
+    data = jsonify(request.get_data())
+
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
 
     client_ip = request.remote_addr
     data['client_ip'] = client_ip
-
 
     try:
         user = db.users.find_one({"username": username})
