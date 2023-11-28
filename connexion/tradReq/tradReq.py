@@ -416,7 +416,7 @@ def convert_values(data, message):
     app.logger.info("conversion des valeurs...")
     for key, value in data.items():
         if isinstance(value, str):
-            if data[key].contains("."):
+            if "." in data[key]:
                 try:
                     data[key] = float(value)
                     message += value+" est un float \n"
