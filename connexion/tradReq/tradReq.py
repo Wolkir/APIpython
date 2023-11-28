@@ -78,9 +78,10 @@ def compare_passwords(password, hashed_password):
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
-    data = request.json
+    #data = request.json
+    data = request.get_data()
     if(data == None):
-        data = request.form.to_dict()
+        #data = request.form.to_dict()
         return jsonify({"message": "MQL4: "+str(data)}), 200
     username = data.get('username')
     password = data.get('password')
