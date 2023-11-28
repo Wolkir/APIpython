@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import bcrypt
 import sys
 from datetime import time
-import logging
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import calculate_killzone
@@ -79,8 +78,9 @@ def compare_passwords(password, hashed_password):
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
+    message = ""
     raw_data = request.json
-    data = convert_values(raw_data)
+    data, message = convert_values(raw_data, message)
 
     username = data.get('username')
     password = data.get('password')
@@ -398,7 +398,7 @@ def save_trade_request():
         #calculate_sharp_ratio(data) // groupé avec maxgain_minloss
         
         return jsonify({
-            "message": "Data saved successfully with TPR and SLR kill",
+            "message": message+"Data saved successfully with TPR and SLR kill",
             "overrisk": data.get('overtrading'),
             "overtrading": data.get('overtrading'),
             "RR": data.get('RR'),
@@ -412,24 +412,24 @@ def save_trade_request():
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
-def convert_values(data):
+def convert_values(data, message):
     app.logger.info("conversion des valeurs...")
     for key, value in data.items():
         if isinstance(value, str):
             # Try to convert to float
             try:
                 data[key] = float(value)
-                app.logger.info(value+" est un float")
+                message += value+" est un float \n"
             except ValueError:
                 # If conversion to float fails, try to convert to int
                 try:
                     data[key] = int(value)
-                    app.logger.info(value + " est un int")
+                    message += value+" est un int \n"
                 except ValueError:
                     # If conversion to int also fails, leave it as a string
-                    app.logger.info(value + " est un string")
+                    message += value+" est un string \n"
                     pass
-    return data
+    return data, message
 
 if __name__ == '__main__':
     app.run()
