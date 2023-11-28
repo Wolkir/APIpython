@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import bcrypt
 import sys
 from datetime import time
+import logging
 from routes.calcul.TPR import calculate_tpr
 from routes.calcul.SLR import calculate_slr
 from routes.calcul.killzone import calculate_killzone
@@ -412,16 +413,22 @@ def save_trade_request():
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
 def convert_values(data):
+    app.logger.info("conversion des valeurs...")
     for key, value in data.items():
-        if isinstance(value, int):
-            # Convert integers to strings
-            data[key] = str(value)
-        elif isinstance(value, float):
-            # Preserve precision for floats
-            data[key] = value
-        elif isinstance(value, dict):
-            # Recursively convert values in nested dictionaries
-            data[key] = convert_values(value)
+        if isinstance(value, str):
+            # Try to convert to float
+            try:
+                data[key] = float(value)
+                app.logger.info(value+" est un float")
+            except ValueError:
+                # If conversion to float fails, try to convert to int
+                try:
+                    data[key] = int(value)
+                    app.logger.info(value + " est un int")
+                except ValueError:
+                    # If conversion to int also fails, leave it as a string
+                    app.logger.info(value + " est un string")
+                    pass
     return data
 
 if __name__ == '__main__':
