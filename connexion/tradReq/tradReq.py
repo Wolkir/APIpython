@@ -78,7 +78,8 @@ def compare_passwords(password, hashed_password):
 
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
-    data = request.json
+    raw_data = request.json
+    data = convert_values(raw_data)
 
     username = data.get('username')
     password = data.get('password')
@@ -410,6 +411,18 @@ def save_trade_request():
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
+def convert_values(data):
+    for key, value in data.items():
+        if isinstance(value, int):
+            # Convert integers to strings
+            data[key] = str(value)
+        elif isinstance(value, float):
+            # Preserve precision for floats
+            data[key] = value
+        elif isinstance(value, dict):
+            # Recursively convert values in nested dictionaries
+            data[key] = convert_values(value)
+    return data
 
 if __name__ == '__main__':
     app.run()
