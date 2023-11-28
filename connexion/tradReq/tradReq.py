@@ -404,7 +404,8 @@ def save_trade_request():
             "RR": data.get('RR'),
             "killzone": data.get("killzone"),
             "session": data.get("session"),
-            "tilt": data.get("tilt")
+            "tilt": data.get("tilt"),
+            "code": 201
         }), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
