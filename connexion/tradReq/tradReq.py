@@ -87,7 +87,8 @@ def save_trade_request():
 
     client_ip = request.remote_addr
     data['client_ip'] = client_ip
- 
+    return jsonify({"message": data.get('dateAndTimeOpening')+" and "+data.get('dateAndTimeClosure')}), 200
+
     try:
         user = db.users.find_one({"username": username})
         if not user or not compare_passwords(password, user['password']):
