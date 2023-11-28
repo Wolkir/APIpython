@@ -398,7 +398,7 @@ def save_trade_request():
         #calculate_sharp_ratio(data) // groupé avec maxgain_minloss
         
         return jsonify({
-            "message": message+"Data saved successfully with TPR and SLR kill",
+            "message": "Data saved successfully with TPR and SLR kill",
             "overrisk": data.get('overtrading'),
             "overtrading": data.get('overtrading'),
             "RR": data.get('RR'),
