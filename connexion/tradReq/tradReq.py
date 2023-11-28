@@ -416,19 +416,20 @@ def convert_values(data, message):
     app.logger.info("conversion des valeurs...")
     for key, value in data.items():
         if isinstance(value, str):
-            # Try to convert to float
-            try:
-                data[key] = float(value)
-                message += value+" est un float \n"
-            except ValueError:
-                # If conversion to float fails, try to convert to int
+            if data[key].contains("."):
+                try:
+                    data[key] = float(value)
+                    message += value+" est un float \n"
+                except ValueError:
+                    message += value + " est un string \n"
+                    pass
+            else:
                 try:
                     data[key] = int(value)
                     message += value+" est un int \n"
                 except ValueError:
-                    # If conversion to int also fails, leave it as a string
-                    message += value+" est un string \n"
-                    pass
+                        message += value+" est un string \n"
+                        pass
     return data, message
 
 if __name__ == '__main__':
