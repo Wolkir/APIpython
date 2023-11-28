@@ -81,13 +81,14 @@ def save_trade_request():
     data = request.json
     if(data == None):
         data = request.form.to_dict()
+        return jsonify({"message": "MQL4: "+str(data)}), 200
     username = data.get('username')
     password = data.get('password')
     closure_position = data.get('closurePosition')
 
     client_ip = request.remote_addr
     data['client_ip'] = client_ip
-    return jsonify({"message": str(data.get('dateAndTimeOpening'))+" and "+str(data.get('dateAndTimeClosure'))}), 200
+    return jsonify({"message": str(data)}), 200
 
     try:
         user = db.users.find_one({"username": username})
