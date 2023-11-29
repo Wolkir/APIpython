@@ -405,7 +405,7 @@ def save_trade_request():
             "code": 201
         }), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"Errors": str(e)}), 400
 
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
