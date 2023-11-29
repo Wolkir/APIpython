@@ -121,12 +121,7 @@ def save_trade_request():
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
 
-        message += "closure position is " + str(closure_position) + "\n"
-        return jsonify({"message": message}), 300
-
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
-            message += "volume_remain is " + str(float(data.get('volume'))) + "\n"
-            return jsonify({"message": message}), 300
             volume_remain = float(data.get('volume'))
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -142,10 +137,7 @@ def save_trade_request():
             open_order = open_orders.find_one({"identifier": data.get('identifier')})
             if open_order:
                 volume_remain = open_order.get('volume_remain', 0) - float(data.get('volume'))
-                message += "Open order.get volume remain is "+str(open_order.get('volume_remain', 0))+"\n"
-                message += "data.get('volume') is " + str(float(data.get('volume')))+"\n"
-                message += "volume_remain is " + str(volume_remain)+"\n"
-                return jsonify({"message": message}), 300
+
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
