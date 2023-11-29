@@ -146,7 +146,7 @@ def save_trade_request():
                 return jsonify({"message": "No corresponding 'Open' order found"}), 400
         
         
-        if closure_position == "ModiySl":
+        if closure_position == "ModifySl":
             data['volume'] = round(float(data.get('volume')), 2)
             volume_remain = round(volume_remain, 2)
             
