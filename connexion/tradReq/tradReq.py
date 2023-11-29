@@ -60,7 +60,8 @@ from routes.calcul.tilt import find_tilt
 #from routes.calcul.sharp import calculate_sharp_ratio // groupé avec maxgain_minloss
 
 # Connexion à la base de données MongoDB
-client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
+#client = MongoClient("mongodb+srv://pierre:ztxiGZypi6BGDMSY@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://guillaume:VAH0zD8zkULecNqR@atlascluster.sbpp5xm.mongodb.net/test?retryWrites=true&w=majority")
 db = client["test"]
 
 
@@ -361,18 +362,18 @@ def save_trade_request():
     user_collection.insert_one(trade_request)
 
 
-    # find_max_successive_counts(data)
-    # find_max_profit_and_min_loss(data)
-    # calculate_profit_factor_group(data)
-    # calculate_winrate_group(data)
-    # calculate_average_gain_loss_rr(data)
-    # calculate_winrrtflat(data)
-    # calculate_totaltrade(data)
-    # calculate_daycount(data)
-    # calculate_averagedaytrade(data)
-    # most_common_asset(data)
-    # save_balance(data)
-    # calculate_pfreal(data)
+    find_max_successive_counts(data)
+    find_max_profit_and_min_loss(data)
+    calculate_profit_factor_group(data)
+    calculate_winrate_group(data)
+    calculate_average_gain_loss_rr(data)
+    calculate_winrrtflat(data)
+    calculate_totaltrade(data)
+    calculate_daycount(data)
+    calculate_averagedaytrade(data)
+    most_common_asset(data)
+    save_balance(data)
+    calculate_pfreal(data)
 
     #calculate_profitw(data)
 
