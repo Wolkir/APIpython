@@ -120,10 +120,13 @@ def save_trade_request():
             rrt = calculate_rrt(data)
             data['RRT'] = rrt
             open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"RRT": data.get('RRT')}})
-      
-            
-        
+
+        message += "closure position is " + str(closure_position) + "\n"
+        return jsonify({"message": message}), 300
+
         if closure_position == "Open" and data.get('typeOfTransaction') != "ModifySl":
+            message += "volume_remain is " + str(float(data.get('volume'))) + "\n"
+            return jsonify({"message": message}), 300
             volume_remain = float(data.get('volume'))
             if volume_remain < 0.01:
                 volume_remain = 0
@@ -133,7 +136,6 @@ def save_trade_request():
             TPOpen[identifier] = data.get('takeProfit')
             if identifier not in RROpen:
                 RROpen[identifier] = data.get('RRT')
-            
         elif closure_position != "":
             # Check if there's a corresponding 'Open' order with the same identifier
             open_orders = db[f"{username}_open"]
@@ -143,7 +145,7 @@ def save_trade_request():
                 message += "Open order.get volume remain is "+str(open_order.get('volume_remain', 0))+"\n"
                 message += "data.get('volume') is " + str(float(data.get('volume')))+"\n"
                 message += "volume_remain is " + str(volume_remain)+"\n"
-                return jsonify({"message": message}), 400
+                return jsonify({"message": message}), 300
                 if volume_remain < 0:
                     volume_remain = 0
                 open_orders.update_one({"identifier": data.get('identifier')}, {"$set": {"volume_remain": volume_remain}})
