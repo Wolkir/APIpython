@@ -79,8 +79,8 @@ def compare_passwords(password, hashed_password):
 @trade_blueprint.route('/savetraderequest', methods=['POST'])
 def save_trade_request():
     message = ""
-    raw_data = request.json
-    data, message = convert_values(raw_data, message)
+    data = request.json
+    #data, message = convert_values(raw_data, message)
 
     username = data.get('username')
     password = data.get('password')
@@ -410,25 +410,25 @@ def save_trade_request():
 # Enregistrement du blueprint "trade" dans l'application Flask
 app.register_blueprint(trade_blueprint, url_prefix='/api')
 
-def convert_values(data, message):
-    app.logger.info("conversion des valeurs...")
-    for key, value in data.items():
-        if isinstance(value, str):
-            if "." in data[key]:
-                try:
-                    data[key] = float(value)
-                    message += value+" est un float \n"
-                except ValueError:
-                    message += value + " est un string \n"
-                    pass
-            else:
-                try:
-                    data[key] = int(value)
-                    message += value+" est un int \n"
-                except ValueError:
-                        message += value+" est un string \n"
-                        pass
-    return data, message
+# def convert_values(data, message):
+#     app.logger.info("conversion des valeurs...")
+#     for key, value in data.items():
+#         if isinstance(value, str):
+#             if "." in data[key]:
+#                 try:
+#                     data[key] = float(value)
+#                     message += value+" est un float \n"
+#                 except ValueError:
+#                     message += value + " est un string \n"
+#                     pass
+#             else:
+#                 try:
+#                     data[key] = int(value)
+#                     message += value+" est un int \n"
+#                 except ValueError:
+#                         message += value+" est un string \n"
+#                         pass
+#     return data, message
 
 if __name__ == '__main__':
     app.run()
